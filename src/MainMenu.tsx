@@ -8,7 +8,7 @@ const MainMenu: Component = () => {
 	const peer = new Peer();
 	const [id, setId] = createSignal<string>('');
 	const getUrl = (game_type: string, id: string ) => {
-		const url = new URL('game.html', window.location.href);
+		const url = new URL('game', window.location.href);
 		url.searchParams.set('type', game_type);
 		url.searchParams.set('id', id);
 		return url.href;
