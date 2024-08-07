@@ -2,9 +2,9 @@ import type { Component } from 'solid-js';
 
 import { Peer } from 'peerjs';
 import { createSignal, Show } from 'solid-js';
-import styles from './App.module.css';
+import styles from './MainMenu.module.css';
 
-const App: Component = () => {
+const MainMenu: Component = () => {
 	const peer = new Peer();
 	const [id, setId] = createSignal<string>('');
 	const createGameUrl = () => {
@@ -17,11 +17,11 @@ const App: Component = () => {
 		return url.href;
 	}
 	peer.on('open', setId);
-	return <div class={styles.App}>
+	return <div class={styles.MainMenu}>
 		<a
 			href={createGameUrl()}
 		>Create Game</a>
 	</div>;
 };
 
-export default App;
+export default MainMenu;
