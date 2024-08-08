@@ -11,12 +11,14 @@ import styles from './App.module.css';
 const peer = new Peer();
 const [id, setId] = createSignal<string>('');
 const [conn, setConn] = createSignal<DataConnection | null>(null);
+const [loading, setLoading] = createSignal(false);
 
 function connect(id: string) {
 	const conn = peer.connect(id, { reliable: true });
 	conn.on('open', () => {
 		console.log('conn connected');
 		setConn(conn);
+		setLoading(false);
 	});
 	conn.on('close', () => {
 		console.log('conn close');
@@ -36,6 +38,7 @@ const Menu = () => {
 				value="Create Game"
 				disabled={id() === ''}
 				onclick={() => {
+					setLoading(true);
 					createServer(connect);
 				}}
 			/>
@@ -76,7 +79,7 @@ const App: Component = () => {
 	});
 	return <div class={styles.App}>
 		<Show
-			when={id()}
+			when={id() && !loading()}
 			fallback={<Loading />}
 		>
 			<Show
