@@ -55,7 +55,14 @@ const Menu = () => {
 
 
 const App: Component = () => {
-	peer.on('open', setId);
+	peer.on('open', id => {
+		setId(id);
+		const gameId = new URL(window.location.href).searchParams.get('id');
+		console.log(gameId);
+		if(gameId !== null) {
+			connect(gameId);
+		}
+	});
 	return <div class={styles.App}>
 		<Show
 			when={conn() === null}

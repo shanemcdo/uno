@@ -6,6 +6,12 @@ type GameProps = {
 };
 
 const Game: Component<GameProps> = props => {
+	const url = () => {
+		const url = new URL(window.location.href);
+		url.searchParams.set('id', props.conn.peer);
+		return url.href;
+		
+	};
 	return <>
 		{props.conn.peer}
 		<input
@@ -15,6 +21,10 @@ const Game: Component<GameProps> = props => {
 				props.conn.send('test!');
 			}}
 		/>
+		<a
+			href={url()}
+			target="_blank"
+		>Sharable Link</a>
 	</>;
 };
 
