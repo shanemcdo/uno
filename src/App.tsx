@@ -4,6 +4,7 @@ import type { DataConnection } from 'peerjs'
 import { Peer } from 'peerjs';
 import { createSignal, Show } from 'solid-js';
 import { createServer } from './server';
+import Game from './Game';
 import styles from './App.module.css';
 
 const peer = new Peer();
@@ -40,7 +41,7 @@ const Menu = () => {
 			placeholder="Game Code"
 			ref={game_code_input}
 			oninput={ e => setJoinButtonDisabled(e.target.value === '') }
-		/>;
+		/>
 		<input
 			type="button"
 			value="Join Game"
@@ -52,25 +53,13 @@ const Menu = () => {
 	</>;
 };
 
-const Game = () => {
-	return <>
-		{conn()!.peer}
-		<input
-			type="button"
-			value="Click me"
-			onclick={() => {
-				conn()!.send('test!');
-			}}
-		/>
-	</>;
-};
 
 const App: Component = () => {
 	peer.on('open', setId);
 	return <div class={styles.App}>
 		<Show
 			when={conn() === null}
-			fallback={<Game/>}
+			fallback={<Game conn={conn()!}/>}
 		> <Menu /> </Show>
 	</div>;
 };
