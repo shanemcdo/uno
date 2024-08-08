@@ -27,30 +27,41 @@ function connect(id: string) {
 const Menu = () => {
 	let game_code_input: HTMLInputElement | undefined;
 	const [joinButtonDisabled, setJoinButtonDisabled] = createSignal(true);
-	return <>
-		<input
-			type="button"
-			value="Create Game"
-			disabled={id() === ''}
-			onclick={() => {
-				createServer(connect);
-			}}
-		/>
-		OR
-		<input
-			placeholder="Game Code"
-			ref={game_code_input}
-			oninput={ e => setJoinButtonDisabled(e.target.value === '') }
-		/>
-		<input
-			type="button"
-			value="Join Game"
-			disabled={joinButtonDisabled()}
-			onclick={() => {
-				connect(game_code_input!.value);
-			}}
-		/>
-	</>;
+	return <div class={styles.container}>
+		<div class={styles.option}>
+			<input
+				type="button"
+				class={styles.button}
+				value="Create Game"
+				disabled={id() === ''}
+				onclick={() => {
+					createServer(connect);
+				}}
+			/>
+		</div>
+		<div class={styles.divider} >
+			<div class={styles.vert_bar} />
+			OR
+			<div class={styles.vert_bar} />
+		</div>
+		<div class={styles.option}>
+			<input
+				placeholder="Game Code"
+				ref={game_code_input}
+				oninput={ e => setJoinButtonDisabled(e.target.value === '') }
+			/>
+			<br />
+			<input
+				type="button"
+				class={styles.button}
+				value="Join Game"
+				disabled={joinButtonDisabled()}
+				onclick={() => {
+					connect(game_code_input!.value);
+				}}
+			/>
+		</div>
+	</div>;
 };
 
 
@@ -58,7 +69,6 @@ const App: Component = () => {
 	peer.on('open', id => {
 		setId(id);
 		const gameId = new URL(window.location.href).searchParams.get('id');
-		console.log(gameId);
 		if(gameId !== null) {
 			connect(gameId);
 		}

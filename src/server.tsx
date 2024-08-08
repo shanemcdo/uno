@@ -7,6 +7,7 @@ export function createServer(callback: (id: string) => void): Peer {
 	peer.on('close', () => console.log('server close'));
 	peer.on('connection', conn => {
 		conn.on('data', data => {
+			console.log(data);
 		})
 	});
 

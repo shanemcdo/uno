@@ -1,2 +1,44 @@
 .App {
+	height: 100%;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+
+	> :first-child,
+	> :last-child {
+		flex: 1;
+	}
+}
+
+.divider {
+	display: flex;
+	flex-direction: column;
+}
+
+.vert_bar {
+	flex: 1;
+	background: linear-gradient(black, black) no-repeat center/2px 100%;
+	margin: 10px 0;
+}
+
+.option {
+	text-align: center;
+	margin: auto;
+
+}
+
+input {
+	font-size: 1.4rem;
+	color: inherit;
+	border-radius: 10px;
+	border: 1px solid black;
+
+	&:disabled {
+		color: grey;
+		border-color: grey;
+		background: inherit;
+	}
 }
