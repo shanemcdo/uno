@@ -12,6 +12,9 @@ const Game: Component<GameProps> = props => {
 		return url.href;
 		
 	};
+	window.addEventListener('beforeunload', () => {
+		props.conn.close();
+	});
 	return <>
 		{props.conn.peer}
 		<input
@@ -19,6 +22,13 @@ const Game: Component<GameProps> = props => {
 			value="Click me"
 			onclick={() => {
 				props.conn.send('test!');
+			}}
+		/>
+		<input
+			type="button"
+			value="Close"
+			onclick={() => {
+				props.conn.close();
 			}}
 		/>
 		<a
