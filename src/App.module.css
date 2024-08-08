@@ -11,6 +11,20 @@
 	> :last-child {
 		flex: 1;
 	}
+
+	input {
+		color: inherit;
+		border-radius: 10px;
+		border: 1px solid black;
+		cursor: pointer;
+
+		&:disabled {
+			color: grey;
+			border-color: grey;
+			background: inherit;
+			cursor: not-allowed;
+		}
+	}
 }
 
 .divider {
@@ -28,17 +42,9 @@
 	text-align: center;
 	margin: auto;
 
-}
-
-input {
-	font-size: 1.4rem;
-	color: inherit;
-	border-radius: 10px;
-	border: 1px solid black;
-
-	&:disabled {
-		color: grey;
-		border-color: grey;
-		background: inherit;
+	input {
+		font-size: 1.4rem;
 	}
+
 }
+
