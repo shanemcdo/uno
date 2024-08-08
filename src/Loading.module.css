@@ -1,0 +1,9 @@
+.loading {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	
+	h1 { 
+		margin: auto;
+	}
+}
