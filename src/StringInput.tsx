@@ -7,15 +7,23 @@ type Props = {
 };
 
 const StringInput: Component<Props> = props => {
-	const input = <input type="text" placeholder={props.placeholder} /> as HTMLInputElement;
+	const onclick = () => {
+		props.callback(input.value);
+		if(props.clearOnSend) input.value = '';
+	}
+	const input = <input
+		type="text"
+		placeholder={props.placeholder}
+		onkeypress={event => {
+			if(event.key === 'Enter') {
+				onclick();
+				event.preventDefault();
+			}
+		}}
+	/> as HTMLInputElement;
 	return <>
 		{input}
-		<button
-			onclick={ () => {
-				props.callback(input.value);
-				if(props.clearOnSend) input.value = '';
-			}}
-		>Submit</button>
+		<button onclick={ onclick }>Submit</button>
 	</>;
 };
 
