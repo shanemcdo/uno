@@ -9,14 +9,24 @@ type NameData = {
 
 type MessageData = {
 	type: 'message',
-	name: string,
 	message: string,
 };
 
 type Data = NameData | MessageData;
 
-const names: Set<string> = new Set();
-const connections: DataConnection[]  = [];
+type PlayerData = {
+	conn: DataConnection
+	name: string,
+};
+
+const playerData: Record<string, PlayerData> = {};
+
+function nameExists(name: string): boolean {
+	for(const [_, value] of Object.entries(playerData)) {
+		if(value.name === name) return true;
+	}
+	return false;
+}
 
 export function createServer(callback: (id: string) => void): Peer {
 	const peer = new Peer();
@@ -25,8 +35,6 @@ export function createServer(callback: (id: string) => void): Peer {
 	peer.on('close', () => console.log('server close'));
 	peer.on('connection', conn => {
 		conn.on('open', () => {
-			connections.push(conn);
-			console.log(connections);
 			console.log(conn.peer + ' open');
 		})
 		conn.on('data', data => {
@@ -34,9 +42,12 @@ export function createServer(callback: (id: string) => void): Peer {
 			const d = data as Data;
 			switch(d.type) {
 			case "name":
-				const accepted = !names.has(d.name);
+				const accepted = !nameExists(d.name);
 				if(accepted) {
-					names.add(d.name);
+					playerData[conn.peer] = {
+						conn,
+						name: d.name,
+					};
 				}
 				conn.send({
 					type: 'name',
@@ -45,22 +56,21 @@ export function createServer(callback: (id: string) => void): Peer {
 				});
 				break;
 			case "message":
-				for(const conn of connections) {
-					conn.send(d);
+				for(const [_, player] of Object.entries(playerData)) {
+					player.conn.send({
+						type: 'message',
+						message: d.message,
+						name: playerData[conn.peer].name,
+					});
 				}
 				break;
 			}
 		})
 		conn.on('close', () => {
-			for (let i = 0; i < connections.length;) {
-				if(connections[i].peer === conn.peer) {
-					connections.splice(i, 1);
-				} else {
-					i++;
-				}
-			}
+			console.log(playerData);
+			delete playerData[conn.peer];
+			console.log(playerData);
 			console.log(conn.peer + ' close');
-			console.log(connections);
 		})
 		conn.on('error', err => console.log(err.message));
 	});
