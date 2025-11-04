@@ -22,8 +22,8 @@ type PlayerData = {
 const playerData: Record<string, PlayerData> = {};
 
 function nameExists(name: string): boolean {
-	for(const [_, value] of Object.entries(playerData)) {
-		if(value.name === name) return true;
+	for(const player of Object.values(playerData)) {
+		if(player.name === name) return true;
 	}
 	return false;
 }
@@ -56,7 +56,7 @@ export function createServer(callback: (id: string) => void): Peer {
 				});
 				break;
 			case "message":
-				for(const [_, player] of Object.entries(playerData)) {
+				for(const player of Object.values(playerData)) {
 					player.conn.send({
 						type: 'message',
 						message: d.message,
