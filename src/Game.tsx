@@ -1,5 +1,6 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
+import type { Message, MessageRequest, NameRequest, ServerData } from './Types';
 
 import { Show, createSignal } from 'solid-js';
 import Messages from './Messages';
@@ -7,25 +8,6 @@ import StringInput from './StringInput';
 
 type GameProps = {
 	conn: DataConnection,
-};
-
-type NameData = {
-	type: 'name',
-	accepted: boolean,
-	name: string,
-};
-
-type MessageData = {
-	type: 'message',
-	name: string,
-	message: string,
-};
-
-type Data = NameData | MessageData;
-
-type Message = {
-	name: string,
-	message: string,
 };
 
 const Game: Component<GameProps> = props => {
@@ -44,7 +26,7 @@ const Game: Component<GameProps> = props => {
 		props.conn.close();
 	});
 	props.conn.on('data', data => {
-		const d = data as Data;
+		const d = data as ServerData;
 		switch(d.type) {
 		case 'name':
 			if(d.accepted) setName(d.name);
@@ -62,7 +44,7 @@ const Game: Component<GameProps> = props => {
 				<StringInput
 					placeholder="Enter Name"
 					callback={ name => {
-						props.conn.send({ type: 'name', name });
+						props.conn.send({ type: 'name', name } as NameRequest);
 					}}
 				/>
 			}
@@ -72,7 +54,7 @@ const Game: Component<GameProps> = props => {
 				placeholder="Enter Message"
 				clearOnSend={true}
 				callback={ message => {
-					props.conn.send({ type: 'message', message });
+					props.conn.send({ type: 'message', message } as MessageRequest);
 				}}
 			/>
 			<input

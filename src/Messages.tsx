@@ -1,10 +1,7 @@
 import type { Component } from 'solid-js';
-import { For } from 'solid-js';
+import type { Message } from './Types';
 
-type Message = {
-	name: string,
-	message: string,
-};
+import { For } from 'solid-js';
 
 type Props = {
 	messages: Message[],
