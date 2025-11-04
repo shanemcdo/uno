@@ -67,17 +67,15 @@ const Game: Component<GameProps> = props => {
 			}
 			>
 			<h2>{name()}</h2>
-			<input
-				type="button"
-				value="Click me"
-				onclick={() => {
-					props.conn.send({
-						type: 'message',
-						name: name()!,
-						message: 'This is a test!',
-					});
-				}}
-			/>
+			<StringInput
+			placeholder="Enter Message"
+			callback={ message => {
+				props.conn.send({
+					type: 'message',
+					name: name(),
+					message,
+				});
+			}} />
 			<input
 				type="button"
 				value="Close"
