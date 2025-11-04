@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
-import type { Message, MessageRequest, NameRequest, ServerData } from './Types';
+import type { Message, MessageRequest, NameRequest, ServerData } from './types';
 
 import { Show, createSignal } from 'solid-js';
 import Messages from './Messages';

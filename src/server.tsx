@@ -1,5 +1,5 @@
 import type { DataConnection } from 'peerjs';
-import type{ ClientData, MessageBroadcast, NameValidation } from './Types';
+import type{ ClientData, MessageBroadcast, NameValidation } from './types';
 
 import { Peer } from 'peerjs';
 

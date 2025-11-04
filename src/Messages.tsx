@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js';
-import type { Message } from './Types';
+import type { Message } from './types';
 
 import { For } from 'solid-js';
 
