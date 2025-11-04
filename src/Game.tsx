@@ -6,11 +6,11 @@ import { Show, createSignal } from 'solid-js';
 import Messages from './Messages';
 import StringInput from './StringInput';
 
-type GameProps = {
+type Props = {
 	conn: DataConnection,
 };
 
-const Game: Component<GameProps> = props => {
+const Game: Component<Props> = props => {
 	const url = () => {
 		const url = new URL(window.location.href);
 		url.searchParams.set('id', props.conn.peer);
