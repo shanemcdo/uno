@@ -60,22 +60,24 @@ const Game: Component<GameProps> = props => {
 			when={ name() }
 			fallback={
 				<StringInput
-				placeholder="Enter Name"
-				callback={ name => {
-					props.conn.send({ type: 'name', name });
-				}} />
+					placeholder="Enter Name"
+					callback={ name => {
+						props.conn.send({ type: 'name', name });
+					}}
+				/>
 			}
 			>
 			<h2>{name()}</h2>
 			<StringInput
-			placeholder="Enter Message"
-			callback={ message => {
-				props.conn.send({
-					type: 'message',
-					name: name(),
-					message,
-				});
-			}} />
+				placeholder="Enter Message"
+				callback={ message => {
+					props.conn.send({
+						type: 'message',
+						name: name(),
+						message,
+					});
+				}}
+			/>
 			<input
 				type="button"
 				value="Close"
