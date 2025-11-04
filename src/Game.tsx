@@ -46,10 +46,10 @@ const Game: Component<GameProps> = props => {
 	props.conn.on('data', data => {
 		const d = data as Data;
 		switch(d.type) {
-		case "name":
+		case 'name':
 			if(d.accepted) setName(d.name);
 			break;
-		case "message":
+		case 'message':
 			addMessage(d);
 			break;
 		}

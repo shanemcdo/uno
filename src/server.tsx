@@ -41,7 +41,7 @@ export function createServer(callback: (id: string) => void): Peer {
 			console.log(data);
 			const d = data as Data;
 			switch(d.type) {
-			case "name":
+			case 'name':
 				const accepted = !nameExists(d.name);
 				if(accepted) {
 					playerData[conn.peer] = {
@@ -55,7 +55,7 @@ export function createServer(callback: (id: string) => void): Peer {
 					accepted,
 				});
 				break;
-			case "message":
+			case 'message':
 				for(const player of Object.values(playerData)) {
 					player.conn.send({
 						type: 'message',
