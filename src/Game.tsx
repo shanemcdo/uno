@@ -70,6 +70,7 @@ const Game: Component<GameProps> = props => {
 			<h2>{name()}</h2>
 			<StringInput
 				placeholder="Enter Message"
+				clearOnSend={true}
 				callback={ message => {
 					props.conn.send({
 						type: 'message',

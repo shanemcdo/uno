@@ -3,6 +3,7 @@ import type { Component } from "solid-js";
 type Props = {
 	placeholder: string,
 	callback: (arg: string) => void,
+	clearOnSend?: boolean,
 };
 
 const StringInput: Component<Props> = props => {
@@ -10,7 +11,10 @@ const StringInput: Component<Props> = props => {
 	return <>
 		{input}
 		<button
-			onclick={ () => props.callback(input.value) }
+			onclick={ () => {
+				props.callback(input.value);
+				if(props.clearOnSend) input.value = '';
+			}}
 		>Submit</button>
 	</>;
 };
