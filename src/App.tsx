@@ -7,6 +7,7 @@ import { createServer } from './server';
 import Loading from './Loading';
 import Game from './Game';
 import styles from './App.module.css';
+import StringInput from './StringInput';
 
 const peer = new Peer();
 const [id, setId] = createSignal<string>('');
@@ -29,12 +30,10 @@ function connect(id: string) {
 
 const Menu = () => {
 	let game_code_input: HTMLInputElement | undefined;
-	const [joinButtonDisabled, setJoinButtonDisabled] = createSignal(true);
 	return <div class={styles.container}>
 		<div class={styles.option}>
 			<input
 				type="button"
-				class={styles.button}
 				value="Create Game"
 				disabled={id() === ''}
 				onclick={() => {
@@ -49,20 +48,10 @@ const Menu = () => {
 			<div class={styles.vert_bar} />
 		</div>
 		<div class={styles.option}>
-			<input
+			<StringInput	
 				placeholder="Game Code"
-				ref={game_code_input}
-				oninput={ e => setJoinButtonDisabled(e.target.value === '') }
-			/>
-			<br />
-			<input
-				type="button"
-				class={styles.button}
-				value="Join Game"
-				disabled={joinButtonDisabled()}
-				onclick={() => {
-					connect(game_code_input!.value);
-				}}
+				callback={connect}
+				buttonText="Join Game"
 			/>
 		</div>
 	</div>;
