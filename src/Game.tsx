@@ -3,6 +3,7 @@ import type { DataConnection } from 'peerjs'
 
 import { Show, createSignal } from 'solid-js';
 import Messages from './Messages';
+import StringInput from './StringInput';
 
 type GameProps = {
 	conn: DataConnection,
@@ -25,21 +26,6 @@ type Data = NameData | MessageData;
 type Message = {
 	name: string,
 	message: string,
-};
-
-const NamePicker: Component<GameProps> = props => {
-	const input = <input type="text" placeholder="Enter Name"  /> as HTMLInputElement;
-	return <>
-		{input}
-		<button
-			onclick={ () => {
-				props.conn.send({
-					type: 'name',
-					name: input.value,
-				});
-			}}
-		>Submit</button>
-	</>;
 };
 
 const Game: Component<GameProps> = props => {
@@ -72,8 +58,14 @@ const Game: Component<GameProps> = props => {
 		{props.conn.peer}
 		<Show
 			when={ name() }
-			fallback={ <NamePicker conn={props.conn} /> }
-		>
+			fallback={
+				<StringInput
+				placeholder="Enter Name"
+				callback={ name => {
+					props.conn.send({ type: 'name', name });
+				}} />
+			}
+			>
 			<h2>{name()}</h2>
 			<input
 				type="button"
