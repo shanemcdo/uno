@@ -77,6 +77,11 @@ const App: Component = () => {
 			connect(gameId);
 		}
 	});
+	window.addEventListener('onunload', () => {
+		if(conn()) {
+			conn()!.close();
+		}
+	});
 	return <div class={styles.App}>
 		<Show
 			when={id() && !loading()}
