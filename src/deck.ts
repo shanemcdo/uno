@@ -1,4 +1,4 @@
-enum Color {
+export enum Color {
 	Red,
 	Yellow,
 	Blue,
@@ -12,13 +12,13 @@ const colors = Object.freeze([
 	Color.Green,
 ]);
 
-enum CardType {
+export enum CardType {
 	Number,
 	Action,
 	Wild,
 }
 
-enum ActionType {
+export enum ActionType {
 	Draw2,
 	Reverse,
 	Skip,
@@ -30,7 +30,7 @@ const actionTypes = Object.freeze([
 	ActionType.Skip,
 ]);
 
-enum WildType {
+export enum WildType {
 	Wild,
 	WildDraw4,
 };

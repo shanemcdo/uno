@@ -7,6 +7,7 @@ import { Show, createSignal } from 'solid-js';
 import { ServerType, ClientType, State } from './types';
 import Messages from './Messages';
 import StringInput from './StringInput';
+import Hand from './Hand';
 
 type Props = {
 	conn: DataConnection,
@@ -84,6 +85,7 @@ const Game: Component<Props> = props => {
 				target="_blank"
 			>Sharable Link</a>
 			<Messages messages={messages()} />
+			<Hand hand={hand()} />
 		</Show>
 	</>;
 };
