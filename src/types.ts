@@ -1,12 +1,21 @@
+import type { Card } from "./deck";
+
 export type Message = {
 	name: string,
 	message: string,
+};
+
+export enum State {
+	Waiting,
+	Playing,
+	GameOver,
 };
 
 // sent by server side
 export enum ServerType {
 	Name,
 	Message,
+	Update,
 };
 
 export type NameValidation = {
@@ -21,7 +30,20 @@ export type MessageBroadcast = {
 	message: string,
 };
 
-export type ServerData = NameValidation | MessageBroadcast;
+export type GameUpdate = {
+	type: ServerType.Update,
+	state: State,
+	yourTurn: boolean,
+	yourHand: Card[],
+	isAdmin: boolean,
+	topCard: Card,
+	otherPlayers: {
+		name: string,
+		cardCount: number,
+	}[],
+};
+
+export type ServerData = NameValidation | MessageBroadcast | GameUpdate;
 
 // sent by client side
 export enum ClientType {

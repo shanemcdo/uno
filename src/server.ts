@@ -1,8 +1,8 @@
 import type { DataConnection } from 'peerjs';
-import type { ClientData, MessageBroadcast, NameValidation } from './types';
+import type { ClientData, MessageBroadcast, NameValidation, GameUpdate } from './types';
 import type { Card } from './deck';
 
-import { ServerType, ClientType } from './types';
+import { ServerType, ClientType, State } from './types';
 import { Peer } from 'peerjs';
 import { deck } from './deck';
 import deepClone from './deepClone';
@@ -17,7 +17,8 @@ type PlayerData = {
 const STARTING_HAND_SIZE = 7;
 
 const playerData: Record<string, PlayerData> = {};
-let currentDeck = shuffle(deepClone(deck));
+let currentDeck: Card[] = shuffle(deepClone(deck));
+let topCard = drawCard();
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 function shuffle<T>(arr: T[]): T[] {
@@ -52,6 +53,20 @@ function nameExists(name: string): boolean {
 	return false;
 }
 
+function sendUpdate() {
+	Object.entries(playerData).forEach(([id, player]) => {
+		player.conn.send({
+			type: ServerType.Update,
+			state: State.Waiting,
+			yourTurn: false, // TODO
+			yourHand: player.hand,
+			isAdmin: false, // TODO
+			topCard,
+			otherPlayers: [], // TODO
+		} as GameUpdate);
+	});
+}
+
 export function createServer(callback: (id: string) => void): Peer {
 	const peer = new Peer();
 	peer.on('open', callback);
@@ -81,6 +96,7 @@ export function createServer(callback: (id: string) => void): Peer {
 					name: d.name,
 					accepted,
 				} as NameValidation);
+				sendUpdate();
 				break;
 			case ClientType.Message:
 				for(const player of Object.values(playerData)) {

@@ -35,6 +35,9 @@ const Game: Component<Props> = props => {
 		case ServerType.Message:
 			addMessage(d);
 			break;
+		case ServerType.Update:
+			d
+			break;
 		}
 	});
 	return <>
