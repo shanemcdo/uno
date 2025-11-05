@@ -8,6 +8,7 @@ import { ServerType, ClientType, State } from './types';
 import Messages from './Messages';
 import StringInput from './StringInput';
 import Hand from './Hand';
+import CardComponent from './CardComponent';
 
 type Props = {
 	conn: DataConnection,
@@ -84,6 +85,10 @@ const Game: Component<Props> = props => {
 				href={url()}
 				target="_blank"
 			>Sharable Link</a>
+			<Show when={topCard() !== null}>
+				TopCard:
+				<CardComponent card={topCard()!} />
+			</Show>
 			<Messages messages={messages()} />
 			<Hand hand={hand()} />
 		</Show>
