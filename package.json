@@ -16,7 +16,7 @@
     "vite-plugin-solid": "^2.8.2"
   },
   "dependencies": {
-    "peerjs": "^1.5.4",
+    "peerjs": "^1.5.5",
     "solid-js": "^1.8.11"
   }
 }
