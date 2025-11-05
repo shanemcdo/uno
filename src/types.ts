@@ -5,6 +5,11 @@ export type Message = {
 	message: string,
 };
 
+export type OtherPlayerData = {
+	name: string,
+	cardCount: number,
+};
+
 export enum State {
 	Waiting,
 	Playing,
@@ -37,10 +42,7 @@ export type GameUpdate = {
 	yourHand: Card[],
 	isAdmin: boolean,
 	topCard: Card,
-	otherPlayers: {
-		name: string,
-		cardCount: number,
-	}[],
+	otherPlayers: OtherPlayerData[],
 };
 
 export type ServerData = NameValidation | MessageBroadcast | GameUpdate;

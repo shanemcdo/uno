@@ -1,9 +1,10 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
-import type { Message, MessageRequest, NameRequest, ServerData } from './types';
+import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData } from './types';
+import type { Card } from './deck';
 
 import { Show, createSignal } from 'solid-js';
-import { ServerType, ClientType } from './types';
+import { ServerType, ClientType, State } from './types';
 import Messages from './Messages';
 import StringInput from './StringInput';
 
@@ -23,6 +24,12 @@ const Game: Component<Props> = props => {
 	const addMessage = (message: Message) => {
 		setMessages([...messages(), message]);
 	}
+	const [state, setState] = createSignal(State.Waiting);
+	const [yourTurn, setYourTurn] = createSignal(false);
+	const [hand, setHand] = createSignal<Card[]>([]);
+	const [isAdmin, setIsAdmin] = createSignal(false);
+	const [topCard, setTopCard] = createSignal<Card | null>(null);
+	const [otherPlayers, setOtherPlayers] = createSignal<OtherPlayerData[]>([]);
 	window.addEventListener('beforeunload', () => {
 		props.conn.close();
 	});
@@ -36,7 +43,11 @@ const Game: Component<Props> = props => {
 			addMessage(d);
 			break;
 		case ServerType.Update:
-			d
+			setState(d.state);
+			setYourTurn(d.yourTurn);
+			setHand(d.yourHand);
+			setIsAdmin(d.isAdmin);
+			setTopCard(d.topCard);
 			break;
 		}
 	});
