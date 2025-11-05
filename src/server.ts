@@ -1,6 +1,7 @@
 import type { DataConnection } from 'peerjs';
 import type{ ClientData, MessageBroadcast, NameValidation } from './types';
 
+import { ServerType, ClientType } from './types';
 import { Peer } from 'peerjs';
 
 type PlayerData = {
@@ -30,7 +31,7 @@ export function createServer(callback: (id: string) => void): Peer {
 			console.log(data);
 			const d = data as ClientData;
 			switch(d.type) {
-			case 'name':
+			case ClientType.Name:
 				const accepted = !nameExists(d.name);
 				if(accepted) {
 					playerData[conn.peer] = {
@@ -39,15 +40,15 @@ export function createServer(callback: (id: string) => void): Peer {
 					};
 				}
 				conn.send({
-					type: 'name',
+					type: ServerType.Name,
 					name: d.name,
 					accepted,
 				} as NameValidation);
 				break;
-			case 'message':
+			case ClientType.Message:
 				for(const player of Object.values(playerData)) {
 					player.conn.send({
-						type: 'message',
+						type: ServerType.Message,
 						message: d.message,
 						name: playerData[conn.peer].name,
 					} as MessageBroadcast);

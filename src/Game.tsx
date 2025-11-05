@@ -3,6 +3,7 @@ import type { DataConnection } from 'peerjs'
 import type { Message, MessageRequest, NameRequest, ServerData } from './types';
 
 import { Show, createSignal } from 'solid-js';
+import { ServerType, ClientType } from './types';
 import Messages from './Messages';
 import StringInput from './StringInput';
 
@@ -28,10 +29,10 @@ const Game: Component<Props> = props => {
 	props.conn.on('data', data => {
 		const d = data as ServerData;
 		switch(d.type) {
-		case 'name':
+		case ServerType.Name:
 			if(d.accepted) setName(d.name);
 			break;
-		case 'message':
+		case ServerType.Message:
 			addMessage(d);
 			break;
 		}
@@ -44,7 +45,7 @@ const Game: Component<Props> = props => {
 				<StringInput
 					placeholder="Enter Name"
 					callback={ name => {
-						props.conn.send({ type: 'name', name } as NameRequest);
+						props.conn.send({ type: ClientType.Name, name } as NameRequest);
 					}}
 				/>
 			}
@@ -54,7 +55,7 @@ const Game: Component<Props> = props => {
 				placeholder="Enter Message"
 				clearOnSend={true}
 				callback={ message => {
-					props.conn.send({ type: 'message', message } as MessageRequest);
+					props.conn.send({ type: ClientType.Message, message } as MessageRequest);
 				}}
 			/>
 			<input
