@@ -3,6 +3,7 @@ import type{ ClientData, MessageBroadcast, NameValidation } from './types';
 
 import { ServerType, ClientType } from './types';
 import { Peer } from 'peerjs';
+import { deck } from './deck';
 
 type PlayerData = {
 	conn: DataConnection
