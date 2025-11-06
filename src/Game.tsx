@@ -7,7 +7,6 @@ import { For, Show, createSignal } from 'solid-js';
 import { ServerType, ClientType, State } from './types';
 import Messages from './Messages';
 import StringInput from './StringInput';
-import Hand from './Hand';
 import CardComponent from './CardComponent';
 
 type Props = {
