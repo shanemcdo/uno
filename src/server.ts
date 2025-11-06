@@ -107,6 +107,9 @@ export function createServer(callback: (id: string) => void): Peer {
 					} as MessageBroadcast);
 				}
 				break;
+			case ClientType.PlayCard:
+				// TODO handle playing card
+				break;
 			}
 		})
 		conn.on('close', () => {

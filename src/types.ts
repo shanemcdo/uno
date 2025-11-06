@@ -51,6 +51,7 @@ export type ServerData = NameValidation | MessageBroadcast | GameUpdate;
 export enum ClientType {
 	Name,
 	Message,
+	PlayCard,
 };
 
 export type NameRequest = {
@@ -63,4 +64,9 @@ export type MessageRequest = {
 	message: string,
 };
 
-export type ClientData = NameRequest | MessageRequest;
+export type PlayCard = {
+	type: ClientType.PlayCard,
+	index: number,
+};
+
+export type ClientData = NameRequest | MessageRequest| PlayCard;

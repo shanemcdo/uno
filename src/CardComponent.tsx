@@ -2,15 +2,17 @@ import type { Component } from 'solid-js';
 import type { ActionCard, Card, NumberCard, WildCard } from './deck';
 
 import { CardType } from './deck';
-import { Switch, Match } from 'solid-js';
+import { Switch, Match, mergeProps } from 'solid-js';
 
 
 type Props = {
 	card: Card
+	onclick?: () => void,
 }
 
-const CardComponent: Component<Props> = props => {
-	return <p>
+const CardComponent: Component<Props> = p => {
+	const props = mergeProps({ onclick: () => {} }, p);
+	return <p onclick={props.onclick}>
 		<Switch>
 			<Match when={props.card.type === CardType.Number}>
 				Number: {(props.card as NumberCard).color} {(props.card as NumberCard).number}

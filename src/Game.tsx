@@ -1,9 +1,9 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
-import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData } from './types';
+import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard } from './types';
 import type { Card } from './deck';
 
-import { Show, createSignal } from 'solid-js';
+import { For, Show, createSignal } from 'solid-js';
 import { ServerType, ClientType, State } from './types';
 import Messages from './Messages';
 import StringInput from './StringInput';
@@ -90,7 +90,14 @@ const Game: Component<Props> = props => {
 				<CardComponent card={topCard()!} />
 			</Show>
 			<Messages messages={messages()} />
-			<Hand hand={hand()} />
+			<For each={hand()}>{ (card, index) => 
+				<CardComponent card={card} onclick={() => {
+					props.conn.send({
+						type: ClientType.PlayCard,
+						index: index(),
+					} as PlayCard);
+				}}/>
+			}</For>
 		</Show>
 	</>;
 };
