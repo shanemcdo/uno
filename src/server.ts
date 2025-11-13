@@ -17,6 +17,7 @@ type PlayerData = {
 const STARTING_HAND_SIZE = 7;
 
 const playerData: Record<string, PlayerData> = {};
+let turn: string | null = null;
 let currentDeck: Card[] = shuffle(deepClone(deck));
 let topCard = drawNonWildCard();
 
@@ -66,7 +67,7 @@ function sendUpdate() {
 		player.conn.send({
 			type: ServerType.Update,
 			state: State.Waiting,
-			yourTurn: false, // TODO
+			yourTurn: turn === id,
 			yourHand: player.hand,
 			isAdmin: false, // TODO
 			topCard,
