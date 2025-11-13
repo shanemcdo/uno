@@ -1,5 +1,5 @@
 import type { DataConnection } from 'peerjs';
-import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard } from './types';
+import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard, OtherPlayerData } from './types';
 import type { Card, PlayedCard } from './deck';
 
 import { ServerType, ClientType, State } from './types';
@@ -72,7 +72,12 @@ function sendUpdate() {
 			yourHand: player.hand,
 			isAdmin: player.isAdmin,
 			topCard,
-			otherPlayers: [], // TODO
+			otherPlayers: Object.entries(playerData)
+				.filter(([ other_id, _ ]) => id !== other_id )
+				.map(([ _, other ]) => ({
+					name: other.name,
+					cardCount: other.hand.length,
+				} as OtherPlayerData))
 		} as GameUpdate);
 	});
 }
