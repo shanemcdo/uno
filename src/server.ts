@@ -97,6 +97,7 @@ function handlePlayCard(player: PlayerData, event: PlayCard) {
 			...card,
 		};
 	}
+	sendUpdate();
 
 }
 
