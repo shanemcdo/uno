@@ -1,10 +1,10 @@
 import type { DataConnection } from 'peerjs';
 import type { ClientData, MessageBroadcast, NameValidation, GameUpdate } from './types';
-import type { Card } from './deck';
+import type { Card, PlayedCard } from './deck';
 
 import { ServerType, ClientType, State } from './types';
 import { Peer } from 'peerjs';
-import { deck } from './deck';
+import { CardType, deck } from './deck';
 import deepClone from './deepClone';
 import rand from './rand';
 
@@ -18,7 +18,7 @@ const STARTING_HAND_SIZE = 7;
 
 const playerData: Record<string, PlayerData> = {};
 let currentDeck: Card[] = shuffle(deepClone(deck));
-let topCard = drawCard();
+let topCard = drawNonWildCard();
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 function shuffle<T>(arr: T[]): T[] {
@@ -28,6 +28,14 @@ function shuffle<T>(arr: T[]): T[] {
 		[ arr[i], arr[j] ] = [ arr[j], arr[i] ];
 	}
 	return arr;
+}
+
+function drawNonWildCard(): PlayedCard {
+	const card = drawCard();
+	if(card.type !== CardType.Wild) {
+		return card;
+	}
+	return drawNonWildCard();
 }
 
 function drawCard(): Card {
