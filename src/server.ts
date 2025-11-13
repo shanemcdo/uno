@@ -12,6 +12,7 @@ type PlayerData = {
 	conn: DataConnection
 	name: string,
 	hand: Card[],
+	isAdmin: boolean,
 };
 
 const STARTING_HAND_SIZE = 7;
@@ -69,7 +70,7 @@ function sendUpdate() {
 			state: State.Waiting,
 			yourTurn: turn === id,
 			yourHand: player.hand,
-			isAdmin: false, // TODO
+			isAdmin: player.isAdmin,
 			topCard,
 			otherPlayers: [], // TODO
 		} as GameUpdate);
@@ -110,10 +111,12 @@ export function createServer(callback: (id: string) => void): Peer {
 			case ClientType.Name:
 				const accepted = !nameExists(d.name);
 				if(accepted) {
+					const isAdmin = Object.keys(playerData).length === 0;
 					playerData[conn.peer] = {
 						conn,
 						name: d.name,
 						hand: drawCards(7),
+						isAdmin,
 					};
 					console.log(playerData);
 					console.log(currentDeck);
