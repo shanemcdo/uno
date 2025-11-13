@@ -1,10 +1,10 @@
 import type { DataConnection } from 'peerjs';
-import type { ClientData, MessageBroadcast, NameValidation, GameUpdate } from './types';
+import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard } from './types';
 import type { Card, PlayedCard } from './deck';
 
 import { ServerType, ClientType, State } from './types';
 import { Peer } from 'peerjs';
-import { CardType, deck } from './deck';
+import { CardType, canPlayCard, deck } from './deck';
 import deepClone from './deepClone';
 import rand from './rand';
 
@@ -76,6 +76,24 @@ function sendUpdate() {
 	});
 }
 
+function handlePlayCard(player: PlayerData, event: PlayCard) {
+	const card = player.hand[event.index];
+	if(!canPlayCard(topCard, card)) {
+		console.error('User tried to play a card they are not allowed to');
+		return;
+	}
+	player.hand.splice(event.index, 1);
+	if(card.type !== CardType.Wild) {
+		topCard = card;
+	} else {
+		topCard = {
+			color: event.color!,
+			...card,
+		};
+	}
+
+}
+
 export function createServer(callback: (id: string) => void): Peer {
 	const peer = new Peer();
 	peer.on('open', callback);
@@ -117,7 +135,7 @@ export function createServer(callback: (id: string) => void): Peer {
 				}
 				break;
 			case ClientType.PlayCard:
-				// TODO handle playing card
+				handlePlayCard(playerData[conn.peer], d);
 				break;
 			}
 		})

@@ -1,4 +1,4 @@
-import type { Card } from "./deck";
+import type { Card, Color, PlayedCard } from "./deck";
 
 export type Message = {
 	name: string,
@@ -41,7 +41,7 @@ export type GameUpdate = {
 	yourTurn: boolean,
 	yourHand: Card[],
 	isAdmin: boolean,
-	topCard: Card,
+	topCard: PlayedCard,
 	otherPlayers: OtherPlayerData[],
 };
 
@@ -67,6 +67,7 @@ export type MessageRequest = {
 export type PlayCard = {
 	type: ClientType.PlayCard,
 	index: number,
+	color?: Color,
 };
 
 export type ClientData = NameRequest | MessageRequest| PlayCard;
