@@ -57,7 +57,12 @@ export type WildCard = {
 	wildType: WildType,
 };
 
+export type PlayedWildCard = {
+	color: Color,
+} & WildCard;
+
 export type Card = NumberCard | ActionCard | WildCard;
+export type PlayedCard = NumberCard | ActionCard | PlayedWildCard;
 
 export const deck = (() => {
 	// https://www.letsplayuno.com/news/guide/20181213/30092_732567.html
@@ -101,3 +106,25 @@ export const deck = (() => {
 	}
 	return Object.freeze(result);
 })();
+
+export function canPlayCard(top: PlayedCard, newCard: Card): boolean {
+	// Wild on anything
+	return newCard.type === CardType.Wild ||
+		(
+			// number on matching number/color
+			newCard.type === CardType.Number &&
+			top.type === CardType.Number &&
+			(newCard.number === top.number || newCard.color === top.color)
+		) ||
+		(
+			// action on matching action/color
+			newCard.type === CardType.Action &&
+			top.type === CardType.Action &&
+			(newCard.action === top.action || newCard.color === top.color)
+		) ||
+		(
+			// number/action on matching color from wild
+			top.type === CardType.Wild &&
+			top.color === newCard.color
+		);
+};
