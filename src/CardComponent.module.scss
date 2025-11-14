@@ -6,20 +6,5 @@
   width: 6rem;
   border: 2px solid black;
   border-radius: 1rem;
-
-  &[data-color="Red"] {
-    background: $red;
-  }
-
-  &[data-color="Yellow"] {
-    background: $yellow;
-  }
-
-  &[data-color="Green"] {
-    background: $green;
-  }
-
-  &[data-color="Blue"] {
-    background: $blue;
-  }
+  @include data-backgrounds;
 }

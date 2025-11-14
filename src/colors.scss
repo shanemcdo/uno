@@ -3,3 +3,21 @@ $red: hsl(0, 100%, 40%);
 $yellow: hsl(60, 100%, 40%);
 $green: hsl(120, 100%, 40%);
 $blue: hsl(230, 100%, 40%);
+
+@mixin data-backgrounds {
+  &[data-color="Red"] {
+    background: $red;
+  }
+
+  &[data-color="Yellow"] {
+    background: $yellow;
+  }
+
+  &[data-color="Green"] {
+    background: $green;
+  }
+
+  &[data-color="Blue"] {
+    background: $blue;
+  }
+}

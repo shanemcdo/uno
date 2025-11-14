@@ -1,9 +1,21 @@
+@import './colors.scss';
 
 .color_picker {
   position: absolute;
   top: 50%;
   left: 50%;
   margin: auto;
-  background: hsl(0, 0%, 60%, 0.8);
+  background: $grey;
   translate: -50% -50%;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.choice {
+  width: 2rem;
+  height: 2rem;
+  @include data-backgrounds;
 }
