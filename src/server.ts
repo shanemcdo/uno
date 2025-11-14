@@ -160,7 +160,6 @@ function handleDrawCard(player_id: string,  event: DrawCard) {
 		return;
 	}
 	const player = playerData[player_id];
-	player.hand.push(drawCard());
 	switch(drawInfo.type) {
 	case DrawType.None:
 		player.hand.push(drawCard());
