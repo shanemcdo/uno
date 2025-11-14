@@ -5,6 +5,7 @@ import type { Card } from './deck';
 
 import { For, Show, createSignal } from 'solid-js';
 import { ServerType, ClientType, State } from './types';
+import { CardType } from './deck';
 import Messages from './Messages';
 import StringInput from './StringInput';
 import CardComponent from './CardComponent';
@@ -91,10 +92,14 @@ const Game: Component<Props> = props => {
 			<Messages messages={messages()} />
 			<For each={hand()}>{ (card, index) => 
 				<CardComponent card={card} onclick={() => {
-					props.conn.send({
-						type: ClientType.PlayCard,
-						index: index(),
-					} as PlayCard);
+					if(card.type === CardType.Wild) {
+						// TODO:
+					} else {
+						props.conn.send({
+							type: ClientType.PlayCard,
+							index: index(),
+						} as PlayCard);
+					}
 				}}/>
 			}</For>
 		</Show>
