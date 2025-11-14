@@ -15,6 +15,11 @@ type PlayerData = {
 	isAdmin: boolean,
 };
 
+enum Direction {
+	Forward,
+	Backward,
+};
+
 const STARTING_HAND_SIZE = 7;
 
 const playerData: Record<string, PlayerData> = {};
@@ -22,6 +27,7 @@ const turns: string[] = [];
 let turn: string | null = null;
 let currentDeck: Card[] = shuffle(deepClone(deck));
 let topCard = drawNonWildCard();
+let direction = Direction.Forward;
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 function shuffle<T>(arr: T[]): T[] {
@@ -123,8 +129,15 @@ function handleDrawCard(player_id: string,  event: DrawCard) {
 function getNextTurn(): void {
 	if(turn === null) throw Error('Turn is null when it shouldn\'t be');
 	let index = turns.indexOf(turn)
-	index += 1;
-	index %= turns.length;
+	if(direction === Direction.Forward) { 
+		index += 1;
+		index %= turns.length;
+	} else {
+		index -= 1;
+		if(index < 0) {
+			index += turns.length;
+		}
+	}
 	turn = turns[index];
 }
 
