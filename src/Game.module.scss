@@ -32,7 +32,7 @@
       z-index: 3;
     }
 
-    @for $i from 1 through 50 {
+    @for $i from 1 through 100 {
       &:nth-child(#{$i}) {
         --scalar: calc((#{$i} - var(--card-count) / 2) - 0.5);
         --rotation: calc(var(--scalar) * var(--rotation-interval));
