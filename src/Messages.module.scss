@@ -1,0 +1,24 @@
+$top: 10vh;
+
+
+.toggle {
+  position: absolute;
+  background: #ddd;
+  top: $top;
+  left: 0;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.messages {
+  position: absolute;
+  height: 80vh;
+  width: 20vw;
+  top: $top;
+  left: 0;
+  background: #333;
+  translate: -100% 0;
+  transition: translate 0.3s ease-in;
+  &.active {
+    translate: none;
+  }
+}
