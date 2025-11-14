@@ -20,5 +20,22 @@
     height: $size;
     cursor: pointer;
     @include data-backgrounds;
+
+    &:first-child {
+      border-radius: 100% 0 0 0;
+    }
+
+    &:nth-child(2) {
+      border-radius: 0 100% 0 0;
+    }
+
+    &:nth-child(3) {
+      border-radius: 0 0 0 100%;
+    }
+
+    &:nth-child(4) {
+      border-radius: 0 0 100% 0;
+    }
   }
+
 }
