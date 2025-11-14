@@ -122,8 +122,8 @@ function handleDrawCard(player_id: string,  event: DrawCard) {
 	}
 	const player = playerData[player_id];
 	player.hand.push(drawCard());
-	sendUpdate();
 	getNextTurn();
+	sendUpdate();
 }
 
 function getNextTurn(): void {
