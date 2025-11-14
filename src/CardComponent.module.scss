@@ -8,3 +8,7 @@
   border-radius: 1rem;
   @include colors.data-backgrounds;
 }
+
+.clickable {
+  cursor: pointer;
+}

@@ -12,9 +12,11 @@ type Props = {
 	onclick?: () => void,
 }
 
-const CardComponent: Component<Props> = p => {
-	const props = mergeProps({ onclick: () => {} }, p);
-	return <div class={styles.card} onclick={props.onclick} data-color={props.card.color} >
+const CardComponent: Component<Props> = props => {
+	return <div classList={{
+		[styles.card]: true,
+		[styles.clickable]: props.onclick !== undefined,
+	}} onclick={props.onclick} data-color={props.card.color} >
 		<Switch>
 			<Match when={props.card.type === CardType.Number}>
 				Number: {(props.card as NumberCard).color} {(props.card as NumberCard).number} 
