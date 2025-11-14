@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
 import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard } from './types';
-import type { Card } from './deck';
+import type { Card, Color } from './deck';
 
 import { For, Show, createSignal } from 'solid-js';
 import { ServerType, ClientType, State } from './types';
@@ -9,6 +9,7 @@ import { CardType } from './deck';
 import Messages from './Messages';
 import StringInput from './StringInput';
 import CardComponent from './CardComponent';
+import ColorPicker from './ColorPicker';
 
 type Props = {
 	conn: DataConnection,
@@ -32,6 +33,7 @@ const Game: Component<Props> = props => {
 	const [isAdmin, setIsAdmin] = createSignal(false);
 	const [topCard, setTopCard] = createSignal<Card | null>(null);
 	const [otherPlayers, setOtherPlayers] = createSignal<OtherPlayerData[]>([]);
+	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
 	window.addEventListener('beforeunload', () => {
 		props.conn.close();
 	});
@@ -93,7 +95,14 @@ const Game: Component<Props> = props => {
 			<For each={hand()}>{ (card, index) => 
 				<CardComponent card={card} onclick={() => {
 					if(card.type === CardType.Wild) {
-						// TODO:
+						setColorPickerCallback(() => (color: Color) => {
+							props.conn.send({
+								type: ClientType.PlayCard,
+								index: index(),
+								color,
+							} as PlayCard);
+							setColorPickerCallback(null);
+						});
 					} else {
 						props.conn.send({
 							type: ClientType.PlayCard,
@@ -102,6 +111,9 @@ const Game: Component<Props> = props => {
 					}
 				}}/>
 			}</For>
+			<Show when={colorPickerCallback()}>
+				<ColorPicker callback={colorPickerCallback()!} />
+			</Show>
 		</Show>
 	</>;
 };
