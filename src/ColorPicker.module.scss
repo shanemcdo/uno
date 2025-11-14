@@ -11,12 +11,14 @@
 
 .choices {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
+  $size: 2rem;
+  grid-template-columns: repeat(2, $size);
+  justify-content: center;
 
-.choice {
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  @include data-backgrounds;
+  .choice {
+    width: $size;
+    height: $size;
+    cursor: pointer;
+    @include data-backgrounds;
+  }
 }
