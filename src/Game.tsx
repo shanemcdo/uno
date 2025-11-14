@@ -130,7 +130,7 @@ const Game: Component<Props> = props => {
 				}}
 			>Draw Card</button>
 			<Show when={colorPickerCallback()}>
-				<ColorPicker callback={colorPickerCallback()!} />
+				<ColorPicker callback={colorPickerCallback()!} cancelCallback={() => setColorPickerCallback(null)} />
 			</Show>
 			<Messages
 				sendMessage={ message => {

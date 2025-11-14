@@ -4,11 +4,15 @@ import { Color } from './deck';
 import styles from './ColorPicker.module.scss'
 
 
+type Callback = (color: Color) => void;
+
 type Props = {
-	callback: (color: Color) => void,
+	callback: Callback,
+	cancelCallback: () => void,
 };
 
-type ChoiceProps = Props & {
+type ChoiceProps = {
+	callback: Callback,
 	color: Color,
 };
 
@@ -17,6 +21,12 @@ const Choice: Component<ChoiceProps> = props =>
 
 const ColorPicker: Component<Props> = props => {
 	return <div class={styles.color_picker}>
+		<div class={styles.cancel_container}>
+			<span
+				class={styles.cancel}
+				onclick={props.cancelCallback}
+			>X</span>
+		</div>
 		<h2>Wild Color Picker:</h2>
 		<div class={styles.choices}>
 			<Choice callback={props.callback} color={Color.Red} />
