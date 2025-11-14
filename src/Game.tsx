@@ -89,8 +89,10 @@ const Game: Component<Props> = props => {
 				messages={messages()}
 			/>
 			<Show when={topCard() !== null}>
-				TopCard:
-				<CardComponent card={topCard()!} />
+				<div class={styles.top_card}>
+					TopCard:
+					<CardComponent card={topCard()!} />
+				</div>
 			</Show>
 			<div class={styles.hand} data-card-count={hand().length}>
 				<For each={hand()}>{ (card, index) =>
