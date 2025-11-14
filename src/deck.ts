@@ -1,3 +1,5 @@
+import { DrawInfo, DrawType } from "./types";
+
 export enum Color {
 	Red = 'Red',
 	Yellow = 'Yellow',
@@ -107,21 +109,33 @@ export const deck = (() => {
 	return Object.freeze(result);
 })();
 
-export function canPlayCard(top: PlayedCard, newCard: Card): boolean {
-	// Wild on anything
-	return newCard.type === CardType.Wild ||
+export function canPlayCard(top: PlayedCard, newCard: Card, drawInfo: DrawInfo): boolean {
+	return (
+		drawInfo.type == DrawType.None || (
+			newCard.type === CardType.Action &&
+			newCard.action === ActionType.Draw2 &&
+			drawInfo.type === DrawType.Plus2
+		) || (
+			newCard.type === CardType.Wild &&
+			newCard.wildType === WildType.WildDraw4 && (
+				drawInfo.type === DrawType.Plus2 ||
+				drawInfo.type === DrawType.Plus4
+			)
+		)
+	) && (
+		// Wild on anything
+		newCard.type === CardType.Wild ||
 		// colors match
-		top.color === newCard.color ||
-		(
+		top.color === newCard.color || (
 			// numbers match
 			newCard.type === CardType.Number &&
 			top.type === CardType.Number &&
 			newCard.number === top.number 
-		) ||
-		(
+		) || (
 			// actions match
 			newCard.type === CardType.Action &&
 			top.type === CardType.Action &&
 			newCard.action === top.action
-		);
+		)
+	);
 };

@@ -16,6 +16,19 @@ export enum State {
 	GameOver,
 };
 
+export enum DrawType {
+	None,
+	Plus2,
+	Plus4,
+};
+
+export type DrawInfo = {
+	type: DrawType.None,
+} | {
+	type: DrawType.Plus2 | DrawType.Plus4,
+	count: number,
+};
+
 // sent by server side
 export enum ServerType {
 	Name,
@@ -45,6 +58,7 @@ export type GameUpdate = {
 	topCard: PlayedCard,
 	turnPlayerName: string,
 	otherPlayers: OtherPlayerData[],
+	drawInfo: DrawInfo,
 };
 
 export type ServerData = NameValidation | MessageBroadcast | GameUpdate;
