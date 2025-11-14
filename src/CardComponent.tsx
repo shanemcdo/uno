@@ -4,6 +4,8 @@ import type { ActionCard, Card, NumberCard, PlayedCard, PlayedWildCard } from '.
 import { CardType } from './deck';
 import { Switch, Match, mergeProps, Show } from 'solid-js';
 
+import styles from './CardComponent.module.scss'
+
 
 type Props = {
 	card: Partial<PlayedCard> & Card
@@ -12,7 +14,7 @@ type Props = {
 
 const CardComponent: Component<Props> = p => {
 	const props = mergeProps({ onclick: () => {} }, p);
-	return <p onclick={props.onclick}>
+	return <div class={styles.card} onclick={props.onclick} data-color={props.card.color} >
 		<Switch>
 			<Match when={props.card.type === CardType.Number}>
 				Number: {(props.card as NumberCard).color} {(props.card as NumberCard).number} 
@@ -29,7 +31,7 @@ const CardComponent: Component<Props> = p => {
 				{(props.card as PlayedWildCard).wildType}
 			</Match>
 		</Switch>
-	</p>
+	</div>
 	
 };
 

@@ -1,8 +1,8 @@
 export enum Color {
-	Red,
-	Yellow,
-	Blue,
-	Green,
+	Red = 'Red',
+	Yellow = 'Yellow',
+	Blue = 'Blue',
+	Green = 'Green',
 }
 
 const colors = Object.freeze([
@@ -13,15 +13,15 @@ const colors = Object.freeze([
 ]);
 
 export enum CardType {
-	Number,
-	Action,
-	Wild,
+	Number = 'Number',
+	Action = 'Action',
+	Wild = 'Wild',
 }
 
 export enum ActionType {
-	Draw2,
-	Reverse,
-	Skip,
+	Draw2 = 'Draw2',
+	Reverse = 'Reverse',
+	Skip = 'Skip',
 }
 
 const actionTypes = Object.freeze([
@@ -31,8 +31,8 @@ const actionTypes = Object.freeze([
 ]);
 
 export enum WildType {
-	Wild,
-	WildDraw4,
+	Wild = 'Wild',
+	WildDraw4 = 'WildDraw4',
 };
 
 const wildTypes = Object.freeze([
