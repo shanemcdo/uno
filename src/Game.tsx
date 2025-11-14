@@ -95,23 +95,27 @@ const Game: Component<Props> = props => {
 			</Show>
 			<div class={styles.hand} data-card-count={hand().length}>
 				<For each={hand()}>{ (card, index) =>
-					<CardComponent card={card} onclick={() => {
-						if(card.type === CardType.Wild) {
-							setColorPickerCallback(() => (color: Color) => {
+					<CardComponent
+						card={card}
+						disabled={!yourTurn()}
+						onclick={() => {
+							if(card.type === CardType.Wild) {
+								setColorPickerCallback(() => (color: Color) => {
+									props.conn.send({
+										type: ClientType.PlayCard,
+										index: index(),
+										color,
+									} as PlayCard);
+									setColorPickerCallback(null);
+								});
+							} else {
 								props.conn.send({
 									type: ClientType.PlayCard,
 									index: index(),
-									color,
 								} as PlayCard);
-								setColorPickerCallback(null);
-							});
-						} else {
-							props.conn.send({
-								type: ClientType.PlayCard,
-								index: index(),
-							} as PlayCard);
+							}
 						}
-					}}/>
+					}/>
 				}</For>
 			</div>
 			<Show when={colorPickerCallback()}>

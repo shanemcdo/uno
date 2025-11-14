@@ -10,12 +10,15 @@ import styles from './CardComponent.module.scss'
 type Props = {
 	card: Partial<PlayedCard> & Card
 	onclick?: () => void,
+	disabled?: boolean,
 }
 
-const CardComponent: Component<Props> = props => {
+const CardComponent: Component<Props> = p => {
+	const props = mergeProps({ disabled: false }, p);
 	return <div classList={{
 		[styles.card]: true,
-		[styles.clickable]: props.onclick !== undefined,
+		[styles.clickable]: props.onclick !== undefined && !props.disabled,
+		[styles.disabled]: props.disabled,
 	}} onclick={props.onclick} data-color={props.card.color} >
 		<Switch>
 			<Match when={props.card.type === CardType.Number}>

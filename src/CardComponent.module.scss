@@ -12,3 +12,7 @@
 .clickable {
   cursor: pointer;
 }
+
+.disabled {
+  filter: brightness(30%);
+}
