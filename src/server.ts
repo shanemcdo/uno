@@ -82,7 +82,12 @@ function sendUpdate() {
 	});
 }
 
-function handlePlayCard(player: PlayerData, event: PlayCard) {
+function handlePlayCard(player_id: string,  event: PlayCard) {
+	if(turn !== player_id) {
+		console.error('User tried to play a card out of turn');
+		return;
+	}
+	const player = playerData[player_id]
 	const card = player.hand[event.index];
 	if(!canPlayCard(topCard, card)) {
 		console.error('User tried to play a card they are not allowed to');
@@ -144,7 +149,7 @@ export function createServer(callback: (id: string) => void): Peer {
 				}
 				break;
 			case ClientType.PlayCard:
-				handlePlayCard(playerData[conn.peer], d);
+				handlePlayCard(conn.peer, d);
 				break;
 			}
 		})
