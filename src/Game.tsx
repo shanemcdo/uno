@@ -80,16 +80,16 @@ const Game: Component<Props> = props => {
 				href={url()}
 				target="_blank"
 			>Sharable Link</a>
-			<Show when={topCard() !== null}>
-				TopCard:
-				<CardComponent card={topCard()!} />
-			</Show>
 			<Messages
 				sendMessage={ message => {
 					props.conn.send({ type: ClientType.Message, message } as MessageRequest);
 				}}
 				messages={messages()}
 			/>
+			<Show when={topCard() !== null}>
+				TopCard:
+				<CardComponent card={topCard()!} />
+			</Show>
 			<For each={hand()}>{ (card, index) => 
 				<CardComponent card={card} onclick={() => {
 					if(card.type === CardType.Wild) {
