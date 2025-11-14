@@ -14,15 +14,17 @@ type Props = {
 const Messages: Component<Props> = props => {
 	const [active, setActive] = createSignal(false);
 	const toggleActive = () => setActive(prev => !prev);
-	const messagesClasses = () => `${styles.messages} ${active() ? styles.active: ''}`;
+	const messagesClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
 	return <>
 	<div class={messagesClasses()}>
 		<button
 			onclick={toggleActive}
 		>X</button>
-		<For each={props.messages} >{item =>
-			<p>{item.name}: {item.message}</p>
-		}</For>
+		<div class={styles.messages}>
+			<For each={props.messages} >{item =>
+				<p>{item.name}: {item.message}</p>
+			}</For>
+		</div>
 		<StringInput
 			placeholder="Enter Message"
 			clearOnSend={true}

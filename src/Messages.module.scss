@@ -9,8 +9,11 @@ $top: 10vh;
   padding: 0.5rem;
   cursor: pointer;
 }
-.messages {
+
+.container {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   height: 80vh;
   width: 20vw;
   top: $top;
@@ -18,7 +21,13 @@ $top: 10vh;
   background: #333;
   translate: -100% 0;
   transition: translate 0.3s ease-in;
+
   &.active {
     translate: none;
+  }
+
+  .messages {
+    flex-grow: 100;
+    overflow-y: scroll;
   }
 }
