@@ -183,7 +183,7 @@ function getNextTurn(skip: boolean = false): void {
 		index %= turns.length;
 	} else {
 		index -= x;
-		if(index < 0) {
+		while(index < 0) {
 			index += turns.length;
 		}
 	}
