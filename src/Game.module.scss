@@ -14,6 +14,8 @@
   --card-count: attr(data-card-count type(<number>));
   --card-area: clamp(0px, calc(5rem * var(--card-count)), 80vw);
   --spacing: calc(var(--card-area) / var(--card-count));
+  --max-rotation: 45deg;
+  --rotation-interval: calc(var(--max-rotation) * 2 / var(--card-count));
   --scale: 1;
   --translateY: 0px;
 
@@ -33,10 +35,10 @@
     @for $i from 1 through 50 {
       &:nth-child(#{$i}) {
         --scalar: calc((#{$i} - var(--card-count) / 2) - 0.5);
-        --rotation: calc(var(--scalar) * 5deg);
+        --rotation: calc(var(--scalar) * var(--rotation-interval));
         transform:
           translateX(calc(var(--scalar) * var(--spacing)))
-          translateY(calc(var(--translateY) + cos(var(--rotation) * 5) * var(--spacing) / -2 ))
+          translateY(calc(var(--translateY) + cos(var(--rotation) * 2) * var(--spacing) * -0.8 ))
           rotate(var(--rotation))
           scale(var(--scale));
       }
