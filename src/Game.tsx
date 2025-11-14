@@ -11,6 +11,8 @@ import StringInput from './StringInput';
 import CardComponent from './CardComponent';
 import ColorPicker from './ColorPicker';
 
+import styles from './Game.module.scss'
+
 type Props = {
 	conn: DataConnection,
 };
@@ -90,25 +92,27 @@ const Game: Component<Props> = props => {
 				TopCard:
 				<CardComponent card={topCard()!} />
 			</Show>
-			<For each={hand()}>{ (card, index) => 
-				<CardComponent card={card} onclick={() => {
-					if(card.type === CardType.Wild) {
-						setColorPickerCallback(() => (color: Color) => {
+			<div class={styles.hand}>
+				<For each={hand()}>{ (card, index) =>
+					<CardComponent card={card} onclick={() => {
+						if(card.type === CardType.Wild) {
+							setColorPickerCallback(() => (color: Color) => {
+								props.conn.send({
+									type: ClientType.PlayCard,
+									index: index(),
+									color,
+								} as PlayCard);
+								setColorPickerCallback(null);
+							});
+						} else {
 							props.conn.send({
 								type: ClientType.PlayCard,
 								index: index(),
-								color,
 							} as PlayCard);
-							setColorPickerCallback(null);
-						});
-					} else {
-						props.conn.send({
-							type: ClientType.PlayCard,
-							index: index(),
-						} as PlayCard);
-					}
-				}}/>
-			}</For>
+						}
+					}}/>
+				}</For>
+			</div>
 			<Show when={colorPickerCallback()}>
 				<ColorPicker callback={colorPickerCallback()!} />
 			</Show>

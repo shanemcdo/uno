@@ -1,0 +1,14 @@
+.hand {
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 0;
+  left: 50vw;
+
+  & > div {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    translate: -50% 0;
+  }
+}
