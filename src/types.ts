@@ -42,6 +42,7 @@ export type GameUpdate = {
 	yourHand: Card[],
 	isAdmin: boolean,
 	topCard: PlayedCard,
+	turnPlayerName: string,
 	otherPlayers: OtherPlayerData[],
 };
 

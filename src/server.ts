@@ -73,6 +73,7 @@ function sendUpdate() {
 			yourHand: player.hand,
 			isAdmin: player.isAdmin,
 			topCard,
+			turnPlayerName: playerData[turn!].name,
 			otherPlayers: Object.entries(playerData)
 				.filter(([ other_id, _ ]) => id !== other_id )
 				.map(([ _, other ]) => ({

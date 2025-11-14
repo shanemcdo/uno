@@ -34,8 +34,10 @@ const Game: Component<Props> = props => {
 	const [hand, setHand] = createSignal<Card[]>([]);
 	const [isAdmin, setIsAdmin] = createSignal(false);
 	const [topCard, setTopCard] = createSignal<PlayedCard | null>(null);
+	const [turnPlayerName, setTurnPlayerName] = createSignal('');
 	const [otherPlayers, setOtherPlayers] = createSignal<OtherPlayerData[]>([]);
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
+	const turnLabel = () => yourTurn() ? 'Your Turn' : `${turnPlayerName()}'s turn`;
 	window.addEventListener('beforeunload', () => {
 		props.conn.close();
 	});
@@ -54,6 +56,8 @@ const Game: Component<Props> = props => {
 			setHand(d.yourHand);
 			setIsAdmin(d.isAdmin);
 			setTopCard(d.topCard);
+			setTurnPlayerName(d.turnPlayerName);
+			setOtherPlayers(d.otherPlayers);
 			break;
 		}
 	});
@@ -84,6 +88,7 @@ const Game: Component<Props> = props => {
 			>Sharable Link</a>
 			<Show when={topCard() !== null}>
 				<div class={styles.top_card}>
+					<h2>{turnLabel()}</h2>
 					TopCard:
 					<CardComponent card={topCard()!} />
 				</div>
