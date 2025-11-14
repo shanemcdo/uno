@@ -92,7 +92,7 @@ const Game: Component<Props> = props => {
 				TopCard:
 				<CardComponent card={topCard()!} />
 			</Show>
-			<div class={styles.hand}>
+			<div class={styles.hand} data-card-count={hand().length}>
 				<For each={hand()}>{ (card, index) =>
 					<CardComponent card={card} onclick={() => {
 						if(card.type === CardType.Wild) {

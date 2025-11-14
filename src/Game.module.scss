@@ -4,11 +4,19 @@
   height: 0;
   bottom: 0;
   left: 50vw;
+  --card-count: attr(data-card-count type(<number>));
+  --spacing: calc(70vw / var(--card-count));
 
   & > div {
     position: absolute;
     bottom: 0;
     left: 0;
     translate: -50% 0;
+  }
+
+  @for $i from 1 through 50 {
+    div:nth-child(#{$i}) {
+      transform: translateX( calc( ($i - var(--card-count) / 2) * var(--spacing) ) );
+    }
   }
 }
