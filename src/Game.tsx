@@ -82,12 +82,6 @@ const Game: Component<Props> = props => {
 				href={url()}
 				target="_blank"
 			>Sharable Link</a>
-			<Messages
-				sendMessage={ message => {
-					props.conn.send({ type: ClientType.Message, message } as MessageRequest);
-				}}
-				messages={messages()}
-			/>
 			<Show when={topCard() !== null}>
 				<div class={styles.top_card}>
 					TopCard:
@@ -118,6 +112,12 @@ const Game: Component<Props> = props => {
 			<Show when={colorPickerCallback()}>
 				<ColorPicker callback={colorPickerCallback()!} />
 			</Show>
+			<Messages
+				sendMessage={ message => {
+					props.conn.send({ type: ClientType.Message, message } as MessageRequest);
+				}}
+				messages={messages()}
+			/>
 		</Show>
 	</>;
 };
