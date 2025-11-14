@@ -32,7 +32,7 @@
 
     @for $i from 1 through 50 {
       &:nth-child(#{$i}) {
-        --scalar: calc(round(down, (#{$i} - var(--card-count) / 2)));
+        --scalar: calc((#{$i} - var(--card-count) / 2) - 0.5);
         --rotation: calc(var(--scalar) * 5deg);
         transform:
           translateX(calc(var(--scalar) * var(--spacing)))
