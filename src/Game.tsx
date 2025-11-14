@@ -69,13 +69,6 @@ const Game: Component<Props> = props => {
 			}
 			>
 			<h2>{name()}</h2>
-			<StringInput
-				placeholder="Enter Message"
-				clearOnSend={true}
-				callback={ message => {
-					props.conn.send({ type: ClientType.Message, message } as MessageRequest);
-				}}
-			/>
 			<input
 				type="button"
 				value="Close"
@@ -91,7 +84,12 @@ const Game: Component<Props> = props => {
 				TopCard:
 				<CardComponent card={topCard()!} />
 			</Show>
-			<Messages messages={messages()} />
+			<Messages
+				sendMessage={ message => {
+					props.conn.send({ type: ClientType.Message, message } as MessageRequest);
+				}}
+				messages={messages()}
+			/>
 			<For each={hand()}>{ (card, index) => 
 				<CardComponent card={card} onclick={() => {
 					if(card.type === CardType.Wild) {
