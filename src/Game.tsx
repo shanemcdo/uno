@@ -121,6 +121,7 @@ const Game: Component<Props> = props => {
 				}</For>
 			</div>
 			<button
+				class={styles.draw_button}
 				onclick={() => {
 					props.conn.send({ 
 						type: ClientType.DrawCard,
