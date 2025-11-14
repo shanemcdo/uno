@@ -1,11 +1,11 @@
-@import './colors.scss';
+@use './colors';
 
 .color_picker {
   position: absolute;
   top: 50%;
   left: 50%;
   margin: auto;
-  background: $grey;
+  background: colors.$grey;
   translate: -50% -50%;
   padding: 1rem;
   padding-top: 0;
@@ -24,7 +24,7 @@
     width: $size;
     height: $size;
     cursor: pointer;
-    @include data-backgrounds;
+    @include colors.data-backgrounds;
 
     &:first-child {
       border-radius: 100% 0 0 0;

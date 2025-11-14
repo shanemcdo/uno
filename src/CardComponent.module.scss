@@ -1,10 +1,10 @@
-@import './colors.scss';
+@use './colors';
 
 .card {
   aspect-ratio: 9/16;
-  background: $grey;
+  background: colors.$grey;
   width: 6rem;
   border: 2px solid black;
   border-radius: 1rem;
-  @include data-backgrounds;
+  @include colors.data-backgrounds;
 }
