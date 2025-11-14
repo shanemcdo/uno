@@ -123,6 +123,9 @@ export function createServer(callback: (id: string) => void): Peer {
 				const accepted = !nameExists(d.name);
 				if(accepted) {
 					const isAdmin = Object.keys(playerData).length === 0;
+					if(turn === null) {
+						turn = conn.peer;
+					}
 					playerData[conn.peer] = {
 						conn,
 						name: d.name,
