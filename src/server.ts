@@ -102,6 +102,7 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 			...card,
 		};
 	}
+	// TODO: switch to next players turn
 	sendUpdate();
 
 }
