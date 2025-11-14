@@ -12,7 +12,8 @@
   bottom: 0;
   left: 50vw;
   --card-count: attr(data-card-count type(<number>));
-  --spacing: calc(70vw / var(--card-count));
+  --card-area: clamp(10vw, calc(5vw * var(--card-count)), 70vw);
+  --spacing: calc(var(--card-area) / var(--card-count));
 
   & > div {
     position: absolute;
