@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
 import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard } from './types';
-import type { Card, Color } from './deck';
+import type { Card, Color, PlayedCard } from './deck';
 
 import { For, Show, createSignal } from 'solid-js';
 import { ServerType, ClientType, State } from './types';
@@ -31,7 +31,7 @@ const Game: Component<Props> = props => {
 	const [yourTurn, setYourTurn] = createSignal(false);
 	const [hand, setHand] = createSignal<Card[]>([]);
 	const [isAdmin, setIsAdmin] = createSignal(false);
-	const [topCard, setTopCard] = createSignal<Card | null>(null);
+	const [topCard, setTopCard] = createSignal<PlayedCard | null>(null);
 	const [otherPlayers, setOtherPlayers] = createSignal<OtherPlayerData[]>([]);
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
 	window.addEventListener('beforeunload', () => {
