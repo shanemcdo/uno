@@ -15,7 +15,7 @@
   --card-area: clamp(0px, calc(5rem * var(--card-count)), 80vw);
   --spacing: calc(var(--card-area) / var(--card-count));
   --scale: 1;
-  --translateY: 0;
+  --translateY: 0px;
 
   & > div {
     position: absolute;
@@ -32,11 +32,12 @@
 
     @for $i from 1 through 50 {
       &:nth-child(#{$i}) {
+        --rotation: calc((#{$i} - var(--card-count) / 2) * 5deg);
         transform:
           translateX(calc(($i - var(--card-count) / 2) * var(--spacing)))
-          translateY(var(--translateY))
+          translateY(calc(var(--translateY) + cos(var(--rotation) * 5) * var(--spacing) / -2 ))
+          rotate(var(--rotation))
           scale(var(--scale));
-
       }
     }
   }
