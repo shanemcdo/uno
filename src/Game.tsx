@@ -125,7 +125,6 @@ const Game: Component<Props> = props => {
 				onclick={() => {
 					props.conn.send({ 
 						type: ClientType.DrawCard,
-						count: 1,
 					} as DrawCard);
 				}}
 			>Draw Card</button>
