@@ -18,6 +18,7 @@ type PlayerData = {
 const STARTING_HAND_SIZE = 7;
 
 const playerData: Record<string, PlayerData> = {};
+const turns: string[] = [];
 let turn: string | null = null;
 let currentDeck: Card[] = shuffle(deepClone(deck));
 let topCard = drawNonWildCard();
@@ -102,9 +103,16 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 			...card,
 		};
 	}
-	// TODO: switch to next players turn
+	getNextTurn();
 	sendUpdate();
+}
 
+function getNextTurn(): void {
+	if(turn === null) throw Error('Turn is null when it shouldn\'t be');
+	let index = turns.indexOf(turn)
+	index += 1;
+	index %= turns.length;
+	turn = turns[index];
 }
 
 export function createServer(callback: (id: string) => void): Peer {
@@ -127,6 +135,7 @@ export function createServer(callback: (id: string) => void): Peer {
 					if(turn === null) {
 						turn = conn.peer;
 					}
+					turns.push(conn.peer);
 					playerData[conn.peer] = {
 						conn,
 						name: d.name,
