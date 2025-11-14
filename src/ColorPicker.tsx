@@ -17,7 +17,7 @@ const Choice: Component<ChoiceProps> = props =>
 
 const ColorPicker: Component<Props> = props => {
 	return <div class={styles.color_picker}>
-		<h2>Color Picker:</h2>
+		<h2>Wild Color Picker:</h2>
 		<div class={styles.choices}>
 			<Choice callback={props.callback} color={Color.Red} />
 			<Choice callback={props.callback} color={Color.Blue} />

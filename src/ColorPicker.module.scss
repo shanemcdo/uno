@@ -7,11 +7,16 @@
   margin: auto;
   background: $grey;
   translate: -50% -50%;
+  padding: 1rem;
+  padding-top: 0;
+  text-align: center;
+  border-radius: 2rem;
+  border: 1px solid black;
 }
 
 .choices {
   display: grid;
-  $size: 2rem;
+  $size: 3rem;
   grid-template-columns: repeat(2, $size);
   justify-content: center;
 
