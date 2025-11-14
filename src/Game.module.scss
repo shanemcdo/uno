@@ -26,17 +26,18 @@
 
     &:hover {
       --scale: 1.2;
-      --translateY: -20%
+      --translateY: -20%;
+      z-index: 3;
     }
-  }
 
-  @for $i from 1 through 50 {
-    div:nth-child(#{$i}) {
-      transform:
-        translateX(calc(($i - var(--card-count) / 2) * var(--spacing)))
-        translateY(var(--translateY))
-        scale(var(--scale));
+    @for $i from 1 through 50 {
+      &:nth-child(#{$i}) {
+        transform:
+          translateX(calc(($i - var(--card-count) / 2) * var(--spacing)))
+          translateY(var(--translateY))
+          scale(var(--scale));
 
+      }
     }
   }
 }
