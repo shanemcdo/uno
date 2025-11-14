@@ -1,0 +1,23 @@
+.card {
+  aspect-ratio: 9/16;
+  background: hsl(0, 0, 40%);
+  width: 6rem;
+  border: 2px solid black;
+  border-radius: 1rem;
+
+  &[data-color="Red"] {
+    background: hsl(0, 100%, 40%);
+  }
+
+  &[data-color="Yellow"] {
+    background: hsl(60, 100%, 40%);
+  }
+
+  &[data-color="Green"] {
+    background: hsl(120, 100%, 40%);
+  }
+
+  &[data-color="Blue"] {
+    background: hsl(230, 100%, 40%);
+  }
+}
