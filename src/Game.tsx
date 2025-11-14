@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
-import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard } from './types';
+import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard, DrawCard } from './types';
 import type { Card, Color, PlayedCard } from './deck';
 
 import { For, Show, createSignal } from 'solid-js';
@@ -32,6 +32,7 @@ const Game: Component<Props> = props => {
 	const [state, setState] = createSignal(State.Waiting);
 	const [yourTurn, setYourTurn] = createSignal(false);
 	const [hand, setHand] = createSignal<Card[]>([]);
+	const [playableHand, setPlayableHand] = createSignal<boolean[]>([]);
 	const [isAdmin, setIsAdmin] = createSignal(false);
 	const [topCard, setTopCard] = createSignal<PlayedCard | null>(null);
 	const [turnPlayerName, setTurnPlayerName] = createSignal('');
@@ -54,6 +55,7 @@ const Game: Component<Props> = props => {
 			setState(d.state);
 			setYourTurn(d.yourTurn);
 			setHand(d.yourHand);
+			setPlayableHand(d.playableHand);
 			setIsAdmin(d.isAdmin);
 			setTopCard(d.topCard);
 			setTurnPlayerName(d.turnPlayerName);
@@ -97,7 +99,7 @@ const Game: Component<Props> = props => {
 				<For each={hand()}>{ (card, index) =>
 					<CardComponent
 						card={card}
-						disabled={!yourTurn()}
+						disabled={!yourTurn() || !playableHand()[index()]}
 						onclick={() => {
 							if(card.type === CardType.Wild) {
 								setColorPickerCallback(() => (color: Color) => {
@@ -118,6 +120,14 @@ const Game: Component<Props> = props => {
 					}/>
 				}</For>
 			</div>
+			<button
+				onclick={() => {
+					props.conn.send({ 
+						type: ClientType.DrawCard,
+						count: 1,
+					} as DrawCard);
+				}}
+			>Draw Card</button>
 			<Show when={colorPickerCallback()}>
 				<ColorPicker callback={colorPickerCallback()!} />
 			</Show>

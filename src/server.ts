@@ -1,5 +1,5 @@
 import type { DataConnection } from 'peerjs';
-import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard, OtherPlayerData } from './types';
+import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard, OtherPlayerData, DrawCard } from './types';
 import type { Card, PlayedCard } from './deck';
 
 import { ServerType, ClientType, State } from './types';
@@ -71,6 +71,7 @@ function sendUpdate() {
 			state: State.Waiting,
 			yourTurn: turn === id,
 			yourHand: player.hand,
+			playableHand: player.hand.map(card => canPlayCard(topCard, card)),
 			isAdmin: player.isAdmin,
 			topCard,
 			turnPlayerName: playerData[turn!].name,
@@ -106,6 +107,17 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 	}
 	getNextTurn();
 	sendUpdate();
+}
+
+function handleDrawCard(player_id: string,  event: DrawCard) {
+	if(turn !== player_id) {
+		console.error('User tried to draw a card out of turn');
+		return;
+	}
+	const player = playerData[player_id];
+	player.hand.push(drawCard());
+	sendUpdate();
+	getNextTurn();
 }
 
 function getNextTurn(): void {
@@ -164,6 +176,9 @@ export function createServer(callback: (id: string) => void): Peer {
 				break;
 			case ClientType.PlayCard:
 				handlePlayCard(conn.peer, d);
+				break;
+			case ClientType.DrawCard:
+				handleDrawCard(conn.peer, d);
 				break;
 			}
 		})

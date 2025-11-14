@@ -40,6 +40,7 @@ export type GameUpdate = {
 	state: State,
 	yourTurn: boolean,
 	yourHand: Card[],
+	playableHand: boolean[],
 	isAdmin: boolean,
 	topCard: PlayedCard,
 	turnPlayerName: string,
@@ -53,6 +54,7 @@ export enum ClientType {
 	Name,
 	Message,
 	PlayCard,
+	DrawCard,
 };
 
 export type NameRequest = {
@@ -71,4 +73,8 @@ export type PlayCard = {
 	color?: Color,
 };
 
-export type ClientData = NameRequest | MessageRequest| PlayCard;
+export type DrawCard = {
+	type: ClientType.DrawCard,
+};
+
+export type ClientData = NameRequest | MessageRequest| PlayCard | DrawCard;
