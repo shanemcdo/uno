@@ -110,21 +110,18 @@ export const deck = (() => {
 export function canPlayCard(top: PlayedCard, newCard: Card): boolean {
 	// Wild on anything
 	return newCard.type === CardType.Wild ||
+		// colors match
+		top.color === newCard.color ||
 		(
-			// number on matching number/color
+			// numbers match
 			newCard.type === CardType.Number &&
 			top.type === CardType.Number &&
-			(newCard.number === top.number || newCard.color === top.color)
+			newCard.number === top.number 
 		) ||
 		(
-			// action on matching action/color
+			// actions match
 			newCard.type === CardType.Action &&
 			top.type === CardType.Action &&
-			(newCard.action === top.action || newCard.color === top.color)
-		) ||
-		(
-			// number/action on matching color from wild
-			top.type === CardType.Wild &&
-			top.color === newCard.color
+			newCard.action === top.action
 		);
 };
