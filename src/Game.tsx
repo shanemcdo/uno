@@ -10,6 +10,7 @@ import Messages from './Messages';
 import StringInput from './StringInput';
 import CardComponent from './CardComponent';
 import ColorPicker from './ColorPicker';
+import AdminControls from './AdminControls';
 
 import styles from './Game.module.scss'
 
@@ -155,6 +156,9 @@ const Game: Component<Props> = props => {
 				}}
 				messages={messages()}
 			/>
+			<Show when={isAdmin()}>
+				<AdminControls />
+			</Show>
 		</Show>
 	</>;
 };

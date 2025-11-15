@@ -1,0 +1,12 @@
+@use './Messages.module';
+
+.toggle {
+  left: unset;
+  right: 0;
+}
+
+.container {
+  left: unset;
+  right: 0;
+  translate: 100% 0;
+}
