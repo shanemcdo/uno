@@ -138,6 +138,9 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 				skip = true;
 				break;
 			case ActionType.Reverse:
+				if(Object.keys(playerData).length === 2) {
+					skip = true;
+				}
 				direction = direction === Direction.Forward ?
 					Direction.Backward :
 					Direction.Forward;
