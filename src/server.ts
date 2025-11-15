@@ -30,6 +30,7 @@ let currentDeck: Card[] = shuffle(deepClone(deck));
 let topCard = drawNonWildCard();
 let direction = Direction.Forward;
 let drawInfo: DrawInfo = { type: DrawType.None };
+let winner: string | undefined = undefined;
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 function shuffle<T>(arr: T[]): T[] {
@@ -77,7 +78,7 @@ function sendUpdate() {
 		player.conn.send({
 			type: ServerType.Update,
 			state,
-			yourTurn: turn === id,
+			yourTurn: turn === id && state === State.Playing,
 			yourHand: player.hand,
 			playableHand: player.hand.map(card => canPlayCard(topCard, card, drawInfo)),
 			isAdmin: player.isAdmin,
@@ -90,6 +91,7 @@ function sendUpdate() {
 					cardCount: other.hand.length,
 				} as OtherPlayerData)),
 			drawInfo,
+			winner,
 		} as GameUpdate);
 	});
 }
@@ -107,6 +109,10 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 		return;
 	}
 	player.hand.splice(event.index, 1);
+	if(player.hand.length === 0) {
+		winner = player.name;
+		state = State.GameOver;
+	}
 	if(card.type !== CardType.Wild) {
 		topCard = card;
 		if(card.type === CardType.Action) {
@@ -191,6 +197,17 @@ function getNextTurn(skip: boolean = false): void {
 	turn = turns[index];
 }
 
+function restartGame() {
+	state = State.Playing;
+	Object.values(playerData).forEach(player => {
+		player.hand = drawCards(7);
+	});
+	direction = Direction.Forward;
+	drawInfo = { type: DrawType.None };
+	winner = undefined;
+	sendUpdate();
+}
+
 export function createServer(callback: (id: string) => void): Peer {
 	const peer = new Peer();
 	peer.on('open', callback);
@@ -245,6 +262,9 @@ export function createServer(callback: (id: string) => void): Peer {
 				break;
 			case ClientType.DrawCard:
 				handleDrawCard(conn.peer, d);
+				break;
+			case ClientType.RestartGame:
+				restartGame();
 				break;
 			}
 		})

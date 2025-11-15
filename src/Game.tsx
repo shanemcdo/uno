@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
-import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard, DrawCard } from './types';
+import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard, DrawCard, RestartGame } from './types';
 import type { Card, Color, PlayedCard } from './deck';
 
 import { For, Show, createSignal } from 'solid-js';
@@ -38,8 +38,8 @@ const Game: Component<Props> = props => {
 	const [turnPlayerName, setTurnPlayerName] = createSignal('');
 	const [otherPlayers, setOtherPlayers] = createSignal<OtherPlayerData[]>([]);
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
+	const [winner, setWinner] = createSignal<string | undefined>(undefined);
 	const turnLabel = () => yourTurn() ? 'Your Turn' : `${turnPlayerName()}'s turn`;
-	const waiting = () => state() === State.Waiting;
 	window.addEventListener('beforeunload', () => {
 		props.conn.close();
 	});
@@ -61,6 +61,7 @@ const Game: Component<Props> = props => {
 			setTopCard(d.topCard);
 			setTurnPlayerName(d.turnPlayerName);
 			setOtherPlayers(d.otherPlayers);
+			setWinner(d.winner);
 			break;
 		}
 	});
@@ -139,9 +140,19 @@ const Game: Component<Props> = props => {
 				}}
 				messages={messages()}
 			/>
-			<Show when={waiting()}>
-				<div class={styles.waiting}>
-					<h1>Waiting for more players to join...</h1>
+			<Show when={state() === State.Waiting || state() === State.GameOver}>
+				<div class={styles.popup}>
+					<Show when={state() === State.Waiting}>
+						<h1>Waiting for more players to join...</h1> :
+					</Show>
+					<Show when={state() === State.GameOver}>
+						<h1>{winner()} Won!</h1>
+						<button
+							onclick={()=>{
+								props.conn.send({ type: ClientType.RestartGame } as RestartGame);
+							}}
+						>Play again?</button>
+					</Show>
 				</div>
 			</Show>
 		</Show>

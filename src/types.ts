@@ -59,6 +59,7 @@ export type GameUpdate = {
 	turnPlayerName: string,
 	otherPlayers: OtherPlayerData[],
 	drawInfo: DrawInfo,
+	winner?: string,
 };
 
 export type ServerData = NameValidation | MessageBroadcast | GameUpdate;
@@ -69,6 +70,7 @@ export enum ClientType {
 	Message,
 	PlayCard,
 	DrawCard,
+	RestartGame,
 };
 
 export type NameRequest = {
@@ -91,4 +93,8 @@ export type DrawCard = {
 	type: ClientType.DrawCard,
 };
 
-export type ClientData = NameRequest | MessageRequest| PlayCard | DrawCard;
+export type RestartGame = {
+	type: ClientType.RestartGame,
+};
+
+export type ClientData = NameRequest | MessageRequest| PlayCard | DrawCard | RestartGame;
