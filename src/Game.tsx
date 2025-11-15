@@ -106,6 +106,7 @@ const Game: Component<Props> = props => {
 						card={card}
 						disabled={!yourTurn() || !playableHand()[index()]}
 						onclick={() => {
+							if(!yourTurn()) return;
 							if(card.type === CardType.Wild) {
 								setColorPickerCallback(() => (color: Color) => {
 									props.conn.send({
