@@ -200,7 +200,7 @@ function getNextTurn(skip: boolean = false): void {
 function restartGame() {
 	state = State.Playing;
 	Object.values(playerData).forEach(player => {
-		player.hand = drawCards(7);
+		player.hand = drawCards(STARTING_HAND_SIZE);
 	});
 	direction = Direction.Forward;
 	drawInfo = { type: DrawType.None };
@@ -232,7 +232,7 @@ export function createServer(callback: (id: string) => void): Peer {
 					playerData[conn.peer] = {
 						conn,
 						name: d.name,
-						hand: drawCards(7),
+						hand: drawCards(STARTING_HAND_SIZE),
 						isAdmin,
 					};
 					if(state === State.Waiting && turns.length > 1) {
