@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
-import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard, DrawCard, RestartGame } from './types';
+import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard, DrawCard, RestartGame, AdminUpdates, AdminProps } from './types';
 import type { Card, Color, PlayedCard } from './deck';
 
 import { For, Show, createSignal } from 'solid-js';
@@ -157,7 +157,12 @@ const Game: Component<Props> = props => {
 				messages={messages()}
 			/>
 			<Show when={isAdmin()}>
-				<AdminControls />
+				<AdminControls callback={(adminProps: AdminProps) => {
+					props.conn.send({
+						type: ClientType.AdminUpdates,
+						...adminProps,
+					} as AdminUpdates);
+				}} />
 			</Show>
 		</Show>
 	</>;

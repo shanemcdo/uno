@@ -71,6 +71,7 @@ export enum ClientType {
 	PlayCard,
 	DrawCard,
 	RestartGame,
+	AdminUpdates,
 };
 
 export type NameRequest = {
@@ -97,4 +98,12 @@ export type RestartGame = {
 	type: ClientType.RestartGame,
 };
 
-export type ClientData = NameRequest | MessageRequest| PlayCard | DrawCard | RestartGame;
+export type AdminProps = {
+	stacking: boolean,
+};
+
+export type AdminUpdates = {
+	type: ClientType.AdminUpdates,
+} & AdminProps;
+
+export type ClientData = NameRequest | MessageRequest| PlayCard | DrawCard | RestartGame | AdminUpdates;

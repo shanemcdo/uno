@@ -1,19 +1,38 @@
 import type { Component } from 'solid-js';
 
-import { Show, createSignal } from 'solid-js';
+import { Show, createEffect, createSignal } from 'solid-js';
+import { AdminProps } from './types';
 
 import styles from './AdminControls.module.scss';
 
-const AdminControls: Component = () => {
+type Props = {
+	callback: (adminProps: AdminProps) => void,
+};
+
+const AdminControls: Component<Props> = props => {
 	const [active, setActive] = createSignal(false);
+	const [stacking, setStacking] = createSignal(true);
 	const toggleActive = () => setActive(prev => !prev);
 	const adminControlsClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
+
+	createEffect(() => {
+		props.callback({
+			stacking: stacking(),
+		})
+	})
+
 	return <>
 	<div class={adminControlsClasses()}>
 		<button
 			onclick={toggleActive}
 		>X</button>
 		<h1>Admin Controls</h1>
+		<div class={styles.grid}>
+			<label for="stacking-box">Stacking</label>
+			<input id="stacking-box" type="checkbox" checked onchange={event => {
+				setStacking(event.target.checked);
+			}}/>
+		</div>
 	</div>
 	<Show when={!active()}>
 		<div

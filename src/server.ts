@@ -1,5 +1,5 @@
 import type { DataConnection } from 'peerjs';
-import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard, OtherPlayerData, DrawCard, DrawInfo } from './types';
+import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard, OtherPlayerData, DrawCard, DrawInfo, AdminProps } from './types';
 import type { Card, PlayedCard } from './deck';
 
 import { ServerType, ClientType, State, DrawType } from './types';
@@ -31,6 +31,9 @@ let topCard = drawNonWildCard();
 let direction = Direction.Forward;
 let drawInfo: DrawInfo = { type: DrawType.None };
 let winner: string | undefined = undefined;
+let adminProps: AdminProps = { 
+	stacking: true,
+};
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 function shuffle<T>(arr: T[]): T[] {
@@ -80,7 +83,7 @@ function sendUpdate() {
 			state,
 			yourTurn: turn === id && state === State.Playing,
 			yourHand: player.hand,
-			playableHand: player.hand.map(card => canPlayCard(topCard, card, drawInfo)),
+			playableHand: player.hand.map(card => canPlayCard(topCard, card, drawInfo, adminProps.stacking)),
 			isAdmin: player.isAdmin,
 			topCard,
 			turnPlayerName: playerData[turn!].name,
@@ -104,7 +107,7 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 	const player = playerData[player_id]
 	const card = player.hand[event.index];
 	let skip = false;
-	if(!canPlayCard(topCard, card, drawInfo)) {
+	if(!canPlayCard(topCard, card, drawInfo, adminProps.stacking)) {
 		console.error('User tried to play a card they are not allowed to');
 		return;
 	}
@@ -265,6 +268,13 @@ export function createServer(callback: (id: string) => void): Peer {
 				break;
 			case ClientType.RestartGame:
 				restartGame();
+				break;
+			case ClientType.AdminUpdates:
+				adminProps = d;
+				sendUpdate();
+				break;
+			default:
+				throw new Error('Reached default on clienttype switch');
 				break;
 			}
 		})

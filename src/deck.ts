@@ -109,17 +109,19 @@ export const deck = (() => {
 	return Object.freeze(result);
 })();
 
-export function canPlayCard(top: PlayedCard, newCard: Card, drawInfo: DrawInfo): boolean {
+export function canPlayCard(top: PlayedCard, newCard: Card, drawInfo: DrawInfo, stacking: boolean): boolean {
 	return (
 		drawInfo.type == DrawType.None || (
-			newCard.type === CardType.Action &&
-			newCard.action === ActionType.Draw2 &&
-			drawInfo.type === DrawType.Plus2
-		) || (
-			newCard.type === CardType.Wild &&
-			newCard.wildType === WildType.WildDraw4 && (
-				drawInfo.type === DrawType.Plus2 ||
-				drawInfo.type === DrawType.Plus4
+			stacking && (
+				newCard.type === CardType.Action &&
+				newCard.action === ActionType.Draw2 &&
+				drawInfo.type === DrawType.Plus2
+			) || (
+				newCard.type === CardType.Wild &&
+				newCard.wildType === WildType.WildDraw4 && (
+					drawInfo.type === DrawType.Plus2 ||
+					drawInfo.type === DrawType.Plus4
+				)
 			)
 		)
 	) && (
