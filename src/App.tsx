@@ -2,7 +2,7 @@ import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
 
 import { Peer } from 'peerjs';
-import { createSignal, Show, Suspense } from 'solid-js';
+import { createSignal, Show } from 'solid-js';
 import { createServer } from './server';
 import Loading from './Loading';
 import Game from './Game';
@@ -29,7 +29,6 @@ function connect(id: string) {
 }
 
 const Menu = () => {
-	let game_code_input: HTMLInputElement | undefined;
 	return <div class={styles.container}>
 		<div class={styles.option}>
 			<input
