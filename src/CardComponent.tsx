@@ -19,7 +19,7 @@ const CardComponent: Component<Props> = p => {
 		[styles.card]: true,
 		[styles.clickable]: props.onclick !== undefined && !props.disabled,
 		[styles.disabled]: props.disabled,
-	}} onclick={props.onclick} data-color={props.card.color} >
+	}} onclick={props.disabled ? undefined : props.onclick} data-color={props.card.color} >
 		<Switch>
 			<Match when={props.card.type === CardType.Number}>
 				Number: {(props.card as NumberCard).color} {(props.card as NumberCard).number} 
