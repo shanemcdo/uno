@@ -33,7 +33,7 @@ const AdminControls: Component<Props> = props => {
 		accessor: Accessor<boolean>
 		setter: Setter<boolean>
 		label: string,
-	}> = controlsProps => { 
+	}> = controlsProps => {
 		const id = controlsProps.label.replaceAll(' ', '-') + '-id';
 		return <>
 			<label for={id}>{controlsProps.label}</label>
@@ -59,6 +59,38 @@ const AdminControls: Component<Props> = props => {
 		</>;
 	}
 
+	const NumberControls: Component<{
+		accessor: Accessor<number>
+		setter: Setter<number>
+		label: string,
+	}> = controlsProps => {
+		const id = controlsProps.label.replaceAll(' ', '-') + '-id';
+		return <>
+			<label for={id}>{controlsProps.label}</label>
+			<Show
+				when={props.isAdmin}
+				fallback={
+					<input
+						type="checkbox"
+						disabled
+						value={controlsProps.accessor()}
+					/>
+				}
+			>
+			<input
+				id={id}
+				type="checkbox"
+				value={untrack(controlsProps.accessor)}
+				onchange={event => {
+						if(event.target.valueAsNumber < 1) {
+							event.target.valueAsNumber = 1;
+					}
+					controlsProps.setter(event.target.valueAsNumber);
+				}}
+			/>
+			</Show>
+		</>;
+	}
 
 	return <>
 	<div class={adminControlsClasses()}>
@@ -73,28 +105,11 @@ const AdminControls: Component<Props> = props => {
 				setter={setStacking}
 			/>
 			<label for="starting-hand-size-input">Starting Hand Size</label>
-			<Show
-				when={props.isAdmin}
-				fallback={
-					<input
-						type="number"
-						disabled
-						value={props.startingProps.startingHandSize}
-					/>
-				}
-			>
-				<input
-					id="starting-hand-size-input"
-					type="number"
-					value={untrack(startingHandSize)}
-					onchange={event => {
-						if(event.target.valueAsNumber < 1) {
-							event.target.valueAsNumber = 1;
-						}
-						setStartingHandSize(event.target.valueAsNumber);
-					}}
-				/>
-			</Show>
+			<NumberControls
+				label="Starting Hand Size"
+				accessor={() => props.startingProps.startingHandSize}
+				setter={setStartingHandSize}
+			/>
 			<CheckboxControls
 				label="Disable-chat"
 				accessor={() => props.startingProps.disableChat}
