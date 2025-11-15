@@ -12,13 +12,15 @@ type Props = {
 const AdminControls: Component<Props> = props => {
 	const [active, setActive] = createSignal(false);
 	const [stacking, setStacking] = createSignal(true);
+	const [startingHandSize, setStartingHandSize] = createSignal(7);
 	const toggleActive = () => setActive(prev => !prev);
 	const adminControlsClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
 
 	createEffect(() => {
 		props.callback({
 			stacking: stacking(),
-		})
+			startingHandSize: startingHandSize(),
+		} as AdminProps)
 	})
 
 	return <>
@@ -31,6 +33,13 @@ const AdminControls: Component<Props> = props => {
 			<label for="stacking-box">Stacking</label>
 			<input id="stacking-box" type="checkbox" checked onchange={event => {
 				setStacking(event.target.checked);
+			}}/>
+			<label for="starting-hand-size-input">Starting Hand Size</label>
+			<input id="starting-hand-size-input" type="number" value={7} onchange={event => {
+				if(event.target.valueAsNumber < 1) {
+					event.target.valueAsNumber = 1;
+				}
+				setStartingHandSize(event.target.valueAsNumber);
 			}}/>
 		</div>
 	</div>

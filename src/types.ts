@@ -100,6 +100,7 @@ export type RestartGame = {
 
 export type AdminProps = {
 	stacking: boolean,
+	startingHandSize: number,
 };
 
 export type AdminUpdates = {

@@ -20,8 +20,6 @@ enum Direction {
 	Backward,
 };
 
-const STARTING_HAND_SIZE = 7;
-
 let state = State.Waiting;
 const playerData: Record<string, PlayerData> = {};
 const turns: string[] = [];
@@ -33,6 +31,7 @@ let drawInfo: DrawInfo = { type: DrawType.None };
 let winner: string | undefined = undefined;
 let adminProps: AdminProps = { 
 	stacking: true,
+	startingHandSize: 7,
 };
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
@@ -203,7 +202,7 @@ function getNextTurn(skip: boolean = false): void {
 function restartGame() {
 	state = State.Playing;
 	Object.values(playerData).forEach(player => {
-		player.hand = drawCards(STARTING_HAND_SIZE);
+		player.hand = drawCards(adminProps.startingHandSize);
 	});
 	direction = Direction.Forward;
 	drawInfo = { type: DrawType.None };
@@ -235,7 +234,7 @@ export function createServer(callback: (id: string) => void): Peer {
 					playerData[conn.peer] = {
 						conn,
 						name: d.name,
-						hand: drawCards(STARTING_HAND_SIZE),
+						hand: drawCards(adminProps.startingHandSize),
 						isAdmin,
 					};
 					if(state === State.Waiting && turns.length > 1) {
@@ -270,7 +269,14 @@ export function createServer(callback: (id: string) => void): Peer {
 				restartGame();
 				break;
 			case ClientType.AdminUpdates:
+				if(!playerData[conn.peer].isAdmin) {
+					console.error('Non admin player trying to make admin updates');
+					break;
+				}
 				adminProps = d;
+				if(state === State.Waiting) {
+					playerData[conn.peer].hand = drawCards(adminProps.startingHandSize);
+				}
 				sendUpdate();
 				break;
 			default:
