@@ -27,13 +27,13 @@ const StringInput: Component<Props> = p => {
 	const input = <input
 		type="text"
 		placeholder={props.placeholder}
-		onkeypress={event => {
+		onkeypress={ event => {
 			if(event.key === 'Enter' && (props.allowEmptyInput || input.value !== '')) {
 				onclick();
 				event.preventDefault();
 			}
 		}}
-		oninput={event => {
+		oninput={ event => {
 			if(!props.allowEmptyInput) setButtonDisabled(event.target.value === '');
 		}}
 	/> as HTMLInputElement;

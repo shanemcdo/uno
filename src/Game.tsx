@@ -148,7 +148,7 @@ const Game: Component<Props> = props => {
 					<Show when={state() === State.GameOver}>
 						<h1>{winner()} Won!</h1>
 						<button
-							onclick={()=>{
+							onclick={() => {
 								props.conn.send({ type: ClientType.RestartGame } as RestartGame);
 							}}
 						>Play again?</button>
