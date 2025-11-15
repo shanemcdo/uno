@@ -134,12 +134,6 @@ const Game: Component<Props> = props => {
 			<Show when={colorPickerCallback()}>
 				<ColorPicker callback={colorPickerCallback()!} cancelCallback={() => setColorPickerCallback(null)} />
 			</Show>
-			<Messages
-				sendMessage={ message => {
-					props.conn.send({ type: ClientType.Message, message } as MessageRequest);
-				}}
-				messages={messages()}
-			/>
 			<Show when={state() === State.Waiting || state() === State.GameOver}>
 				<div class={styles.popup}>
 					<Show when={state() === State.Waiting}>
@@ -155,6 +149,12 @@ const Game: Component<Props> = props => {
 					</Show>
 				</div>
 			</Show>
+			<Messages
+				sendMessage={ message => {
+					props.conn.send({ type: ClientType.Message, message } as MessageRequest);
+				}}
+				messages={messages()}
+			/>
 		</Show>
 	</>;
 };
