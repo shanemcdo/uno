@@ -39,6 +39,7 @@ const Game: Component<Props> = props => {
 	const [otherPlayers, setOtherPlayers] = createSignal<OtherPlayerData[]>([]);
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
 	const turnLabel = () => yourTurn() ? 'Your Turn' : `${turnPlayerName()}'s turn`;
+	const waiting = () => state() === State.Waiting;
 	window.addEventListener('beforeunload', () => {
 		props.conn.close();
 	});
@@ -75,7 +76,7 @@ const Game: Component<Props> = props => {
 					}}
 				/>
 			}
-			>
+		>
 			<h2>{name()}</h2>
 			<input
 				type="button"
@@ -122,6 +123,7 @@ const Game: Component<Props> = props => {
 			</div>
 			<button
 				class={styles.draw_button}
+				disabled={!yourTurn()}
 				onclick={() => {
 					props.conn.send({ 
 						type: ClientType.DrawCard,
@@ -137,6 +139,11 @@ const Game: Component<Props> = props => {
 				}}
 				messages={messages()}
 			/>
+			<Show when={waiting()}>
+				<div class={styles.waiting}>
+					<h1>Waiting for more players to join...</h1>
+				</div>
+			</Show>
 		</Show>
 	</>;
 };

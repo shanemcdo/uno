@@ -22,6 +22,7 @@ enum Direction {
 
 const STARTING_HAND_SIZE = 7;
 
+let state = State.Waiting;
 const playerData: Record<string, PlayerData> = {};
 const turns: string[] = [];
 let turn: string | null = null;
@@ -75,7 +76,7 @@ function sendUpdate() {
 	Object.entries(playerData).forEach(([id, player]) => {
 		player.conn.send({
 			type: ServerType.Update,
-			state: State.Waiting,
+			state,
 			yourTurn: turn === id,
 			yourHand: player.hand,
 			playableHand: player.hand.map(card => canPlayCard(topCard, card, drawInfo)),
@@ -217,6 +218,9 @@ export function createServer(callback: (id: string) => void): Peer {
 						hand: drawCards(7),
 						isAdmin,
 					};
+					if(state === State.Waiting && turns.length > 1) {
+						state = State.Playing;
+					}
 					console.log(playerData);
 					console.log(currentDeck);
 				}
