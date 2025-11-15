@@ -95,7 +95,7 @@ function sendUpdate() {
 				} as OtherPlayerData)),
 			drawInfo,
 			winner,
-			chatDisabled: adminProps.disableChat,
+			adminProps,
 		} as GameUpdate);
 	});
 }

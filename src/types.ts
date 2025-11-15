@@ -60,7 +60,7 @@ export type GameUpdate = {
 	otherPlayers: OtherPlayerData[],
 	drawInfo: DrawInfo,
 	winner?: string,
-	chatDisabled: boolean,
+	adminProps: AdminProps,
 };
 
 export type ServerData = NameValidation | MessageBroadcast | GameUpdate;

@@ -40,7 +40,7 @@ const Game: Component<Props> = props => {
 	const [otherPlayers, setOtherPlayers] = createSignal<OtherPlayerData[]>([]);
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
 	const [winner, setWinner] = createSignal<string | undefined>(undefined);
-	const [chatDisabled, setChatDisabled] = createSignal(false);
+	const [adminProps, setAdminProps] = createSignal<AdminProps | null>(null);
 	const turnLabel = () => yourTurn() ? 'Your Turn' : `${turnPlayerName()}'s turn`;
 	window.addEventListener('beforeunload', () => {
 		props.conn.close();
@@ -64,7 +64,7 @@ const Game: Component<Props> = props => {
 			setTurnPlayerName(d.turnPlayerName);
 			setOtherPlayers(d.otherPlayers);
 			setWinner(d.winner);
-			setChatDisabled(d.chatDisabled);
+			setAdminProps(d.adminProps);
 			break;
 		}
 	});
@@ -152,7 +152,7 @@ const Game: Component<Props> = props => {
 					</Show>
 				</div>
 			</Show>
-			<Show when={!chatDisabled()}>
+			<Show when={!(adminProps()?.disableChat ?? false)}>
 				<Messages
 					sendMessage={ message => {
 						props.conn.send({ type: ClientType.Message, message } as MessageRequest);
@@ -160,13 +160,17 @@ const Game: Component<Props> = props => {
 					messages={messages()}
 				/>
 			</Show>
-			<Show when={isAdmin()}>
-				<AdminControls callback={(adminProps: AdminProps) => {
-					props.conn.send({
-						type: ClientType.AdminUpdates,
-						...adminProps,
-					} as AdminUpdates);
-				}} />
+			<Show when={adminProps() !== null}>
+				<AdminControls
+					isAdmin={isAdmin()}
+					startingProps={adminProps()!}
+					callback={(adminProps: AdminProps) => {
+						props.conn.send({
+							type: ClientType.AdminUpdates,
+							...adminProps,
+						} as AdminUpdates);
+					}
+				} />
 			</Show>
 		</Show>
 	</>;
