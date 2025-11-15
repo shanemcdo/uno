@@ -32,6 +32,7 @@ let winner: string | undefined = undefined;
 let adminProps: AdminProps = { 
 	stacking: true,
 	startingHandSize: 7,
+	disableChat: false,
 };
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
@@ -94,6 +95,7 @@ function sendUpdate() {
 				} as OtherPlayerData)),
 			drawInfo,
 			winner,
+			chatDisabled: adminProps.disableChat,
 		} as GameUpdate);
 	});
 }

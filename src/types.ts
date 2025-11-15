@@ -60,6 +60,7 @@ export type GameUpdate = {
 	otherPlayers: OtherPlayerData[],
 	drawInfo: DrawInfo,
 	winner?: string,
+	chatDisabled: boolean,
 };
 
 export type ServerData = NameValidation | MessageBroadcast | GameUpdate;
@@ -101,6 +102,7 @@ export type RestartGame = {
 export type AdminProps = {
 	stacking: boolean,
 	startingHandSize: number,
+	disableChat: boolean,
 };
 
 export type AdminUpdates = {
