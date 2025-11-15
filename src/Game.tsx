@@ -88,9 +88,9 @@ const Game: Component<Props> = props => {
 				href={url()}
 				target="_blank"
 			>Sharable Link</a>
+			<h2>{turnLabel()}</h2>
 			<Show when={topCard() !== null}>
 				<div class={styles.top_card}>
-					<h2>{turnLabel()}</h2>
 					TopCard:
 					<CardComponent card={topCard()!} />
 				</div>
