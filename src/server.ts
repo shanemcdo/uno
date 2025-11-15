@@ -33,6 +33,7 @@ let adminProps: AdminProps = {
 	stacking: true,
 	startingHandSize: 7,
 	disableChat: false,
+	twoPlayerReverseSkip: true,
 };
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
@@ -138,7 +139,7 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 				skip = true;
 				break;
 			case ActionType.Reverse:
-				if(Object.keys(playerData).length === 2) {
+				if(Object.keys(playerData).length === 2 && adminProps.twoPlayerReverseSkip) {
 					skip = true;
 				}
 				direction = direction === Direction.Forward ?

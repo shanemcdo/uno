@@ -16,6 +16,7 @@ const AdminControls: Component<Props> = props => {
 	const [stacking, setStacking] = createSignal(props.startingProps.stacking);
 	const [startingHandSize, setStartingHandSize] = createSignal(props.startingProps.startingHandSize);
 	const [disableChat, setDisableChat] = createSignal(props.startingProps.disableChat);
+	const [twoPlayerReverseSkip, setTwoPlayerReverseSkip] = createSignal(props.startingProps.twoPlayerReverseSkip);
 	const toggleActive = () => setActive(prev => !prev);
 	const adminControlsClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
 
@@ -24,6 +25,7 @@ const AdminControls: Component<Props> = props => {
 			stacking: stacking(),
 			startingHandSize: startingHandSize(),
 			disableChat: disableChat(),
+			twoPlayerReverseSkip: twoPlayerReverseSkip(),
 		} as AdminProps)
 	})
 
@@ -94,6 +96,26 @@ const AdminControls: Component<Props> = props => {
 					checked={untrack(disableChat)}
 					onchange={event => {
 						setDisableChat(event.target.checked);
+					}}
+				/>
+			</Show>
+			<label for="reverse-skip-box">Two Player Reverse Skip</label>
+			<Show
+				when={props.isAdmin}
+				fallback={
+					<input
+						type="checkbox"
+						disabled
+						checked={props.startingProps.twoPlayerReverseSkip}
+					/>
+				}
+			>
+				<input
+					id="reverse-skip-box"
+					type="checkbox"
+					checked={untrack(twoPlayerReverseSkip)}
+					onchange={event => {
+						setTwoPlayerReverseSkip(event.target.checked);
 					}}
 				/>
 			</Show>

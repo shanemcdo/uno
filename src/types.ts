@@ -103,6 +103,7 @@ export type AdminProps = {
 	stacking: boolean,
 	startingHandSize: number,
 	disableChat: boolean,
+	twoPlayerReverseSkip: boolean, // Whether or not a reverse should skip someones turn when there are only 2 players
 };
 
 export type AdminUpdates = {
