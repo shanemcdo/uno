@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import type { Accessor, Component, Setter } from 'solid-js';
 
 import { Show, createEffect, createSignal, untrack } from 'solid-js';
 import { AdminProps } from './types';
@@ -29,6 +29,37 @@ const AdminControls: Component<Props> = props => {
 		} as AdminProps)
 	})
 
+	const CheckboxControls: Component<{
+		accessor: Accessor<boolean>
+		setter: Setter<boolean>
+		label: string,
+	}> = controlsProps => { 
+		const id = controlsProps.label.replaceAll(' ', '-') + '-id';
+		return <>
+			<label for={id}>{controlsProps.label}</label>
+			<Show
+				when={props.isAdmin}
+				fallback={
+					<input
+						type="checkbox"
+						disabled
+						checked={controlsProps.accessor()}
+					/>
+				}
+			>
+			<input
+				id={id}
+				type="checkbox"
+				checked={untrack(controlsProps.accessor)}
+				onchange={event => {
+					controlsProps.setter(event.target.checked);
+				}}
+			/>
+			</Show>
+		</>;
+	}
+
+
 	return <>
 	<div class={adminControlsClasses()}>
 		<button
@@ -36,26 +67,11 @@ const AdminControls: Component<Props> = props => {
 		>X</button>
 		<h1>Admin Controls</h1>
 		<div class={styles.grid}>
-			<label for="stacking-box">Stacking</label>
-			<Show
-				when={props.isAdmin}
-				fallback={
-					<input
-						type="checkbox"
-						disabled
-						checked={props.startingProps.stacking}
-					/>
-				}
-			>
-				<input
-					id="stacking-box"
-					type="checkbox"
-					checked={untrack(stacking)}
-					onchange={event => {
-						setStacking(event.target.checked);
-					}}
-				/>
-			</Show>
+			<CheckboxControls
+				label="Stacking"
+				accessor={() => props.startingProps.stacking}
+				setter={setStacking}
+			/>
 			<label for="starting-hand-size-input">Starting Hand Size</label>
 			<Show
 				when={props.isAdmin}
@@ -79,46 +95,16 @@ const AdminControls: Component<Props> = props => {
 					}}
 				/>
 			</Show>
-			<label for="disable-chat-box">Disable Chat</label>
-			<Show
-				when={props.isAdmin}
-				fallback={
-					<input
-						type="checkbox"
-						disabled
-						checked={props.startingProps.disableChat}
-					/>
-				}
-			>
-				<input
-					id="disable-chat-box"
-					type="checkbox"
-					checked={untrack(disableChat)}
-					onchange={event => {
-						setDisableChat(event.target.checked);
-					}}
-				/>
-			</Show>
-			<label for="reverse-skip-box">Two Player Reverse Skip</label>
-			<Show
-				when={props.isAdmin}
-				fallback={
-					<input
-						type="checkbox"
-						disabled
-						checked={props.startingProps.twoPlayerReverseSkip}
-					/>
-				}
-			>
-				<input
-					id="reverse-skip-box"
-					type="checkbox"
-					checked={untrack(twoPlayerReverseSkip)}
-					onchange={event => {
-						setTwoPlayerReverseSkip(event.target.checked);
-					}}
-				/>
-			</Show>
+			<CheckboxControls
+				label="Disable-chat"
+				accessor={() => props.startingProps.disableChat}
+				setter={setDisableChat}
+			/>
+			<CheckboxControls
+				label="Two Player Reverse Skip"
+				accessor={() => props.startingProps.twoPlayerReverseSkip}
+				setter={setTwoPlayerReverseSkip}
+			/>
 		</div>
 	</div>
 	<Show when={!active()}>
