@@ -29,6 +29,16 @@ export type DrawInfo = {
 	count: number,
 };
 
+export enum DrawCardMethod {
+	GrabBag = 'GrabBag',
+	Random = 'Random',
+};
+
+export const drawCardMethods = Object.freeze([
+	DrawCardMethod.GrabBag,
+	DrawCardMethod.Random,
+]);
+
 // sent by server side
 export enum ServerType {
 	Name,
@@ -104,6 +114,7 @@ export type AdminProps = {
 	startingHandSize: number,
 	disableChat: boolean,
 	twoPlayerReverseSkip: boolean, // Whether or not a reverse should skip someones turn when there are only 2 players
+	drawCardMethod: DrawCardMethod,
 };
 
 export type AdminUpdates = {

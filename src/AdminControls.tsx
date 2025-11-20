@@ -1,7 +1,7 @@
 import type { Accessor, Component, Setter } from 'solid-js';
 
-import { Show, createEffect, createSignal, untrack } from 'solid-js';
-import { AdminProps } from './types';
+import { For, Show, createEffect, createSignal, untrack } from 'solid-js';
+import { AdminProps, DrawCardMethod, drawCardMethods } from './types';
 
 import styles from './AdminControls.module.scss';
 
@@ -17,6 +17,7 @@ const AdminControls: Component<Props> = props => {
 	const [startingHandSize, setStartingHandSize] = createSignal(props.startingProps.startingHandSize);
 	const [disableChat, setDisableChat] = createSignal(props.startingProps.disableChat);
 	const [twoPlayerReverseSkip, setTwoPlayerReverseSkip] = createSignal(props.startingProps.twoPlayerReverseSkip);
+	const [drawCardMethod, setDrawCardMethod] = createSignal(props.startingProps.drawCardMethod);
 	const toggleActive = () => setActive(prev => !prev);
 	const adminControlsClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
 
@@ -26,6 +27,7 @@ const AdminControls: Component<Props> = props => {
 			startingHandSize: startingHandSize(),
 			disableChat: disableChat(),
 			twoPlayerReverseSkip: twoPlayerReverseSkip(),
+			drawCardMethod: drawCardMethod(),
 		} as AdminProps)
 	})
 
@@ -92,6 +94,39 @@ const AdminControls: Component<Props> = props => {
 		</>;
 	}
 
+	const DropDownControls: Component<{
+		accessor: Accessor<DrawCardMethod>
+		setter: Setter<DrawCardMethod>
+		label: string,
+		choices: DrawCardMethod[],
+	}> = controlsProps => {
+		const id = controlsProps.label.replaceAll(' ', '-') + '-id';
+		return <>
+			<label for={id}>{controlsProps.label}</label>
+			<Show
+				when={props.isAdmin}
+				fallback={
+					<input
+						disabled
+						value={controlsProps.accessor()}
+					/>
+				}
+			>
+			<select
+				id={id}
+				value={untrack(controlsProps.accessor)}
+				onchange={event => {
+					controlsProps.setter(event.target.value as DrawCardMethod);
+				}}
+			>
+				<For each={controlsProps.choices}>{choice =>
+					<option value={choice}>{choice}</option>
+				}</For>
+			</select>
+			</Show>
+		</>;
+	}
+
 	return <>
 	<div class={adminControlsClasses()}>
 		<button
@@ -118,6 +153,12 @@ const AdminControls: Component<Props> = props => {
 				label="Two Player Reverse Skip"
 				accessor={() => props.startingProps.twoPlayerReverseSkip}
 				setter={setTwoPlayerReverseSkip}
+			/>
+			<DropDownControls
+				label="Draw Card Method"
+				accessor={() => props.startingProps.drawCardMethod}
+				setter={setDrawCardMethod}
+				choices={drawCardMethods}
 			/>
 		</div>
 	</div>

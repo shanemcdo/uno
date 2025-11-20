@@ -2,11 +2,11 @@ import type { DataConnection } from 'peerjs';
 import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard, OtherPlayerData, DrawCard, DrawInfo, AdminProps } from './types';
 import type { Card, PlayedCard } from './deck';
 
-import { ServerType, ClientType, State, DrawType } from './types';
+import { ServerType, ClientType, State, DrawType, DrawCardMethod } from './types';
 import { Peer } from 'peerjs';
 import { ActionType, CardType, WildType, canPlayCard, deck } from './deck';
 import deepClone from './deepClone';
-import rand from './rand';
+import { rand, choose } from './rand';
 
 type PlayerData = {
 	conn: DataConnection
@@ -23,18 +23,19 @@ enum Direction {
 let state = State.Waiting;
 const playerData: Record<string, PlayerData> = {};
 const turns: string[] = [];
+let adminProps: AdminProps = { 
+	stacking: true,
+	startingHandSize: 7,
+	disableChat: false,
+	twoPlayerReverseSkip: true,
+	drawCardMethod: DrawCardMethod.GrabBag,
+};
 let turn: string | null = null;
 let currentDeck: Card[] = shuffle(deepClone(deck));
 let topCard = drawNonWildCard();
 let direction = Direction.Forward;
 let drawInfo: DrawInfo = { type: DrawType.None };
 let winner: string | undefined = undefined;
-let adminProps: AdminProps = { 
-	stacking: true,
-	startingHandSize: 7,
-	disableChat: false,
-	twoPlayerReverseSkip: true,
-};
 
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 function shuffle<T>(arr: T[]): T[] {
@@ -55,11 +56,15 @@ function drawNonWildCard(): PlayedCard {
 }
 
 function drawCard(): Card {
-	if(currentDeck.length < 1) {
-		currentDeck = shuffle(deepClone(deck));
+	switch(adminProps.drawCardMethod) {
+	case DrawCardMethod.GrabBag:
+		if(currentDeck.length < 1) {
+			currentDeck = shuffle(deepClone(deck));
+		}
+		return currentDeck.pop()!;
+	case DrawCardMethod.Random:
+		return choose(deck)!;
 	}
-	const card = currentDeck.pop();
-	return card!;
 }
 
 function drawCards(count: number): Card[] {
