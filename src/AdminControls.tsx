@@ -71,7 +71,7 @@ const AdminControls: Component<Props> = props => {
 				when={props.isAdmin}
 				fallback={
 					<input
-						type="checkbox"
+						type="number"
 						disabled
 						value={controlsProps.accessor()}
 					/>
@@ -79,7 +79,7 @@ const AdminControls: Component<Props> = props => {
 			>
 			<input
 				id={id}
-				type="checkbox"
+				type="number"
 				value={untrack(controlsProps.accessor)}
 				onchange={event => {
 						if(event.target.valueAsNumber < 1) {
@@ -104,14 +104,13 @@ const AdminControls: Component<Props> = props => {
 				accessor={() => props.startingProps.stacking}
 				setter={setStacking}
 			/>
-			<label for="starting-hand-size-input">Starting Hand Size</label>
 			<NumberControls
 				label="Starting Hand Size"
 				accessor={() => props.startingProps.startingHandSize}
 				setter={setStartingHandSize}
 			/>
 			<CheckboxControls
-				label="Disable-chat"
+				label="Disable Chat"
 				accessor={() => props.startingProps.disableChat}
 				setter={setDisableChat}
 			/>
