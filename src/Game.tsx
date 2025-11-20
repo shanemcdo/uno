@@ -141,7 +141,7 @@ const Game: Component<Props> = props => {
 			<Show when={state() === State.Waiting || state() === State.GameOver}>
 				<div class={styles.popup}>
 					<Show when={state() === State.Waiting}>
-						<h1>Waiting for more players to join...</h1> :
+						<h1>Waiting for more players to join...</h1>
 					</Show>
 					<Show when={state() === State.GameOver}>
 						<h1>{winner()} Won!</h1>
