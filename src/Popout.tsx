@@ -1,8 +1,6 @@
 import type { Component, ParentProps } from 'solid-js';
-import type { Message } from './types';
 
 import { children, Show, createSignal } from 'solid-js';
-import StringInput from './StringInput';
 
 import styles from './Popout.module.scss';
 
@@ -15,7 +13,7 @@ type Props = ParentProps<{
 	direction: Direction,
 }>;
 
-const Messages: Component<Props> = props => {
+const Popout: Component<Props> = props => {
 	const [active, setActive] = createSignal(false);
 	const toggleActive = () => setActive(prev => !prev);
 	const popoutClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
@@ -37,4 +35,4 @@ const Messages: Component<Props> = props => {
 	</>
 };
 
-export default Messages;
+export default Popout;
