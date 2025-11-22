@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js';
 import type { Message } from './types';
 
-import { For, Show } from 'solid-js';
+import { For } from 'solid-js';
 import StringInput from './StringInput';
 
 import styles from './Messages.module.scss';
