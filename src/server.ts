@@ -284,8 +284,10 @@ export function createServer(callback: (id: string) => void): Peer {
 					console.error('Non admin player trying to make admin updates');
 					break;
 				}
+				const requireRedraw = d.drawCardMethod !== adminProps.drawCardMethod ||
+					d.startingHandSize !== adminProps.startingHandSize;
 				adminProps = d;
-				if(state === State.Waiting) {
+				if(state === State.Waiting && requireRedraw) {
 					playerData[conn.peer].hand = drawCards(adminProps.startingHandSize);
 				}
 				sendUpdate();
