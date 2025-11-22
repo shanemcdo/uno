@@ -1,17 +1,4 @@
-@use './Messages.module';
-
-.toggle {
-  left: unset;
-  right: 0;
-}
-
-.container {
-  left: unset;
-  right: 0;
-  translate: 100% 0;
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }

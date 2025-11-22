@@ -2,6 +2,7 @@ import type { Accessor, Component, Setter } from 'solid-js';
 
 import { For, Show, createEffect, createSignal, untrack } from 'solid-js';
 import { AdminProps, DrawCardMethod, drawCardMethods } from './types';
+import Popout, { Direction } from './Popout';
 
 import styles from './AdminControls.module.scss';
 
@@ -12,14 +13,11 @@ type Props = {
 };
 
 const AdminControls: Component<Props> = props => {
-	const [active, setActive] = createSignal(false);
 	const [stacking, setStacking] = createSignal(props.startingProps.stacking);
 	const [startingHandSize, setStartingHandSize] = createSignal(props.startingProps.startingHandSize);
 	const [disableChat, setDisableChat] = createSignal(props.startingProps.disableChat);
 	const [twoPlayerReverseSkip, setTwoPlayerReverseSkip] = createSignal(props.startingProps.twoPlayerReverseSkip);
 	const [drawCardMethod, setDrawCardMethod] = createSignal(props.startingProps.drawCardMethod);
-	const toggleActive = () => setActive(prev => !prev);
-	const adminControlsClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
 
 	createEffect(() => {
 		props.callback({
@@ -128,10 +126,7 @@ const AdminControls: Component<Props> = props => {
 	}
 
 	return <>
-	<div class={adminControlsClasses()}>
-		<button
-			onclick={toggleActive}
-		>X</button>
+	<Popout direction={Direction.Right}>
 		<h1>Admin Controls</h1>
 		<div class={styles.grid}>
 			<CheckboxControls
@@ -161,13 +156,7 @@ const AdminControls: Component<Props> = props => {
 				choices={drawCardMethods}
 			/>
 		</div>
-	</div>
-	<Show when={!active()}>
-		<div
-			class={styles.toggle}
-			onclick={toggleActive}
-		>V</div>
-	</Show>
+	</Popout>
 	</>
 };
 

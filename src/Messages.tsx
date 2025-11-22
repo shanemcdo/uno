@@ -1,10 +1,11 @@
 import type { Component } from 'solid-js';
 import type { Message } from './types';
 
-import { For, Show, createSignal } from 'solid-js';
+import { For, Show } from 'solid-js';
 import StringInput from './StringInput';
 
 import styles from './Messages.module.scss';
+import Popout, { Direction } from './Popout';
 
 type Props = {
 	sendMessage: (message: string) => void,
@@ -12,14 +13,8 @@ type Props = {
 };
 
 const Messages: Component<Props> = props => {
-	const [active, setActive] = createSignal(false);
-	const toggleActive = () => setActive(prev => !prev);
-	const messagesClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
 	return <>
-	<div class={messagesClasses()}>
-		<button
-			onclick={toggleActive}
-		>X</button>
+		<Popout direction={Direction.Left}>
 		<div class={styles.messages}>
 			<For each={props.messages} >{item =>
 				<p>{item.name}: {item.message}</p>
@@ -30,13 +25,7 @@ const Messages: Component<Props> = props => {
 			clearOnSend={true}
 			callback={props.sendMessage}
 		/>
-	</div>
-	<Show when={!active()}>
-		<div
-			class={styles.toggle}
-			onclick={toggleActive}
-		>V</div>
-	</Show>
+		</Popout>
 	</>
 };
 

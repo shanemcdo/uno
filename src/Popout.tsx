@@ -1,0 +1,40 @@
+import type { Component, ParentProps } from 'solid-js';
+import type { Message } from './types';
+
+import { children, Show, createSignal } from 'solid-js';
+import StringInput from './StringInput';
+
+import styles from './Popout.module.scss';
+
+export enum Direction {
+	Left = "left",
+	Right = "right",
+};
+
+type Props = ParentProps<{
+	direction: Direction,
+}>;
+
+const Messages: Component<Props> = props => {
+	const [active, setActive] = createSignal(false);
+	const toggleActive = () => setActive(prev => !prev);
+	const popoutClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
+	const safeChildren = children(() => props.children);
+	return <>
+	<div class={popoutClasses()} data-direction={props.direction}>
+		<button
+			onclick={toggleActive}
+		>X</button>
+		{safeChildren()}
+	</div>
+	<Show when={!active()}>
+		<div
+			class={styles.toggle}
+			onclick={toggleActive}
+			data-direction={props.direction}
+		>V</div>
+	</Show>
+	</>
+};
+
+export default Messages;

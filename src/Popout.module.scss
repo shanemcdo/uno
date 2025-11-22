@@ -1,0 +1,43 @@
+$top: 10vh;
+
+
+.toggle {
+  position: absolute;
+  background: #ddd;
+  top: $top;
+  padding: 0.5rem;
+  cursor: pointer;
+
+  &[data-direction="left"] {
+    left: 0;
+  }
+
+  &[data-direction="right"] {
+    right: 0;
+  }
+}
+
+.container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 20vw;
+  top: $top;
+  background: #333;
+  transition: translate 0.3s ease-in;
+
+  &[data-direction="left"] {
+    left: 0;
+    translate: -100% 0;
+  }
+
+  &[data-direction="right"] {
+    right: 0;
+    translate: 100% 0;
+  }
+
+  &.active {
+    translate: none;
+  }
+}
