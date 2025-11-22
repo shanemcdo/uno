@@ -1,5 +1,36 @@
 $top: 10vh;
+$roundness: 1.5rem;
 
+@mixin rounded-top {
+  &[data-direction="left"] {
+    border-top-right-radius: $roundness;
+  }
+
+  &[data-direction="right"] {
+    border-top-left-radius: $roundness;
+  }
+}
+
+@mixin rounded-bottom {
+  &[data-direction="left"] {
+    border-bottom-right-radius: $roundness;
+  }
+
+  &[data-direction="right"] {
+    border-bottom-left-radius: $roundness;
+  }
+}
+
+@mixin rounded {
+  @include rounded-top;
+  @include rounded-bottom;
+}
+
+.close {
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
 
 .toggle {
   position: absolute;
@@ -7,37 +38,51 @@ $top: 10vh;
   top: $top;
   padding: 0.5rem;
   cursor: pointer;
+  border: 1px solid black;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 
   &[data-direction="left"] {
     left: 0;
+    border-left: none;
   }
 
   &[data-direction="right"] {
     right: 0;
+    border-right: none;
   }
+
+  @include rounded;
 }
 
 .container {
   position: absolute;
   display: flex;
   flex-direction: column;
-  height: 80vh;
+  height: 100vh - 2 * $top;
   width: 20vw;
   top: $top;
   background: #333;
   transition: translate 0.3s ease-in;
+  border: 1px solid black;
+  overflow: hidden;
 
   &[data-direction="left"] {
     left: 0;
     translate: -100% 0;
+    border-left: none;
   }
 
   &[data-direction="right"] {
     right: 0;
     translate: 100% 0;
+    border-right: none;
   }
 
   &.active {
     translate: none;
   }
+
+  @include rounded;
 }

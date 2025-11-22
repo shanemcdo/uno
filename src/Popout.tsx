@@ -21,6 +21,7 @@ const Popout: Component<Props> = props => {
 	return <>
 	<div class={popoutClasses()} data-direction={props.direction}>
 		<button
+			class={styles.close}
 			onclick={toggleActive}
 		>X</button>
 		{safeChildren()}
@@ -30,7 +31,7 @@ const Popout: Component<Props> = props => {
 			class={styles.toggle}
 			onclick={toggleActive}
 			data-direction={props.direction}
-		>V</div>
+		>{props.direction === Direction.Left ? '>' : '<'}</div>
 	</Show>
 	</>
 };
