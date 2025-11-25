@@ -6,12 +6,7 @@
   & > div {
     position: absolute;
     translate: -50% -50%;
-
-    @for $i from 1 through 1000 {
-      &:nth-child(#{$i}) {
-        rotate: 5deg * $i;
-      }
-    }
+    rotate: attr(data-rotation deg);
   }
 }
 

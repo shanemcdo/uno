@@ -4,7 +4,7 @@ import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData,
 import type { Card, Color, PlayedCard } from './deck';
 
 import { createStore } from 'solid-js/store';
-import { For, Show, createSignal } from 'solid-js';
+import { For, Index, Show, createSignal } from 'solid-js';
 import { ServerType, ClientType, State } from './types';
 import { CardType } from './deck';
 import Messages from './Messages';
@@ -14,6 +14,7 @@ import ColorPicker from './ColorPicker';
 import AdminControls from './AdminControls';
 
 import styles from './Game.module.scss'
+import { rand } from './rand';
 
 type Props = {
 	conn: DataConnection,
@@ -88,9 +89,11 @@ const Game: Component<Props> = props => {
 			<h2>{turnLabel()}</h2>
 			<Show when={gameData.topCards.length > 0}>
 				<div class={styles.top_card}>
-					<For each={gameData.topCards}>{ card =>
-						<CardComponent card={card} />
-					}</For>
+					<Index each={gameData.topCards}>{ card =>
+						<div data-rotation={rand(-30, 30)}>
+							<CardComponent card={card()} />
+						</div>
+					}</Index>
 				</div>
 			</Show>
 			<div class={styles.hand} data-card-count={gameData.hand.length}>
