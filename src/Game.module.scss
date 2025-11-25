@@ -20,7 +20,8 @@
   --card-area: clamp(0px, calc(5rem * var(--card-count)), 80vw);
   --spacing: calc(var(--card-area) / var(--card-count));
   --max-rotation: 45deg;
-  --rotation-interval: calc(var(--max-rotation) * 2 / var(--card-count));
+  --initial-rotation-interval: calc(var(--max-rotation) * 2 / var(--card-count));
+  --rotation-interval: var(--initial-rotation-interval);
   --scale: 1;
   --translateY: 0px;
 
@@ -28,12 +29,13 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    translate: -50% 0;
+    translate: -50% 50%;
     transition: transform ease-in 0.2s;
 
     &:hover {
       --scale: 1.2;
-      --translateY: -20%;
+      --translateY: -40%;
+      --rotation-interval: calc(var(--initial-rotation-interval) / 2);
       z-index: 3;
     }
 
