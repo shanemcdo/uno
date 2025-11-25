@@ -10,11 +10,10 @@ import styles from './CardComponent.module.scss'
 type Props = {
 	card: Partial<PlayedCard> & Card
 	onclick?: () => void,
-	disabled?: boolean,
+	disabled: boolean,
 }
 
-const CardComponent: Component<Props> = p => {
-	const props = mergeProps({ disabled: false }, p);
+const FaceUpCard: Component<Props> = props => {
 	return <div classList={{
 		[styles.card]: true,
 		[styles.clickable]: props.onclick !== undefined && !props.disabled,
@@ -37,7 +36,22 @@ const CardComponent: Component<Props> = p => {
 			</Match>
 		</Switch>
 	</div>
-	
+};
+
+const FaceDownCard: Component = () => <div class={styles.card} />;
+
+const CardComponent: Component<Partial<Props>> = p => {
+	const props = mergeProps({ disabled: false }, p);
+	return <Show
+		when={props.card !== undefined}
+		fallback={<FaceDownCard />}
+	>
+		<FaceUpCard
+			card={props.card!}
+			disabled={props.disabled}
+			onclick={props.onclick}
+		/>
+	</Show>
 };
 
 export default CardComponent;
