@@ -86,22 +86,23 @@ function sendUpdate() {
 	Object.entries(playerData).forEach(([id, player]) => {
 		player.conn.send({
 			type: ServerType.Update,
-			state,
-			yourTurn: turn === id && state === State.Playing,
-			yourHand: player.hand,
-			playableHand: player.hand.map(card => canPlayCard(topCard, card, drawInfo, adminProps.stacking)),
-			isAdmin: player.isAdmin,
-			topCard,
-			turnPlayerName: playerData[turn!].name,
-			otherPlayers: Object.entries(playerData)
-				.filter(([ other_id, _ ]) => id !== other_id )
-				.map(([ _, other ]) => ({
-					name: other.name,
-					cardCount: other.hand.length,
-				} as OtherPlayerData)),
-			drawInfo,
-			winner,
-			adminProps,
+			gameData: {
+				state,
+				yourTurn: turn === id && state === State.Playing,
+				hand: player.hand,
+				playableHand: player.hand.map(card => canPlayCard(topCard, card, drawInfo, adminProps.stacking)),
+				isAdmin: player.isAdmin,
+				topCard,
+				turnPlayerName: playerData[turn!].name,
+				otherPlayers: Object.entries(playerData)
+					.filter(([ other_id, _ ]) => id !== other_id )
+					.map(([ _, other ]) => ({
+						name: other.name,
+						cardCount: other.hand.length,
+					} as OtherPlayerData)),
+				winner,
+				adminProps,
+			}
 		} as GameUpdate);
 	});
 }

@@ -1,8 +1,9 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
-import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard, DrawCard, RestartGame, AdminUpdates, AdminProps } from './types';
+import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard, DrawCard, RestartGame, AdminUpdates, AdminProps, GameData } from './types';
 import type { Card, Color, PlayedCard } from './deck';
 
+import { createStore } from 'solid-js/store';
 import { For, Show, createSignal } from 'solid-js';
 import { ServerType, ClientType, State } from './types';
 import { CardType } from './deck';
@@ -30,18 +31,17 @@ const Game: Component<Props> = props => {
 	const addMessage = (message: Message) => {
 		setMessages([...messages(), message]);
 	}
-	const [state, setState] = createSignal(State.Waiting);
-	const [yourTurn, setYourTurn] = createSignal(false);
-	const [hand, setHand] = createSignal<Card[]>([]);
-	const [playableHand, setPlayableHand] = createSignal<boolean[]>([]);
-	const [isAdmin, setIsAdmin] = createSignal(false);
-	const [topCard, setTopCard] = createSignal<PlayedCard | null>(null);
-	const [turnPlayerName, setTurnPlayerName] = createSignal('');
-	const [otherPlayers, setOtherPlayers] = createSignal<OtherPlayerData[]>([]);
+	const [gameData, setGameData] = createStore<GameData>({
+		state: State.Waiting,
+		yourTurn: false,
+		hand: [],
+		playableHand: [],
+		isAdmin: false,
+		turnPlayerName: '',
+		otherPlayers: [],
+	});
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
-	const [winner, setWinner] = createSignal<string | undefined>(undefined);
-	const [adminProps, setAdminProps] = createSignal<AdminProps | null>(null);
-	const turnLabel = () => yourTurn() ? 'Your Turn' : `${turnPlayerName()}'s turn`;
+	const turnLabel = () => gameData.yourTurn ? 'Your Turn' : `${gameData.turnPlayerName}'s turn`;
 	window.addEventListener('beforeunload', () => {
 		props.conn.close();
 	});
@@ -55,16 +55,7 @@ const Game: Component<Props> = props => {
 			addMessage(d);
 			break;
 		case ServerType.Update:
-			setState(d.state);
-			setYourTurn(d.yourTurn);
-			setHand(d.yourHand);
-			setPlayableHand(d.playableHand);
-			setIsAdmin(d.isAdmin);
-			setTopCard(d.topCard);
-			setTurnPlayerName(d.turnPlayerName);
-			setOtherPlayers(d.otherPlayers);
-			setWinner(d.winner);
-			setAdminProps(d.adminProps);
+			setGameData(d.gameData);
 			break;
 		}
 	});
@@ -94,19 +85,19 @@ const Game: Component<Props> = props => {
 				target="_blank"
 			>Sharable Link</a>
 			<h2>{turnLabel()}</h2>
-			<Show when={topCard() !== null}>
+			<Show when={gameData.topCard !== undefined}>
 				<div class={styles.top_card}>
 					TopCard:
-					<CardComponent card={topCard()!} />
+					<CardComponent card={gameData.topCard!} />
 				</div>
 			</Show>
-			<div class={styles.hand} data-card-count={hand().length}>
-				<For each={hand()}>{ (card, index) =>
+			<div class={styles.hand} data-card-count={gameData.hand.length}>
+				<For each={gameData.hand}>{ (card, index) =>
 					<CardComponent
 						card={card}
-						disabled={!yourTurn() || !playableHand()[index()]}
+						disabled={!gameData.yourTurn || !gameData.playableHand[index()]}
 						onclick={() => {
-							if(!yourTurn()) return;
+							if(!gameData.yourTurn) return;
 							if(card.type === CardType.Wild) {
 								setColorPickerCallback(() => (color: Color) => {
 									props.conn.send({
@@ -128,7 +119,7 @@ const Game: Component<Props> = props => {
 			</div>
 			<button
 				class={styles.draw_button}
-				disabled={!yourTurn()}
+				disabled={!gameData.yourTurn}
 				onclick={() => {
 					props.conn.send({ 
 						type: ClientType.DrawCard,
@@ -138,13 +129,13 @@ const Game: Component<Props> = props => {
 			<Show when={colorPickerCallback()}>
 				<ColorPicker callback={colorPickerCallback()!} cancelCallback={() => setColorPickerCallback(null)} />
 			</Show>
-			<Show when={state() === State.Waiting || state() === State.GameOver}>
+			<Show when={gameData.state === State.Waiting || gameData.state === State.GameOver}>
 				<div class={styles.popup}>
-					<Show when={state() === State.Waiting}>
+					<Show when={gameData.state === State.Waiting}>
 						<h1>Waiting for more players to join...</h1>
 					</Show>
-					<Show when={state() === State.GameOver}>
-						<h1>{winner()} Won!</h1>
+					<Show when={gameData.state === State.GameOver}>
+						<h1>{gameData.winner} Won!</h1>
 						<button
 							onclick={() => {
 								props.conn.send({ type: ClientType.RestartGame } as RestartGame);
@@ -153,7 +144,7 @@ const Game: Component<Props> = props => {
 					</Show>
 				</div>
 			</Show>
-			<Show when={!(adminProps()?.disableChat ?? false)}>
+			<Show when={!(gameData.adminProps?.disableChat ?? false)}>
 				<Messages
 					sendMessage={ message => {
 						props.conn.send({ type: ClientType.Message, message } as MessageRequest);
@@ -161,10 +152,10 @@ const Game: Component<Props> = props => {
 					messages={messages()}
 				/>
 			</Show>
-			<Show when={adminProps() !== null}>
+			<Show when={gameData.adminProps !== undefined}>
 				<AdminControls
-					isAdmin={isAdmin()}
-					startingProps={adminProps()!}
+					isAdmin={gameData.isAdmin}
+					startingProps={gameData.adminProps!}
 					callback={(adminProps: AdminProps) => {
 						props.conn.send({
 							type: ClientType.AdminUpdates,

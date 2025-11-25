@@ -39,6 +39,19 @@ export const drawCardMethods = Object.freeze([
 	DrawCardMethod.Random,
 ]);
 
+export type GameData = {
+	state: State,
+	yourTurn: boolean,
+	hand: Card[],
+	playableHand: boolean[]
+	isAdmin: boolean,
+	topCard?: PlayedCard,
+	turnPlayerName: string,
+	otherPlayers: OtherPlayerData[],
+	winner?: string,
+	adminProps?: AdminProps,
+};
+
 // sent by server side
 export enum ServerType {
 	Name,
@@ -60,17 +73,7 @@ export type MessageBroadcast = {
 
 export type GameUpdate = {
 	type: ServerType.Update,
-	state: State,
-	yourTurn: boolean,
-	yourHand: Card[],
-	playableHand: boolean[],
-	isAdmin: boolean,
-	topCard: PlayedCard,
-	turnPlayerName: string,
-	otherPlayers: OtherPlayerData[],
-	drawInfo: DrawInfo,
-	winner?: string,
-	adminProps: AdminProps,
+	gameData: GameData,
 };
 
 export type ServerData = NameValidation | MessageBroadcast | GameUpdate;
