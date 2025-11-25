@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js';
 import type { DataConnection } from 'peerjs'
-import type { Message, OtherPlayerData, MessageRequest, NameRequest, ServerData, PlayCard, DrawCard, RestartGame, AdminUpdates, AdminProps, GameData } from './types';
-import type { Card, Color, PlayedCard } from './deck';
+import type { Message, MessageRequest, NameRequest, ServerData, PlayCard, DrawCard, RestartGame, AdminUpdates, AdminProps, GameData } from './types';
+import type { Color } from './deck';
 
 import { createStore } from 'solid-js/store';
 import { For, Index, Show, createSignal } from 'solid-js';
