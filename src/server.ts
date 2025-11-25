@@ -32,7 +32,8 @@ let adminProps: AdminProps = {
 };
 let turn: string | null = null;
 let currentDeck: Card[] = shuffle(deepClone(deck));
-let topCard = drawNonWildCard();
+let topCards = [drawNonWildCard()];
+const getTopCard = () => topCards[topCards.length - 1];
 let direction = Direction.Forward;
 let drawInfo: DrawInfo = { type: DrawType.None };
 let winner: string | undefined = undefined;
@@ -90,9 +91,9 @@ function sendUpdate() {
 				state,
 				yourTurn: turn === id && state === State.Playing,
 				hand: player.hand,
-				playableHand: player.hand.map(card => canPlayCard(topCard, card, drawInfo, adminProps.stacking)),
+				playableHand: player.hand.map(card => canPlayCard(getTopCard(), card, drawInfo, adminProps.stacking)),
 				isAdmin: player.isAdmin,
-				topCard,
+				topCards,
 				turnPlayerName: playerData[turn!].name,
 				otherPlayers: Object.entries(playerData)
 					.filter(([ other_id, _ ]) => id !== other_id )
@@ -115,7 +116,7 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 	const player = playerData[player_id]
 	const card = player.hand[event.index];
 	let skip = false;
-	if(!canPlayCard(topCard, card, drawInfo, adminProps.stacking)) {
+	if(!canPlayCard(getTopCard(), card, drawInfo, adminProps.stacking)) {
 		console.error('User tried to play a card they are not allowed to');
 		return;
 	}
@@ -125,7 +126,7 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 		state = State.GameOver;
 	}
 	if(card.type !== CardType.Wild) {
-		topCard = card;
+		topCards.push(card);
 		if(card.type === CardType.Action) {
 			switch(card.action){
 			case ActionType.Draw2:
@@ -166,10 +167,10 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 				count,
 			};
 		}
-		topCard = {
+		topCards.push({
 			color: event.color!,
 			...card,
-		};
+		});
 	}
 	getNextTurn(skip);
 	sendUpdate();

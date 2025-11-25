@@ -39,6 +39,7 @@ const Game: Component<Props> = props => {
 		isAdmin: false,
 		turnPlayerName: '',
 		otherPlayers: [],
+		topCards: [],
 	});
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
 	const turnLabel = () => gameData.yourTurn ? 'Your Turn' : `${gameData.turnPlayerName}'s turn`;
@@ -85,10 +86,11 @@ const Game: Component<Props> = props => {
 				target="_blank"
 			>Sharable Link</a>
 			<h2>{turnLabel()}</h2>
-			<Show when={gameData.topCard !== undefined}>
+			<Show when={gameData.topCards.length > 0}>
 				<div class={styles.top_card}>
-					TopCard:
-					<CardComponent card={gameData.topCard!} />
+					<For each={gameData.topCards}>{ card =>
+						<CardComponent card={card} />
+					}</For>
 				</div>
 			</Show>
 			<div class={styles.hand} data-card-count={gameData.hand.length}>

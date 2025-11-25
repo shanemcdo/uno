@@ -45,7 +45,7 @@ export type GameData = {
 	hand: Card[],
 	playableHand: boolean[]
 	isAdmin: boolean,
-	topCard?: PlayedCard,
+	topCards: PlayedCard[],
 	turnPlayerName: string,
 	otherPlayers: OtherPlayerData[],
 	winner?: string,
