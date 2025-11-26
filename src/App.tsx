@@ -6,7 +6,7 @@ import { createSignal, Show } from 'solid-js';
 import { createServer } from './server';
 import Loading from './Loading';
 import Game from './Game';
-import styles from './App.module.css';
+import styles from './App.module.scss';
 import StringInput from './StringInput';
 
 const peer = new Peer();
