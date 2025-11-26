@@ -1,0 +1,14 @@
+@mixin standard-input {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  background: var(--bg);
+  color: var(--text);
+
+  &:disabled {
+    color: var(--bg-light);
+    border-color: var(--bg-light);
+    background: inherit;
+    cursor: not-allowed !important;
+  }
+}

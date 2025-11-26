@@ -1,3 +1,5 @@
+@use './input';
+
 .name_input{
     justify-content: center;
     align-items: center;
@@ -5,11 +7,7 @@
     height: 100%;
 
     input {
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      background: var(--bg);
-      color: var(--text);
+      @include input.standard-input;
       font-size: 1.8rem;
     }
 }
