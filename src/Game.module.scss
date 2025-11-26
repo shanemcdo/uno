@@ -68,5 +68,16 @@
   top: 20vh;
   left: 20vw;
   text-align: center;
-  background: var(--bg-light);
+  background: var(--bg);
+  border: solid 1px var(--border);
+  border-radius: 1.5rem;
+
+  button {
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: var(--bg-light);
+    color: var(--text);
+    font-size: 2rem;
+  }
 }
