@@ -63,12 +63,14 @@ const Game: Component<Props> = props => {
 	});
 
 	const nameInput =
-		<StringInput
-			placeholder="Enter Name"
-			callback={ name => {
-				props.conn.send({ type: ClientType.Name, name } as NameRequest);
-			}}
-		/>;
+		<div class={styles.name_input}>
+			<StringInput
+				placeholder="Enter Name"
+				callback={ name => {
+					props.conn.send({ type: ClientType.Name, name } as NameRequest);
+				}}
+			/>
+		</div>;
 
 	const topCard =
 		<Show when={gameData.topCards.length > 0}>

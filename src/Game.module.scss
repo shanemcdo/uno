@@ -1,3 +1,19 @@
+.name_input{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+
+    input {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1.8rem;
+    }
+}
+
 .top_card {
   position: absolute;
   top: 50vh;
