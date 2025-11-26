@@ -5,6 +5,11 @@
     align-items: center;
     display: flex;
     height: 100%;
+    text-align: center;
+
+    h1 {
+      font-size: 3rem;
+    }
 
     input {
       @include input.standard-input;

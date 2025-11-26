@@ -64,12 +64,15 @@ const Game: Component<Props> = props => {
 
 	const nameInput =
 		<div class={styles.name_input}>
-			<StringInput
-				placeholder="Enter Name"
-				callback={ name => {
-					props.conn.send({ type: ClientType.Name, name } as NameRequest);
-				}}
-			/>
+			<div>
+				<h1>Enter Name</h1>
+				<StringInput
+					placeholder="Enter Name"
+					callback={ name => {
+						props.conn.send({ type: ClientType.Name, name } as NameRequest);
+					}}
+				/>
+			</div>
 		</div>;
 
 	const topCard =
