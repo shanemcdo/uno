@@ -169,7 +169,6 @@ const Game: Component<Props> = props => {
 		</Show>
 
 	return <>
-		{props.conn.peer}
 		<Show
 			when={ name() }
 			fallback={ nameInput }
