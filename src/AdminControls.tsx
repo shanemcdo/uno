@@ -127,7 +127,9 @@ const AdminControls: Component<Props> = props => {
 
 	return <>
 	<Popout direction={Direction.Right}>
-		<h1>Admin Controls</h1>
+		<h1>Admin {props.isAdmin
+			? 'Controls'
+			: 'Rules'}</h1>
 		<div class={styles.grid}>
 			<CheckboxControls
 				label="Stacking"
