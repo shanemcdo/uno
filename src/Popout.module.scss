@@ -30,15 +30,17 @@ $roundness: 1.5rem;
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .toggle {
   position: absolute;
-  background: #ddd;
+  background: var(--bg-light);
   top: $top;
   padding: 0.5rem;
   cursor: pointer;
-  border: 1px solid black;
+  border: 1px solid var(--border);
   align-items: center;
   justify-content: center;
   font-weight: bold;
@@ -63,9 +65,9 @@ $roundness: 1.5rem;
   height: 100vh - 2 * $top;
   width: 20vw;
   top: $top;
-  background: #333;
+  background: var(--bg-light);
   transition: translate 0.3s ease-in;
-  border: 1px solid black;
+  border: 1px solid var(--border);
   overflow: hidden;
 
   &[data-direction="left"] {

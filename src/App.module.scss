@@ -1,5 +1,20 @@
 .App {
   height: 100%;
+  $hue: 0;
+  $sat: 0%;
+  --bg-dark: hsl(#{$hue}, #{$sat}, 0%);
+  --bg: hsl(#{$hue}, #{$sat}, 5%);
+  --bg-light: hsl(#{$hue}, #{$sat}, 10%);
+  --border: hsl(#{$hue}, #{$sat}, 40%);
+  --text-muted: hsl(#{$hue}, #{$sat}, 70%);
+  --text: hsl(#{$hue}, #{$sat}, 95%);
+  background: var(--bg-dark);
+  color: var(--text);
+
+  input {
+    background: var(--bg);
+    color: var(--text);
+  }
 }
 
 .loading {
@@ -25,14 +40,16 @@
   input {
     color: inherit;
     border-radius: 10px;
-    border: 1px solid black;
+    border: 1px solid var(--border);
     cursor: pointer;
+    background: var(--bg);
+    color: var(--text);
 
     &:disabled {
-      color: grey;
-      border-color: grey;
+      color: var(--bg-light);
+      border-color: var(--bg-light);
       background: inherit;
-      cursor: not-allowed;
+      cursor: not-allowed !important;
     }
   }
 }
@@ -44,7 +61,7 @@
 
 .vert_bar {
   flex: 1;
-  background: linear-gradient(black, black) no-repeat center/2px 100%;
+  background: linear-gradient(var(--text), var(--text)) no-repeat center/2px 100%;
   margin: 10px 0;
 }
 
