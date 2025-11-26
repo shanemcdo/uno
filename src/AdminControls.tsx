@@ -96,7 +96,7 @@ const AdminControls: Component<Props> = props => {
 		accessor: Accessor<DrawCardMethod>
 		setter: Setter<DrawCardMethod>
 		label: string,
-		choices: DrawCardMethod[],
+		choices: readonly DrawCardMethod[],
 	}> = controlsProps => {
 		const id = controlsProps.label.replaceAll(' ', '-') + '-id';
 		return <>
