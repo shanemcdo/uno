@@ -21,7 +21,7 @@
 .other_players {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   --player-count: attr(data-player-count type(<number>));
 
   & > .other_player {
