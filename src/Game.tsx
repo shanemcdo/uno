@@ -43,7 +43,7 @@ const Game: Component<Props> = props => {
 		topCards: [],
 	});
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
-	const turnLabel = () => gameData.yourTurn ? 'Your Turn' : `${gameData.turnPlayerName}'s turn`;
+	const turnLabel = () => (gameData.yourTurn ? 'Your' : `${gameData.turnPlayerName}'s`) + ' Turn';
 	window.addEventListener('beforeunload', () => {
 		props.conn.close();
 	});
@@ -77,12 +77,15 @@ const Game: Component<Props> = props => {
 
 	const topCard =
 		<Show when={gameData.topCards.length > 0}>
-			<div class={styles.top_card}>
-				<Index each={gameData.topCards}>{ card =>
-					<div data-rotation={rand(-30, 30)}>
-						<CardComponent card={card()} />
-					</div>
-				}</Index>
+			<div class={styles.top_card_wrapper}>
+				<h2>{turnLabel()}</h2>
+				<div class={styles.top_card}>
+					<Index each={gameData.topCards}>{ card =>
+						<div data-rotation={rand(-30, 30)}>
+							<CardComponent card={card()} />
+						</div>
+					}</Index>
+				</div>
 			</div>
 		</Show>;
 
@@ -176,7 +179,6 @@ const Game: Component<Props> = props => {
 			when={ name() }
 			fallback={ nameInput }
 		>
-			<h2>{name()}</h2>
 			<input
 				type="button"
 				value="Close"
@@ -188,7 +190,6 @@ const Game: Component<Props> = props => {
 				href={url()}
 				target="_blank"
 			>Sharable Link</a>
-			<h2>{turnLabel()}</h2>
 			{topCard}
 			{hand}
 			{drawCardButton}

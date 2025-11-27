@@ -1,4 +1,5 @@
 @use './input';
+@use './CardComponent.module' as card;
 
 .name_input{
     justify-content: center;
@@ -17,15 +18,25 @@
     }
 }
 
-.top_card {
+.top_card_wrapper {
   position: absolute;
-  top: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 55vh;
   left: 50vw;
+  translate: -50% -50%;
 
-  & > div {
-    position: absolute;
-    translate: -50% -50%;
-    rotate: attr(data-rotation deg);
+  & > .top_card {
+    position: relative;
+    width: card.$width;
+    aspect-ratio: card.$aspect-ratio;
+
+    & > div {
+      position: absolute;
+      transform-origin: center;
+      transform: rotate(attr(data-rotation deg));
+    }
   }
 }
 
