@@ -93,7 +93,7 @@ const Game: Component<Props> = props => {
 	const topCard =
 		<Show when={gameData.topCards.length > 0}>
 			<div class={styles.top_card_wrapper}>
-				<h2>{turnLabel()}</h2>
+				<h2 data-your-turn={gameData.yourTurn}>{turnLabel()}</h2>
 				<div class={styles.top_card}>
 					<Index each={gameData.topCards}>{ card =>
 						<div data-rotation={rand(-30, 30)}>

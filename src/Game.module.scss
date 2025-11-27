@@ -63,6 +63,16 @@
   left: 50vw;
   translate: -50% -50%;
 
+  & > h2 {
+    &[data-your-turn="true"] {
+      color: var(--text);
+    }
+
+    &[data-your-turn="false"] {
+      color: var(--text-muted);
+    }
+  }
+
   & > .top_card {
     position: relative;
     width: card.$width;
