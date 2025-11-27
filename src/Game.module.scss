@@ -25,7 +25,7 @@
   --player-count: attr(data-player-count type(<number>));
 
   & > .other_player {
-    
+
     & > .other_player_hand {
       position: relative;
       --card-count: attr(data-card-count type(<number>));
