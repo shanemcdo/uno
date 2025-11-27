@@ -54,6 +54,31 @@
   }
 }
 
+.toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 1.5rem 0;
+  display: flex;
+
+  & > a {
+    border: 1px solid var(--border);
+    background: var(--bg-light);
+    width: 3rem;
+    height: 3rem;
+    margin: 0.5rem;
+    cursor: pointer;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .top_card_wrapper {
   position: absolute;
   display: flex;

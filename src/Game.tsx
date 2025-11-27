@@ -90,6 +90,28 @@ const Game: Component<Props> = props => {
 			}}</For>
 		</div>;
 
+	const toolbar =
+		<div class={styles.toolbar}>
+			<a
+				onclick={() => {
+					props.conn.close();
+				}}
+			>Close</a>
+			<a
+				onclick={() => {
+					// TODO: open popup for this
+				}}
+			>options</a>
+			<a
+				href="https://github.com/shanemcdo/uno/"
+				target="_blank"
+			>GitHub</a>
+			<a
+				href={url()}
+				target="_blank"
+			>Sharable Link</a>
+		</div>;
+
 	const topCard =
 		<Show when={gameData.topCards.length > 0}>
 			<div class={styles.top_card_wrapper}>
@@ -194,18 +216,8 @@ const Game: Component<Props> = props => {
 			when={ name() }
 			fallback={ nameInput }
 		>
-			<input
-				type="button"
-				value="Close"
-				onclick={() => {
-					props.conn.close();
-				}}
-			/>
-			<a
-				href={url()}
-				target="_blank"
-			>Sharable Link</a>
 			{otherPlayers}
+			{toolbar}
 			{topCard}
 			{hand}
 			{drawCardButton}
