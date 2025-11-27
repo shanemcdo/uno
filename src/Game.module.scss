@@ -1,21 +1,48 @@
 @use './input';
 @use './CardComponent.module' as card;
 
+@mixin card-count-attr {
+  --card-count: attr(data-card-count type(<number>));
+  --card-area: clamp(0px, calc(5rem * var(--card-count)), 80vw);
+  --spacing: calc(var(--card-area) / var(--card-count));
+  --max-rotation: 45deg;
+  --initial-rotation-interval: calc(var(--max-rotation) * 2 / var(--card-count));
+  --rotation-interval: var(--initial-rotation-interval);
+  --scale: 1;
+  --translateY: 0px;
+
+  & > div {
+    position: absolute;
+
+    @for $i from 1 through 100 {
+      &:nth-child(#{$i}) {
+        --scalar: calc((#{$i} - var(--card-count) / 2) - 0.5);
+        --rotation: calc(var(--scalar) * var(--rotation-interval));
+        transform:
+          translateX(calc(var(--scalar) * var(--spacing)))
+          translateY(calc(var(--translateY) + cos(var(--rotation) * 2) * var(--spacing) * -0.8 ))
+          rotate(var(--rotation))
+          scale(var(--scale));
+      }
+    }
+  }
+}
+
 .name_input{
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    height: 100%;
-    text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  text-align: center;
 
-    h1 {
-      font-size: 3rem;
-    }
+  h1 {
+    font-size: 3rem;
+  }
 
-    input {
-      @include input.standard-input;
-      font-size: 1.8rem;
-    }
+  input {
+    @include input.standard-input;
+    font-size: 1.8rem;
+  }
 }
 
 .other_players {
@@ -28,27 +55,13 @@
 
     & > .other_player_hand {
       position: relative;
-      --card-count: attr(data-card-count type(<number>));
+      @include card-count-attr;
       --card-area: clamp(0px, calc(1rem * var(--card-count)), 20vw);
-      --spacing: calc(var(--card-area) / var(--card-count));
       --max-rotation: 15deg;
-      --rotation-interval: calc(var(--max-rotation) * 2 / var(--card-count));
 
       & > div {
-        position: absolute;
         top: 0;
         left: 0;
-
-        @for $i from 1 through 100 {
-          &:nth-child(#{$i}) {
-            --scalar: calc((#{$i} - var(--card-count) / 2) - 0.5);
-            --rotation: calc(var(--scalar) * var(--rotation-interval));
-            transform:
-              translateX(calc(var(--scalar) * var(--spacing)))
-              translateY(calc(cos(var(--rotation) * 2) * var(--spacing) * -0.8 ))
-              rotateZ(var(--rotation));
-          }
-        }
       }
     }
   }
@@ -125,39 +138,20 @@
   height: 0;
   bottom: 0;
   left: 50vw;
-  --card-count: attr(data-card-count type(<number>));
-  --card-area: clamp(0px, calc(5rem * var(--card-count)), 80vw);
-  --spacing: calc(var(--card-area) / var(--card-count));
-  --max-rotation: 45deg;
-  --initial-rotation-interval: calc(var(--max-rotation) * 2 / var(--card-count));
-  --rotation-interval: var(--initial-rotation-interval);
-  --scale: 1;
-  --translateY: 0px;
 
-  & > div {
-    position: absolute;
+  @include card-count-attr;
+
+  & > div { 
     bottom: 0;
     left: 0;
     translate: -50% 50%;
     transition: transform ease-in 0.2s;
-
+    
     &:hover {
       --scale: 1.2;
       --translateY: -40%;
       --rotation-interval: calc(var(--initial-rotation-interval) / 2);
       z-index: 3;
-    }
-
-    @for $i from 1 through 100 {
-      &:nth-child(#{$i}) {
-        --scalar: calc((#{$i} - var(--card-count) / 2) - 0.5);
-        --rotation: calc(var(--scalar) * var(--rotation-interval));
-        transform:
-          translateX(calc(var(--scalar) * var(--spacing)))
-          translateY(calc(var(--translateY) + cos(var(--rotation) * 2) * var(--spacing) * -0.8 ))
-          rotate(var(--rotation))
-          scale(var(--scale));
-      }
     }
   }
 }
