@@ -12,6 +12,7 @@ import StringInput from './StringInput';
 import CardComponent from './CardComponent';
 import ColorPicker from './ColorPicker';
 import AdminControls from './AdminControls';
+import Repeat from './Repeat';
 
 import styles from './Game.module.scss'
 import { rand } from './rand';
@@ -73,6 +74,20 @@ const Game: Component<Props> = props => {
 					}}
 				/>
 			</div>
+		</div>;
+
+	const otherPlayers =
+		<div class={styles.other_players} data-player-count={gameData.otherPlayers.length}>
+			<For each={gameData.otherPlayers}>{ otherPlayer => {
+				return <div class={styles.other_player}>
+					<h3>{otherPlayer.name}</h3>
+					<div class={styles.other_player_hand} data-card-count={otherPlayer.cardCount}>
+						<Repeat count={otherPlayer.cardCount}>
+							<CardComponent />
+						</Repeat>
+					</div>
+				</div>;
+			}}</For>
 		</div>;
 
 	const topCard =
@@ -190,6 +205,7 @@ const Game: Component<Props> = props => {
 				href={url()}
 				target="_blank"
 			>Sharable Link</a>
+			{otherPlayers}
 			{topCard}
 			{hand}
 			{drawCardButton}

@@ -18,6 +18,42 @@
     }
 }
 
+.other_players {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  --player-count: attr(data-player-count type(<number>));
+
+  & > .other_player {
+    
+    & > .other_player_hand {
+      position: relative;
+      --card-count: attr(data-card-count type(<number>));
+      --card-area: clamp(0px, calc(1rem * var(--card-count)), 20vw);
+      --spacing: calc(var(--card-area) / var(--card-count));
+      --max-rotation: 15deg;
+      --rotation-interval: calc(var(--max-rotation) * 2 / var(--card-count));
+
+      & > div {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        @for $i from 1 through 100 {
+          &:nth-child(#{$i}) {
+            --scalar: calc((#{$i} - var(--card-count) / 2) - 0.5);
+            --rotation: calc(var(--scalar) * var(--rotation-interval));
+            transform:
+              translateX(calc(var(--scalar) * var(--spacing)))
+              translateY(calc(cos(var(--rotation) * 2) * var(--spacing) * -0.8 ))
+              rotateZ(var(--rotation));
+          }
+        }
+      }
+    }
+  }
+}
+
 .top_card_wrapper {
   position: absolute;
   display: flex;
