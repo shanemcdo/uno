@@ -5,6 +5,8 @@ import type { Color } from './deck';
 
 import { createStore } from 'solid-js/store';
 import { For, Index, Show, createSignal } from 'solid-js';
+import { FaBrandsGithub, FaSolidGear, FaSolidShareFromSquare } from 'solid-icons/fa'
+import { IoCloseCircle } from 'solid-icons/io'
 import { ServerType, ClientType, State } from './types';
 import { CardType } from './deck';
 import Messages from './Messages';
@@ -96,20 +98,20 @@ const Game: Component<Props> = props => {
 				onclick={() => {
 					props.conn.close();
 				}}
-			>Close</a>
+			><IoCloseCircle /></a>
 			<a
 				onclick={() => {
 					// TODO: open popup for this
 				}}
-			>options</a>
+			><FaSolidGear /></a>
 			<a
 				href="https://github.com/shanemcdo/uno/"
 				target="_blank"
-			>GitHub</a>
+			><FaBrandsGithub /></a>
 			<a
 				href={url()}
 				target="_blank"
-			>Sharable Link</a>
+			><FaSolidShareFromSquare /></a>
 		</div>;
 
 	const topCard =

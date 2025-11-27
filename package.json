@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "peerjs": "^1.5.5",
+    "solid-icons": "^1.1.0",
     "solid-js": "^1.9.10"
   }
 }

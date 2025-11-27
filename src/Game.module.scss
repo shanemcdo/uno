@@ -62,20 +62,28 @@
   border: 1px solid var(--border);
   border-left: none;
   border-top: none;
-  border-radius: 0 0 1.5rem 0;
+  border-radius: 0 0 1rem 0;
   display: flex;
 
   & > a {
     border: 1px solid var(--border);
     background: var(--bg-light);
-    width: 3rem;
-    height: 3rem;
-    margin: 0.5rem;
+    --size: 1.8rem;
+    width: var(--size);
+    height: var(--size);
+    font-size: var(--size);
+    padding: 0.3rem;
+    margin: 0.3rem;
     cursor: pointer;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--text);
+    
+    &:visited {
+      color: var(--text-muted);
+    }
   }
 }
 
