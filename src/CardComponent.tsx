@@ -48,7 +48,11 @@ const FaceUpCard: Component<Props> = props => {
 				</div>
 			</Match>
 			<Match when={props.card.type === CardType.Wild}>
-				<div class={styles.wild_oval} />
+				<div class={styles.wild_oval}>
+					<Show when={(props.card as PlayedWildCard).wildType === WildType.WildDraw4}>
+						<span>+4</span>
+					</Show>
+				</div>
 				<Show when={(props.card as PlayedWildCard).wildType === WildType.WildDraw4}>
 				</Show>
 			</Match>

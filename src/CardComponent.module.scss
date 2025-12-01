@@ -61,6 +61,10 @@ $oval-rotation: 25deg;
       #{colors.$green} 180deg 270deg + $oval-rotation,
       #{colors.$yellow} 270deg + $oval-rotation 360deg
     );
+
+    & > span {
+      font-size: 2.5rem;
+    }
   }
 }
 
