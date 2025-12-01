@@ -14,7 +14,6 @@ $width: 6rem;
 
   & > span {
     font-weight: 900;
-    font-size: 2rem;
     rotate: -40deg;
   }
 }
@@ -36,7 +35,18 @@ $width: 6rem;
     @include card-oval;
 
     & > span {
+      font-size: 2rem;
       color: colors.$logo-font-color;
+    }
+  }
+
+  & > .number_oval {
+    background: colors.$back;
+    @include card-oval;
+
+    & > span {
+      font-size: 3rem;
+      color: var(--data-color);
     }
   }
 }

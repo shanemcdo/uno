@@ -7,18 +7,22 @@ $logo-font-color: hsl(49, 83%, 47%);
 
 @mixin data-backgrounds {
   &[data-color="Red"] {
+    --data-color: #{$red};
     background: $red;
   }
 
   &[data-color="Yellow"] {
+    --data-color: #{$yellow};
     background: $yellow;
   }
 
   &[data-color="Green"] {
+    --data-color: #{$green};
     background: $green;
   }
 
   &[data-color="Blue"] {
+    --data-color: #{$blue};
     background: $blue;
   }
 }

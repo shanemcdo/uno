@@ -21,7 +21,9 @@ const FaceUpCard: Component<Props> = props => {
 	}} onclick={props.onclick} data-color={props.card.color} >
 		<Switch>
 			<Match when={props.card.type === CardType.Number}>
-				Number: {(props.card as NumberCard).color} {(props.card as NumberCard).number} 
+				<div class={styles.number_oval}>
+					<span>{(props.card as NumberCard).number}</span>
+				</div>
 			</Match>
 			<Match when={props.card.type === CardType.Action}>
 				Action: {(props.card as ActionCard).color} {(props.card as ActionCard).action}
