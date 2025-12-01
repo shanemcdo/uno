@@ -5,13 +5,13 @@
   top: 50%;
   left: 50%;
   margin: auto;
-  background: colors.$grey;
+  background: var(--bg-light);
   translate: -50% -50%;
   padding: 1rem;
   padding-top: 0;
   text-align: center;
   border-radius: 2rem;
-  border: 1px solid black;
+  border: 1px solid var(--border);
 
   h2 {
     margin-top: 0;
