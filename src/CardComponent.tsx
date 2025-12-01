@@ -31,6 +31,16 @@ const FaceUpCard: Component<Props> = props => {
 		}
 	}
 
+	const ActionCorner = () => {
+		if(props.card.type !== CardType.Action) {
+			return null;
+		}
+		if(props.card.action === ActionType.Draw2) {
+			return '+2';
+		}
+		return <ActionIcon />;
+	}
+
 	return <div classList={{
 		[styles.card]: true,
 		[styles.clickable]: props.onclick !== undefined && !props.disabled,
@@ -38,23 +48,29 @@ const FaceUpCard: Component<Props> = props => {
 	}} onclick={props.onclick} data-color={props.card.color} >
 		<Switch>
 			<Match when={props.card.type === CardType.Number}>
+				<span class={styles.corner}>{(props.card as NumberCard).number}</span>
+				<span class={styles.corner}>{(props.card as NumberCard).number}</span>
 				<div class={styles.oval}>
 					<span>{(props.card as NumberCard).number}</span>
 				</div>
 			</Match>
 			<Match when={props.card.type === CardType.Action}>
+				<span class={styles.corner}><ActionCorner /></span>
+				<span class={styles.corner}><ActionCorner /></span>
 				<div class={styles.oval}>
 					<span><ActionIcon /></span>
 				</div>
 			</Match>
 			<Match when={props.card.type === CardType.Wild}>
+				<Show when={(props.card as PlayedWildCard).wildType === WildType.WildDraw4}>
+					<span class={styles.corner}>+4</span>
+					<span class={styles.corner}>+4</span>
+				</Show>
 				<div class={styles.wild_oval}>
 					<Show when={(props.card as PlayedWildCard).wildType === WildType.WildDraw4}>
 						<span>+4</span>
 					</Show>
 				</div>
-				<Show when={(props.card as PlayedWildCard).wildType === WildType.WildDraw4}>
-				</Show>
 			</Match>
 		</Switch>
 	</div>

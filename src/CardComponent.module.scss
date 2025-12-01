@@ -16,7 +16,7 @@ $oval-rotation: 25deg;
 
   & > span {
     font-weight: 900;
-    rotate: -15deg - $oval-rotation;
+    rotate: 15deg - $oval-rotation;
   }
 }
 
@@ -30,6 +30,24 @@ $oval-rotation: 25deg;
   align-items: center;
   justify-content: center;
   @include colors.data-backgrounds;
+
+  & > .corner {
+    position: absolute;
+    color: var(--text-muted);
+    $padding: 0.5rem;
+
+    &:first-child {
+
+      top: $padding;
+      left: $padding;
+    }
+
+    &:nth-child(2) {
+      bottom: $padding;
+      right: $padding;
+      rotate: 180deg;
+    }
+  }
 
   // this is just for card backs
   & > .logo {
