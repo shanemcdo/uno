@@ -45,16 +45,20 @@ const FaceUpCard: Component<Props> = props => {
 		return null;
 	}
 
+	const card_type_class = () => {
+		switch(props.card.type) {
+		case CardType.Number: return styles.number_card;
+		case CardType.Action: return styles.action_card;
+		case CardType.Wild: return styles.wild_card;
+		}
+	}
+
 	const Corner = () => {
 		const child = props.card.type === CardType.Action && props.card.action === ActionType.Draw2
 			? '+2'
 			: <CenterIcon />;
-		return <Show when={child}><span class={styles.corner}>{child}</span></Show>
+		return <Show when={child}><span class={`${styles.corner} ${card_type_class()}`}>{child}</span></Show>
 	}
-
-	const oval_class = () => props.card.type === CardType.Wild
-		? styles.wild_oval
-		: styles.oval;
 
 	return <div classList={{
 		[styles.card]: true,
@@ -63,14 +67,14 @@ const FaceUpCard: Component<Props> = props => {
 	}} onclick={props.onclick} data-color={props.card.color}>
 		<Corner />
 		<Corner />
-		<div class={oval_class()}>
+		<div class={`${styles.oval} ${card_type_class()}`}>
 			<span><CenterIcon /></span>
 		</div>
 	</div>;
 };
 
 const FaceDownCard: Component = () => <div class={styles.card}>
-	<div class={styles.logo}>
+	<div class={`${styles.oval} ${styles.logo}`}>
 		<span>UNO</span>
 	</div>
 </div>;

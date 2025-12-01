@@ -36,8 +36,11 @@ $oval-rotation: 25deg;
     color: var(--bg);
     $padding: 0.5rem;
 
-    &:first-child {
+    &.wild_card {
+      color: var(--text-muted);
+    }
 
+    &:first-child {
       top: $padding;
       left: $padding;
     }
@@ -49,40 +52,38 @@ $oval-rotation: 25deg;
     }
   }
 
-  // this is just for card backs
-  & > .logo {
-    background: colors.$red;
-    @include card-oval;
-
-    & > span {
-      font-size: 2rem;
-      color: colors.$logo-font-color;
-      rotate: -$oval-rotation * 2;
-    }
-  }
 
   & > .oval {
-    background: var(--bg);
     @include card-oval;
+    background: var(--bg);
 
     & > span {
       font-size: 3rem;
       color: var(--data-color);
     }
-  }
 
-  & > .wild_oval {
-    @include card-oval;
-    background: conic-gradient(
-      from -90deg - $oval-rotation,
-      #{colors.$red} 0deg 90deg + $oval-rotation,
-      #{colors.$blue} 90deg + $oval-rotation 180deg,
-      #{colors.$green} 180deg 270deg + $oval-rotation,
-      #{colors.$yellow} 270deg + $oval-rotation 360deg
-    );
+    &.logo {
+      background: colors.$red;
 
-    & > span {
-      font-size: 2.5rem;
+      & > span {
+        font-size: 2rem;
+        color: colors.$logo-font-color;
+        rotate: -$oval-rotation * 2;
+      }
+    }
+
+    &.wild_card {
+      background: conic-gradient(
+        from -90deg - $oval-rotation,
+        #{colors.$red} 0deg 90deg + $oval-rotation,
+        #{colors.$blue} 90deg + $oval-rotation 180deg,
+        #{colors.$green} 180deg 270deg + $oval-rotation,
+        #{colors.$yellow} 270deg + $oval-rotation 360deg
+      );
+
+      & > span {
+        font-size: 2.5rem;
+      }
     }
   }
 }
