@@ -5,7 +5,7 @@ import { ActionType, CardType } from './deck';
 import { Switch, Match, mergeProps, Show } from 'solid-js';
 import { OcCircleslash2 } from 'solid-icons/oc';
 import { FiRefreshCcw } from 'solid-icons/fi';
-import { TbPlayCard } from 'solid-icons/tb';
+import { TbCards } from 'solid-icons/tb';
 
 import styles from './CardComponent.module.scss';
 
@@ -23,11 +23,11 @@ const FaceUpCard: Component<Props> = props => {
 		}
 		switch(props.card.action) {
 		case ActionType.Draw2:
-			return <TbPlayCard />
+			return <TbCards />;
 		case ActionType.Reverse:
 			return <FiRefreshCcw />;
 		case ActionType.Skip:
-			return <OcCircleslash2 />
+			return <OcCircleslash2 />;
 		}
 	}
 
