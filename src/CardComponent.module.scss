@@ -40,7 +40,7 @@ $width: 6rem;
     }
   }
 
-  & > .number_oval {
+  & > .oval {
     background: colors.$back;
     @include card-oval;
 

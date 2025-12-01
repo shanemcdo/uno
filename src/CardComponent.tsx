@@ -38,12 +38,12 @@ const FaceUpCard: Component<Props> = props => {
 	}} onclick={props.onclick} data-color={props.card.color} >
 		<Switch>
 			<Match when={props.card.type === CardType.Number}>
-				<div class={styles.number_oval}>
+				<div class={styles.oval}>
 					<span>{(props.card as NumberCard).number}</span>
 				</div>
 			</Match>
 			<Match when={props.card.type === CardType.Action}>
-				<div class={styles.number_oval}>
+				<div class={styles.oval}>
 					<span><ActionIcon /></span>
 				</div>
 			</Match>
