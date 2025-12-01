@@ -33,7 +33,7 @@ $oval-rotation: 25deg;
 
   & > .corner {
     position: absolute;
-    color: var(--text-muted);
+    color: var(--bg);
     $padding: 0.5rem;
 
     &:first-child {
@@ -62,7 +62,7 @@ $oval-rotation: 25deg;
   }
 
   & > .oval {
-    background: colors.$back;
+    background: var(--bg);
     @include card-oval;
 
     & > span {
