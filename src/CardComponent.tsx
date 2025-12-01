@@ -60,13 +60,13 @@ const FaceUpCard: Component<Props> = props => {
 		[styles.card]: true,
 		[styles.clickable]: props.onclick !== undefined && !props.disabled,
 		[styles.disabled]: props.disabled,
-	}} onclick={props.onclick} data-color={props.card.color} >
+	}} onclick={props.onclick} data-color={props.card.color}>
 		<Corner />
 		<Corner />
 		<div class={oval_class()}>
 			<span><CenterIcon /></span>
 		</div>
-	</div>
+	</div>;
 };
 
 const FaceDownCard: Component = () => <div class={styles.card}>
