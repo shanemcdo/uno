@@ -16,7 +16,7 @@ $oval-rotation: 25deg;
 
   & > span {
     font-weight: 900;
-    rotate: 15deg - $oval-rotation;
+    rotate: -$oval-rotation;
   }
 }
 
@@ -57,6 +57,7 @@ $oval-rotation: 25deg;
     & > span {
       font-size: 2rem;
       color: colors.$logo-font-color;
+      rotate: -$oval-rotation * 2;
     }
   }
 
