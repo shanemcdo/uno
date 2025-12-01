@@ -7,7 +7,7 @@ $width: 6rem;
   aspect-ratio: $aspect-ratio;
   width: $width;
   background: colors.$grey;
-  border: 2px solid black;
+  border: 2px solid var(--border);
   border-radius: 1rem;
   @include colors.data-backgrounds;
 }
