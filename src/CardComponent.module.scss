@@ -47,6 +47,9 @@ $width: 6rem;
     background: var(--bg);
 
     & > span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 900;
       rotate: -$oval-rotation;
       font-size: 3rem;
