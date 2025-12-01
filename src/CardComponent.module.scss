@@ -3,6 +3,22 @@
 $aspect-ratio: 0.5625;
 $width: 6rem;
 
+@mixin card-oval {
+  width: 80%;
+  height: 75%;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  rotate: 25deg;
+
+  & > span {
+    font-weight: 900;
+    font-size: 2rem;
+    rotate: -40deg;
+  }
+}
+
 .card {
   aspect-ratio: $aspect-ratio;
   width: $width;
@@ -14,21 +30,13 @@ $width: 6rem;
   justify-content: center;
   @include colors.data-backgrounds;
 
+  // this is just for card backs
   & > .logo {
-    width: 80%;
-    height: 75%;
     background: colors.$red;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    rotate: 25deg;
+    @include card-oval;
 
     & > span {
-      font-weight: 900;
-      font-size: 2rem;
       color: colors.$logo-font-color;
-      rotate: -40deg;
     }
   }
 }
