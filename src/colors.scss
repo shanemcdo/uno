@@ -1,8 +1,9 @@
-$grey: hsl(0, 0%, 40%);
+$back: hsl(0, 0%, 0%);
 $red: hsl(0, 100%, 40%);
 $yellow: hsl(60, 100%, 40%);
 $green: hsl(120, 100%, 40%);
 $blue: hsl(230, 100%, 40%);
+$logo-font-color: hsl(49, 83%, 47%);
 
 @mixin data-backgrounds {
   &[data-color="Red"] {

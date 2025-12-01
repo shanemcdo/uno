@@ -6,10 +6,31 @@ $width: 6rem;
 .card {
   aspect-ratio: $aspect-ratio;
   width: $width;
-  background: colors.$grey;
+  background: colors.$back;
   border: 2px solid var(--border);
   border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   @include colors.data-backgrounds;
+
+  & > .logo {
+    width: 80%;
+    height: 75%;
+    background: colors.$red;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    rotate: 25deg;
+
+    & > span {
+      font-weight: 900;
+      font-size: 2rem;
+      color: colors.$logo-font-color;
+      rotate: -40deg;
+    }
+  }
 }
 
 .clickable {

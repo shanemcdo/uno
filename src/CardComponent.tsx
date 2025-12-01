@@ -38,7 +38,11 @@ const FaceUpCard: Component<Props> = props => {
 	</div>
 };
 
-const FaceDownCard: Component = () => <div class={styles.card} />;
+const FaceDownCard: Component = () => <div class={styles.card}>
+	<div class={styles.logo}>
+		<span>UNO</span>
+	</div>
+</div>;
 
 const CardComponent: Component<Partial<Props>> = p => {
 	const props = mergeProps({ disabled: false }, p);
