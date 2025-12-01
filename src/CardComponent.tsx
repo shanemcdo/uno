@@ -1,10 +1,13 @@
 import type { Component } from 'solid-js';
 import type { ActionCard, Card, NumberCard, PlayedCard, PlayedWildCard } from './deck';
 
-import { CardType } from './deck';
+import { ActionType, CardType } from './deck';
 import { Switch, Match, mergeProps, Show } from 'solid-js';
+import { OcCircleslash2 } from 'solid-icons/oc';
+import { FiRefreshCcw } from 'solid-icons/fi';
+import { TbPlayCard } from 'solid-icons/tb';
 
-import styles from './CardComponent.module.scss'
+import styles from './CardComponent.module.scss';
 
 
 type Props = {
@@ -14,6 +17,20 @@ type Props = {
 }
 
 const FaceUpCard: Component<Props> = props => {
+	const ActionIcon = () => {
+		if(props.card.type !== CardType.Action) {
+			return null;
+		}
+		switch(props.card.action) {
+		case ActionType.Draw2:
+			return <TbPlayCard />
+		case ActionType.Reverse:
+			return <FiRefreshCcw />;
+		case ActionType.Skip:
+			return <OcCircleslash2 />
+		}
+	}
+
 	return <div classList={{
 		[styles.card]: true,
 		[styles.clickable]: props.onclick !== undefined && !props.disabled,
@@ -26,7 +43,9 @@ const FaceUpCard: Component<Props> = props => {
 				</div>
 			</Match>
 			<Match when={props.card.type === CardType.Action}>
-				Action: {(props.card as ActionCard).color} {(props.card as ActionCard).action}
+				<div class={styles.number_oval}>
+					<span><ActionIcon /></span>
+				</div>
 			</Match>
 			<Match when={props.card.type === CardType.Wild}>
 				Wild: 
