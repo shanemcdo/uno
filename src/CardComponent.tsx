@@ -31,48 +31,41 @@ const FaceUpCard: Component<Props> = props => {
 		}
 	}
 
-	const ActionCorner = () => {
-		if(props.card.type !== CardType.Action) {
-			return null;
+	const CenterIcon = () => {
+		switch(props.card.type) {
+		case CardType.Number:
+			return props.card.number;
+		case CardType.Action:
+			return <ActionIcon />;
+		case CardType.Wild:
+			if(props.card.wildType === WildType.WildDraw4) {
+				return '+4';
+			}
 		}
-		if(props.card.action === ActionType.Draw2) {
-			return '+2';
-		}
-		return <ActionIcon />;
+		return null;
 	}
+
+	const Corner = () => {
+		const child = props.card.type === CardType.Action && props.card.action === ActionType.Draw2
+			? '+2'
+			: <CenterIcon />;
+		return <Show when={child}><span class={styles.corner}>{child}</span></Show>
+	}
+
+	const oval_class = () => props.card.type === CardType.Wild
+		? styles.wild_oval
+		: styles.oval;
 
 	return <div classList={{
 		[styles.card]: true,
 		[styles.clickable]: props.onclick !== undefined && !props.disabled,
 		[styles.disabled]: props.disabled,
 	}} onclick={props.onclick} data-color={props.card.color} >
-		<Switch>
-			<Match when={props.card.type === CardType.Number}>
-				<span class={styles.corner}>{(props.card as NumberCard).number}</span>
-				<span class={styles.corner}>{(props.card as NumberCard).number}</span>
-				<div class={styles.oval}>
-					<span>{(props.card as NumberCard).number}</span>
-				</div>
-			</Match>
-			<Match when={props.card.type === CardType.Action}>
-				<span class={styles.corner}><ActionCorner /></span>
-				<span class={styles.corner}><ActionCorner /></span>
-				<div class={styles.oval}>
-					<span><ActionIcon /></span>
-				</div>
-			</Match>
-			<Match when={props.card.type === CardType.Wild}>
-				<Show when={(props.card as PlayedWildCard).wildType === WildType.WildDraw4}>
-					<span class={styles.corner}>+4</span>
-					<span class={styles.corner}>+4</span>
-				</Show>
-				<div class={styles.wild_oval}>
-					<Show when={(props.card as PlayedWildCard).wildType === WildType.WildDraw4}>
-						<span>+4</span>
-					</Show>
-				</div>
-			</Match>
-		</Switch>
+		<Corner />
+		<Corner />
+		<div class={oval_class()}>
+			<span><CenterIcon /></span>
+		</div>
 	</div>
 };
 
