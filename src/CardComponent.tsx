@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js';
 import type { ActionCard, Card, NumberCard, PlayedCard, PlayedWildCard } from './deck';
 
-import { ActionType, CardType } from './deck';
+import { ActionType, CardType, WildType } from './deck';
 import { Switch, Match, mergeProps, Show } from 'solid-js';
 import { OcCircleslash2 } from 'solid-icons/oc';
 import { FiRefreshCcw } from 'solid-icons/fi';
@@ -48,12 +48,9 @@ const FaceUpCard: Component<Props> = props => {
 				</div>
 			</Match>
 			<Match when={props.card.type === CardType.Wild}>
-				Wild: 
-				<Show when={props.card.color !== undefined}>
-					{props.card.color}
-					{' '}
+				<div class={styles.wild_oval} />
+				<Show when={(props.card as PlayedWildCard).wildType === WildType.WildDraw4}>
 				</Show>
-				{(props.card as PlayedWildCard).wildType}
 			</Match>
 		</Switch>
 	</div>

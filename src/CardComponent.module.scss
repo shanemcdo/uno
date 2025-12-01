@@ -2,6 +2,8 @@
 
 $aspect-ratio: 0.5625;
 $width: 6rem;
+$oval-rotation: 25deg;
+
 
 @mixin card-oval {
   width: 80%;
@@ -10,11 +12,11 @@ $width: 6rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  rotate: 25deg;
+  rotate: $oval-rotation;
 
   & > span {
     font-weight: 900;
-    rotate: -40deg;
+    rotate: -15deg - $oval-rotation;
   }
 }
 
@@ -48,6 +50,17 @@ $width: 6rem;
       font-size: 3rem;
       color: var(--data-color);
     }
+  }
+
+  & > .wild_oval {
+    @include card-oval;
+    background: conic-gradient(
+      from -90deg - $oval-rotation,
+      #{colors.$red} 0deg 90deg + $oval-rotation,
+      #{colors.$blue} 90deg + $oval-rotation 180deg,
+      #{colors.$green} 180deg 270deg + $oval-rotation,
+      #{colors.$yellow} 270deg + $oval-rotation 360deg
+    );
   }
 }
 
