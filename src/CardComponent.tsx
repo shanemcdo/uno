@@ -9,7 +9,6 @@ import { TbCards } from 'solid-icons/tb';
 
 import styles from './CardComponent.module.scss';
 
-
 type Props = {
 	card?: Partial<PlayedCard> & Card
 	onclick?: () => void,
@@ -18,31 +17,28 @@ type Props = {
 
 const CardComponent: Component<Props> = p => {
 	const props = mergeProps({ disabled: false }, p);
+
 	const ActionIcon = () => {
 		if(props.card === undefined || props.card.type !== CardType.Action) {
 			return null;
 		}
 		switch(props.card.action) {
-		case ActionType.Draw2:
-			return <TbCards />;
-		case ActionType.Reverse:
-			return <FiRefreshCcw />;
-		case ActionType.Skip:
-			return <OcCircleslash2 />;
+		case ActionType.Draw2: return <TbCards />;
+		case ActionType.Reverse: return <FiRefreshCcw />;
+		case ActionType.Skip: return <OcCircleslash2 />;
 		}
 	}
 
 	const CenterIcon = () => {
 		if(props.card === undefined) return null;
 		switch(props.card.type) {
-		case CardType.Number:
-			return props.card.number;
-		case CardType.Action:
-			return <ActionIcon />;
+		case CardType.Number: return props.card.number;
+		case CardType.Action: return <ActionIcon />;
 		case CardType.Wild:
 			if(props.card.wildType === WildType.WildDraw4) {
 				return '+4';
 			}
+			break;
 		}
 		return null;
 	}
@@ -64,7 +60,9 @@ const CardComponent: Component<Props> = p => {
 			)
 			? '+2'
 			: <CenterIcon />;
-		return <Show when={child}><span class={`${styles.corner} ${card_type_class()}`}>{child}</span></Show>
+		return <Show when={child}>
+			<span class={`${styles.corner} ${card_type_class()}`}>{child}</span>
+		</Show>;
 	}
 
 	return <div classList={{
