@@ -30,7 +30,7 @@ const CardComponent: Component<Props> = p => {
 	}
 
 	const CenterIcon = () => {
-		if(props.card === undefined) return null;
+		if(props.card === undefined) return 'UNO';
 		switch(props.card.type) {
 		case CardType.Number: return props.card.number;
 		case CardType.Action: return <ActionIcon />;
