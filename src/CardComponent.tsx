@@ -11,14 +11,15 @@ import styles from './CardComponent.module.scss';
 
 
 type Props = {
-	card: Partial<PlayedCard> & Card
+	card?: Partial<PlayedCard> & Card
 	onclick?: () => void,
-	disabled: boolean,
+	disabled?: boolean,
 }
 
-const FaceUpCard: Component<Props> = props => {
+const CardComponent: Component<Props> = p => {
+	const props = mergeProps({ disabled: false }, p);
 	const ActionIcon = () => {
-		if(props.card.type !== CardType.Action) {
+		if(props.card === undefined || props.card.type !== CardType.Action) {
 			return null;
 		}
 		switch(props.card.action) {
@@ -32,6 +33,7 @@ const FaceUpCard: Component<Props> = props => {
 	}
 
 	const CenterIcon = () => {
+		if(props.card === undefined) return null;
 		switch(props.card.type) {
 		case CardType.Number:
 			return props.card.number;
@@ -46,6 +48,7 @@ const FaceUpCard: Component<Props> = props => {
 	}
 
 	const card_type_class = () => {
+		if(props.card === undefined) return styles.logo;
 		switch(props.card.type) {
 		case CardType.Number: return styles.number_card;
 		case CardType.Action: return styles.action_card;
@@ -54,7 +57,11 @@ const FaceUpCard: Component<Props> = props => {
 	}
 
 	const Corner = () => {
-		const child = props.card.type === CardType.Action && props.card.action === ActionType.Draw2
+		const child = (
+				props.card
+				&& props.card.type === CardType.Action
+				&& props.card.action === ActionType.Draw2
+			)
 			? '+2'
 			: <CenterIcon />;
 		return <Show when={child}><span class={`${styles.corner} ${card_type_class()}`}>{child}</span></Show>
@@ -64,33 +71,14 @@ const FaceUpCard: Component<Props> = props => {
 		[styles.card]: true,
 		[styles.clickable]: props.onclick !== undefined && !props.disabled,
 		[styles.disabled]: props.disabled,
-	}} onclick={props.onclick} data-color={props.card.color}>
+	}} onclick={props.onclick} data-color={props.card?.color ?? ''}>
 		<Corner />
 		<Corner />
 		<div class={`${styles.oval} ${card_type_class()}`}>
 			<span><CenterIcon /></span>
 		</div>
 	</div>;
-};
 
-const FaceDownCard: Component = () => <div class={styles.card}>
-	<div class={`${styles.oval} ${styles.logo}`}>
-		<span>UNO</span>
-	</div>
-</div>;
-
-const CardComponent: Component<Partial<Props>> = p => {
-	const props = mergeProps({ disabled: false }, p);
-	return <Show
-		when={props.card !== undefined}
-		fallback={<FaceDownCard />}
-	>
-		<FaceUpCard
-			card={props.card!}
-			disabled={props.disabled}
-			onclick={props.onclick}
-		/>
-	</Show>
 };
 
 export default CardComponent;
