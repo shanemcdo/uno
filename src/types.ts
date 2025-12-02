@@ -118,6 +118,7 @@ export type AdminProps = {
 	disableChat: boolean,
 	twoPlayerReverseSkip: boolean, // Whether or not a reverse should skip someones turn when there are only 2 players
 	drawCardMethod: DrawCardMethod,
+	clearStackOnGameOver: boolean,
 };
 
 export type AdminUpdates = {

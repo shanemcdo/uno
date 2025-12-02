@@ -29,6 +29,7 @@ let adminProps: AdminProps = {
 	disableChat: false,
 	twoPlayerReverseSkip: true,
 	drawCardMethod: DrawCardMethod.GrabBag,
+	clearStackOnGameOver: true,
 };
 let turn: string | null = null;
 let currentDeck: Card[] = shuffle(deepClone(deck));
@@ -217,6 +218,9 @@ function restartGame() {
 	Object.values(playerData).forEach(player => {
 		player.hand = drawCards(adminProps.startingHandSize);
 	});
+	if(adminProps.clearStackOnGameOver) {
+		topCards = [ drawNonWildCard() ];
+	}
 	direction = Direction.Forward;
 	drawInfo = { type: DrawType.None };
 	winner = undefined;

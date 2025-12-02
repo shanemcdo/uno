@@ -18,6 +18,7 @@ const AdminControls: Component<Props> = props => {
 	const [disableChat, setDisableChat] = createSignal(props.startingProps.disableChat);
 	const [twoPlayerReverseSkip, setTwoPlayerReverseSkip] = createSignal(props.startingProps.twoPlayerReverseSkip);
 	const [drawCardMethod, setDrawCardMethod] = createSignal(props.startingProps.drawCardMethod);
+	const [clearStackOnGameOver, setClearStackOnGameOver] = createSignal(props.startingProps.clearStackOnGameOver);
 
 	createEffect(() => {
 		props.callback({
@@ -26,6 +27,7 @@ const AdminControls: Component<Props> = props => {
 			disableChat: disableChat(),
 			twoPlayerReverseSkip: twoPlayerReverseSkip(),
 			drawCardMethod: drawCardMethod(),
+			clearStackOnGameOver: clearStackOnGameOver(),
 		} as AdminProps)
 	})
 
@@ -156,6 +158,11 @@ const AdminControls: Component<Props> = props => {
 				accessor={() => props.startingProps.drawCardMethod}
 				setter={setDrawCardMethod}
 				choices={drawCardMethods}
+			/>
+			<CheckboxControls
+				label="Clear Stack on Game Over"
+				accessor={() => props.startingProps.clearStackOnGameOver}
+				setter={setClearStackOnGameOver}
 			/>
 		</div>
 	</Popout>
