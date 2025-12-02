@@ -31,8 +31,8 @@ const ColorPicker: Component<Props> = props => {
 		<div class={styles.choices}>
 			<Choice callback={props.callback} color={Color.Red} />
 			<Choice callback={props.callback} color={Color.Blue} />
-			<Choice callback={props.callback} color={Color.Green} />
 			<Choice callback={props.callback} color={Color.Yellow} />
+			<Choice callback={props.callback} color={Color.Green} />
 		</div>
 	</div>;
 }
