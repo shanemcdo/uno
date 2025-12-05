@@ -12,7 +12,7 @@ $width: 6rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  @include colors.data-backgrounds;
+  @include colors.data-color-background;
 
   & > .corner {
     position: absolute;
