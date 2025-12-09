@@ -53,9 +53,11 @@ const CardComponent: Component<Props> = p => {
 	}
 
 	const Corner = () => {
-		const child = (
-				props.card
-				&& props.card.type === CardType.Action
+		const child =
+			!props.card
+			? null
+			: (
+				props.card.type === CardType.Action
 				&& props.card.action === ActionType.Draw2
 			)
 			? '+2'
