@@ -39,25 +39,27 @@ const AdminControls: Component<Props> = props => {
 		const id = controlsProps.label.replaceAll(' ', '-') + '-id';
 		return <>
 			<label for={id}>{controlsProps.label}</label>
-			<Show
-				when={props.isAdmin}
-				fallback={
-					<input
-						type="checkbox"
-						disabled
-						checked={controlsProps.accessor()}
-					/>
-				}
-			>
-			<input
-				id={id}
-				type="checkbox"
-				checked={untrack(controlsProps.accessor)}
-				onchange={event => {
-					controlsProps.setter(event.target.checked);
-				}}
-			/>
-			</Show>
+			<div class={styles.input_wrapper}>
+				<Show
+					when={props.isAdmin}
+					fallback={
+						<input
+							type="checkbox"
+							disabled
+							checked={controlsProps.accessor()}
+						/>
+					}
+				>
+				<input
+					id={id}
+					type="checkbox"
+					checked={untrack(controlsProps.accessor)}
+					onchange={event => {
+						controlsProps.setter(event.target.checked);
+					}}
+				/>
+				</Show>
+			</div>
 		</>;
 	}
 

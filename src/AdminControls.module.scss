@@ -1,4 +1,10 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, auto);
+  row-gap: .5rem;
+
+  .input_wrapper {
+    display: flex;
+    justify-content: center;
+  }
 }
