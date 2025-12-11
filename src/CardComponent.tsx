@@ -1,8 +1,8 @@
 import type { Component } from 'solid-js';
-import type { ActionCard, Card, NumberCard, PlayedCard, PlayedWildCard } from './deck';
+import type { Card, PlayedCard } from './deck';
 
 import { ActionType, CardType, WildType } from './deck';
-import { Switch, Match, mergeProps, Show } from 'solid-js';
+import { mergeProps, Show } from 'solid-js';
 import { OcCircleslash2 } from 'solid-icons/oc';
 import { FiRefreshCcw } from 'solid-icons/fi';
 import { TbCards } from 'solid-icons/tb';
