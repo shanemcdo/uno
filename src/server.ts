@@ -1,5 +1,5 @@
 import type { DataConnection } from 'peerjs';
-import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard, OtherPlayerData, DrawCard, DrawInfo, AdminProps } from './types';
+import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard, OtherPlayerData, DrawInfo, AdminProps } from './types';
 import type { Card, PlayedCard } from './deck';
 
 import { ServerType, ClientType, State, DrawType, DrawCardMethod } from './types';
@@ -177,7 +177,7 @@ function handlePlayCard(player_id: string,  event: PlayCard) {
 	sendUpdate();
 }
 
-function handleDrawCard(player_id: string,  event: DrawCard) {
+function handleDrawCard(player_id: string) {
 	if(turn !== player_id) {
 		console.error('User tried to draw a card out of turn');
 		return;
@@ -280,7 +280,7 @@ export function createServer(callback: (id: string) => void): Peer {
 				handlePlayCard(conn.peer, d);
 				break;
 			case ClientType.DrawCard:
-				handleDrawCard(conn.peer, d);
+				handleDrawCard(conn.peer);
 				break;
 			case ClientType.RestartGame:
 				restartGame();
