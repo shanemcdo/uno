@@ -79,17 +79,17 @@ const Game: Component<Props> = props => {
 		</div>;
 
 	const otherPlayers =
-		<div class={styles.other_players} data-player-count={gameData.otherPlayers.length}>
-			<For each={gameData.otherPlayers}>{ otherPlayer => {
-				return <div class={styles.other_player}>
+		<div class={styles.other_players}>
+			<For each={gameData.otherPlayers}>{ otherPlayer =>
+				<div class={styles.other_player}>
 					<h3>{otherPlayer.name}</h3>
 					<div class={styles.other_player_hand} data-card-count={otherPlayer.cardCount}>
 						<Repeat count={otherPlayer.cardCount}>
 							<CardComponent />
 						</Repeat>
 					</div>
-				</div>;
-			}}</For>
+				</div>
+			}</For>
 		</div>;
 
 	const toolbar =

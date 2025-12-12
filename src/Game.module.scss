@@ -49,20 +49,16 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  --player-count: attr(data-player-count type(<number>));
 
-  & > .other_player {
+  & > .other_player > .other_player_hand {
+    position: relative;
+    @include card-count-attr;
+    --card-area: clamp(0px, calc(1rem * var(--card-count)), 20vw);
+    --max-rotation: 15deg;
 
-    & > .other_player_hand {
-      position: relative;
-      @include card-count-attr;
-      --card-area: clamp(0px, calc(1rem * var(--card-count)), 20vw);
-      --max-rotation: 15deg;
-
-      & > div {
-        top: 0;
-        left: 0;
-      }
+    & > div {
+      top: 0;
+      left: 0;
     }
   }
 }
