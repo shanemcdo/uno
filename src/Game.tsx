@@ -44,6 +44,7 @@ const Game: Component<Props> = props => {
 		turnPlayerName: '',
 		otherPlayers: [],
 		topCards: [],
+		direction: Direction.Forward,
 	});
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
 	const turnLabel = () => (gameData.yourTurn ? 'Your' : `${gameData.turnPlayerName}'s`) + ' Turn';
