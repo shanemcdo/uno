@@ -214,7 +214,7 @@ function getNextTurn(skip: boolean = false): void {
 }
 
 function restartGame() {
-	state = State.Playing;
+	state = turns.length > 1 ? State.Playing  : State.Waiting;
 	Object.values(playerData).forEach(player => {
 		player.hand = drawCards(adminProps.startingHandSize);
 	});
@@ -312,9 +312,18 @@ export function createServer(callback: (id: string) => void): Peer {
 			}
 		})
 		conn.on('close', () => {
-			console.log(playerData);
+			const index = turns.indexOf(conn.peer);
+			if(index < 0) return;
+			if(turn === conn.peer) {
+				getNextTurn();
+			}
+			turns.splice(index, 1);
 			delete playerData[conn.peer];
-			console.log(conn.peer + ' close');
+			if(turns.length < 2 && state === State.Playing) {
+				restartGame();
+			} else {
+				sendUpdate();
+			}
 		})
 		conn.on('error', err => console.log(err.message));
 	});
