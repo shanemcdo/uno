@@ -230,7 +230,7 @@ function restartGame() {
 export function createServer(callback: (id: string) => void): Peer {
 	const peer = new Peer();
 	peer.on('open', callback);
-	peer.on('error', err => console.log(err.message));
+	peer.on('error', err => console.error(err.message));
 	peer.on('close', () => console.log('server close'));
 	peer.on('connection', conn => {
 		conn.on('open', () => {
@@ -314,7 +314,6 @@ export function createServer(callback: (id: string) => void): Peer {
 		conn.on('close', () => {
 			console.log(playerData);
 			delete playerData[conn.peer];
-			console.log(playerData);
 			console.log(conn.peer + ' close');
 		})
 		conn.on('error', err => console.log(err.message));
