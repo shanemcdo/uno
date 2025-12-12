@@ -2,7 +2,7 @@ import type { Accessor, Component, Setter } from 'solid-js';
 
 import { For, Show, createEffect, createSignal, untrack } from 'solid-js';
 import { AdminProps, DrawCardMethod, drawCardMethods } from './types';
-import Popout, { Direction } from './Popout';
+import Popout, { Location } from './Popout';
 
 import styles from './AdminControls.module.scss';
 
@@ -130,7 +130,7 @@ const AdminControls: Component<Props> = props => {
 	}
 
 	return <>
-	<Popout direction={Direction.Right}>
+	<Popout location={Location.Right}>
 		<h1>Admin {props.isAdmin
 			? 'Controls'
 			: 'Rules'}</h1>

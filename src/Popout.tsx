@@ -4,13 +4,13 @@ import { children, Show, createSignal } from 'solid-js';
 
 import styles from './Popout.module.scss';
 
-export enum Direction {
+export enum Location {
 	Left = "left",
 	Right = "right",
 };
 
 type Props = ParentProps<{
-	direction: Direction,
+	location: Location,
 }>;
 
 const Popout: Component<Props> = props => {
@@ -19,7 +19,7 @@ const Popout: Component<Props> = props => {
 	const popoutClasses = () => `${styles.container} ${active() ? styles.active: ''}`;
 	const safeChildren = children(() => props.children);
 	return <>
-	<div class={popoutClasses()} data-direction={props.direction}>
+	<div class={popoutClasses()} data-direction={props.location}>
 		<button
 			class={styles.close}
 			onclick={toggleActive}
@@ -30,8 +30,8 @@ const Popout: Component<Props> = props => {
 		<div
 			class={styles.toggle}
 			onclick={toggleActive}
-			data-direction={props.direction}
-		>{props.direction === Direction.Left ? '>' : '<'}</div>
+			data-direction={props.location}
+		>{props.location === Location.Left ? '>' : '<'}</div>
 	</Show>
 	</>
 };

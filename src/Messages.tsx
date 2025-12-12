@@ -5,7 +5,7 @@ import { For } from 'solid-js';
 import StringInput from './StringInput';
 
 import styles from './Messages.module.scss';
-import Popout, { Direction } from './Popout';
+import Popout, { Location } from './Popout';
 
 type Props = {
 	sendMessage: (message: string) => void,
@@ -14,7 +14,7 @@ type Props = {
 
 const Messages: Component<Props> = props => {
 	return <>
-		<Popout direction={Direction.Left}>
+		<Popout location={Location.Left}>
 		<div class={styles.messages}>
 			<For each={props.messages} >{item =>
 				<p>{item.name}: {item.message}</p>
