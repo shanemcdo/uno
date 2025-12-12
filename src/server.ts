@@ -312,6 +312,9 @@ export function createServer(callback: (id: string) => void): Peer {
 			}
 		})
 		conn.on('close', () => {
+			if(turns.length < 2) {
+				peer.destroy();
+			}
 			const index = turns.indexOf(conn.peer);
 			if(index < 0) return;
 			if(turn === conn.peer) {
