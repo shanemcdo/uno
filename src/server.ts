@@ -308,7 +308,6 @@ export function createServer(callback: (id: string) => void): Peer {
 				break;
 			default:
 				throw new Error('Reached default on clienttype switch');
-				break;
 			}
 		})
 		conn.on('close', () => {
