@@ -5,7 +5,7 @@ import type { Color } from './deck';
 
 import { createStore } from 'solid-js/store';
 import { For, Index, Show, createSignal } from 'solid-js';
-import { FaBrandsGithub, FaSolidArrowRotateLeft, FaSolidArrowRotateRight, FaSolidGear, FaSolidShareFromSquare } from 'solid-icons/fa'
+import { FaBrandsGithub, FaRegularClipboard, FaSolidArrowRotateLeft, FaSolidArrowRotateRight, FaSolidGear, FaSolidShareFromSquare } from 'solid-icons/fa'
 import { IoCloseCircle } from 'solid-icons/io'
 import { ServerType, ClientType, State, Direction } from './types';
 import { CardType } from './deck';
@@ -15,6 +15,7 @@ import CardComponent from './CardComponent';
 import ColorPicker from './ColorPicker';
 import AdminControls from './AdminControls';
 import Repeat from './Repeat';
+import Modal from './Modal';
 
 import styles from './Game.module.scss'
 import { rand } from './rand';
@@ -93,6 +94,38 @@ const Game: Component<Props> = props => {
 			}</For>
 		</div>;
 
+	const optionsModal =
+		<Modal
+			button={<FaSolidGear />}
+		>
+			<h1>Options</h1>
+		</Modal>;
+
+	const ShareText: Component = () => <>
+		<p>Share this code to play with friends:</p>
+		<p>{props.conn.peer}</p>
+		<p>
+			Or share <a
+				href={url()}
+				target="_blank"
+			>This link</a> <button
+				class={styles.clipboardButton}
+				onclick={ () => {
+					navigator.clipboard.writeText(url());
+				}}
+			><FaRegularClipboard /></button>
+			.
+		</p>
+	</>;
+
+	const shareModal =
+		<Modal
+			button={<FaSolidShareFromSquare />}
+		>
+			<h1>Share</h1>
+			<ShareText/>
+		</Modal>;
+
 	const toolbar =
 		<div class={styles.toolbar}>
 			<a
@@ -100,19 +133,12 @@ const Game: Component<Props> = props => {
 					props.conn.close();
 				}}
 			><IoCloseCircle /></a>
-			<a
-				onclick={() => {
-					// TODO: open popup for this
-				}}
-			><FaSolidGear /></a>
+			{optionsModal}
 			<a
 				href="https://github.com/shanemcdo/uno/"
 				target="_blank"
 			><FaBrandsGithub /></a>
-			<a
-				href={url()}
-				target="_blank"
-			><FaSolidShareFromSquare /></a>
+			{shareModal}
 		</div>;
 
 	const direction_indicator =
@@ -189,6 +215,7 @@ const Game: Component<Props> = props => {
 			<div class={styles.popup}>
 				<Show when={gameData.state === State.Waiting}>
 					<h1>Waiting for more players to join...</h1>
+					<ShareText/>
 				</Show>
 				<Show when={gameData.state === State.GameOver}>
 					<h1>{gameData.winner} Won!</h1>

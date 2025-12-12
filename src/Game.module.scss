@@ -74,7 +74,8 @@
   border-radius: 0 0 1rem 0;
   display: flex;
 
-  & > a {
+  & > a,
+  & > span{
     border: 1px solid var(--border);
     background: var(--bg-light);
     --size: 1.8rem;
@@ -186,4 +187,13 @@
     color: var(--text);
     font-size: 2rem;
   }
+}
+
+.clipboardButton {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  background: var(--bg-light);
+  color: var(--text);
+  font-size: 1em !important;
 }

@@ -1,0 +1,17 @@
+.toggle {
+  cursor: pointer;
+}
+
+.modal {
+  position: absolute;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  top: 50vh;
+  left: 50vw;
+  z-index: 3;
+  translate: -50% -50%;
+  border-radius: 1.5rem;
+  width: clamp(40vw, 5rem, 80vw);
+  height: clamp(40vh, 5rem, 80vh);
+  text-align: center;
+}
