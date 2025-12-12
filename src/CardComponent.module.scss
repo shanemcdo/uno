@@ -12,6 +12,7 @@ $width: 6rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
   @include colors.data-color-background;
 
   & > .corner {
