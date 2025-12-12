@@ -39,6 +39,11 @@ export const drawCardMethods = Object.freeze([
 	DrawCardMethod.Random,
 ]);
 
+export enum Direction {
+	Forward,
+	Backward,
+};
+
 export type GameData = {
 	state: State,
 	yourTurn: boolean,
@@ -50,6 +55,7 @@ export type GameData = {
 	otherPlayers: OtherPlayerData[],
 	winner?: string,
 	adminProps?: AdminProps,
+	direction: Direction,
 };
 
 // sent by server side

@@ -2,7 +2,7 @@ import type { DataConnection } from 'peerjs';
 import type { ClientData, MessageBroadcast, NameValidation, GameUpdate, PlayCard, OtherPlayerData, DrawInfo, AdminProps } from './types';
 import type { Card, PlayedCard } from './deck';
 
-import { ServerType, ClientType, State, DrawType, DrawCardMethod } from './types';
+import { Direction, ServerType, ClientType, State, DrawType, DrawCardMethod } from './types';
 import { Peer } from 'peerjs';
 import { ActionType, CardType, WildType, canPlayCard, deck } from './deck';
 import deepClone from './deepClone';
@@ -13,11 +13,6 @@ type PlayerData = {
 	name: string,
 	hand: Card[],
 	isAdmin: boolean,
-};
-
-enum Direction {
-	Forward,
-	Backward,
 };
 
 let state = State.Waiting;
@@ -104,6 +99,7 @@ function sendUpdate() {
 					} as OtherPlayerData)),
 				winner,
 				adminProps,
+				direction,
 			}
 		} as GameUpdate);
 	});

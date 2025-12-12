@@ -5,9 +5,9 @@ import type { Color } from './deck';
 
 import { createStore } from 'solid-js/store';
 import { For, Index, Show, createSignal } from 'solid-js';
-import { FaBrandsGithub, FaSolidGear, FaSolidShareFromSquare } from 'solid-icons/fa'
+import { FaBrandsGithub, FaSolidArrowRotateLeft, FaSolidArrowRotateRight, FaSolidGear, FaSolidShareFromSquare } from 'solid-icons/fa'
 import { IoCloseCircle } from 'solid-icons/io'
-import { ServerType, ClientType, State } from './types';
+import { ServerType, ClientType, State, Direction } from './types';
 import { CardType } from './deck';
 import Messages from './Messages';
 import StringInput from './StringInput';
@@ -114,10 +114,21 @@ const Game: Component<Props> = props => {
 			><FaSolidShareFromSquare /></a>
 		</div>;
 
+	const direction_indicator =
+		<span class={styles.direction_indicator}>
+			<Show
+				when={gameData.direction === Direction.Forward}
+				fallback={<FaSolidArrowRotateLeft />}
+			>
+				<FaSolidArrowRotateRight />
+			</Show>
+		</span>;
+
 	const topCard =
 		<Show when={gameData.topCards.length > 0}>
 			<div class={styles.top_card_wrapper}>
 				<h2 data-your-turn={gameData.yourTurn}>{turnLabel()}</h2>
+				{direction_indicator}
 				<div class={styles.top_card}>
 					<Index each={gameData.topCards}>{ card =>
 						<div data-rotation={rand(-30, 30)}>
