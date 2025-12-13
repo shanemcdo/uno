@@ -1,6 +1,6 @@
 import type { Accessor, Component, Setter } from 'solid-js';
 
-import { For, Show, untrack } from 'solid-js';
+import { For, mergeProps, Show, untrack } from 'solid-js';
 
 import styles from './controls.module.scss';
 
@@ -8,8 +8,9 @@ export const CheckboxControls: Component<{
 	accessor: Accessor<boolean>
 	setter: Setter<boolean>
 	label: string,
-	disabled: boolean,
-}> = props => {
+	disabled?: boolean,
+}> = p => {
+	const props = mergeProps({ disabled: false, }, p);
 	const id = props.label.replaceAll(' ', '-') + '-id';
 	return <>
 		<label for={id}>{props.label}</label>
@@ -41,8 +42,9 @@ export const NumberControls: Component<{
 	accessor: Accessor<number>
 	setter: Setter<number>
 	label: string,
-	disabled: boolean,
-}> = props => {
+	disabled?: boolean,
+}> = p => {
+	const props = mergeProps({ disabled: false, }, p);
 	const id = props.label.replaceAll(' ', '-') + '-id';
 	return <>
 		<label for={id}>{props.label}</label>
@@ -72,13 +74,14 @@ export const NumberControls: Component<{
 }
 
 // converted to function for easier generics
-export function DropDownControls<T extends Exclude<string, Function>>(props: {
+export function DropDownControls<T extends Exclude<string, Function>>(p: {
 	accessor: Accessor<T>
 	setter: (val: T) => void, // Setter<T> doesn't work well with generics
 	label: string,
 	choices: readonly T[],
-	disabled: boolean,
+	disabled?: boolean,
 }) {
+	const props = mergeProps({ disabled: false, }, p);
 	const id = props.label.replaceAll(' ', '-') + '-id';
 	return <>
 		<label for={id}>{props.label}</label>

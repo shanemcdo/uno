@@ -16,6 +16,7 @@ import ColorPicker from './ColorPicker';
 import AdminControls from './AdminControls';
 import Repeat from './Repeat';
 import Modal from './Modal';
+import Options, { PlayerOptions } from './Options';
 
 import styles from './Game.module.scss'
 import { rand } from './rand';
@@ -46,6 +47,10 @@ const Game: Component<Props> = props => {
 		otherPlayers: [],
 		topCards: [],
 		direction: Direction.Forward,
+	});
+	const [playerOptions, setPlayerOptions] = createStore<PlayerOptions>({
+		hideChat: false,
+
 	});
 	const [colorPickerCallback, setColorPickerCallback] = createSignal<((color: Color) => void) | null>(null);
 	const turnLabel = () => (gameData.yourTurn ? 'Your' : `${gameData.turnPlayerName}'s`) + ' Turn';
@@ -98,7 +103,12 @@ const Game: Component<Props> = props => {
 		<Modal
 			button={<FaSolidGear />}
 		>
-			<h1>Options</h1>
+			<Options
+				startingOptions={playerOptions}
+				callback={options => {
+					setPlayerOptions(options);
+				}}
+			/>
 		</Modal>;
 
 	const ShareText: Component = () => <>
@@ -229,7 +239,7 @@ const Game: Component<Props> = props => {
 		</Show>;
 
 	const messageWindow =
-		<Show when={!(gameData.adminProps?.disableChat ?? false)}>
+		<Show when={!(gameData.adminProps?.disableChat ?? false) && !playerOptions.hideChat}>
 			<Messages
 				sendMessage={ message => {
 					props.conn.send({ type: ClientType.Message, message } as MessageRequest);
