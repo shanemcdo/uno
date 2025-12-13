@@ -34,47 +34,47 @@ const AdminControls: Component<Props> = props => {
 
 	return <>
 	<Popout location={Location.Right}>
-		<h1>Admin {props.isAdmin
-			? 'Controls'
-			: 'Rules'}</h1>
-		<div class={styles.grid}>
-			<CheckboxControls
-				label="Stacking"
-				accessor={() => props.startingProps.stacking}
-				setter={setStacking}
-				disabled={!props.isAdmin}
-			/>
-			<NumberControls
-				label="Starting Hand Size"
-				accessor={() => props.startingProps.startingHandSize}
-				setter={setStartingHandSize}
-				disabled={!props.isAdmin}
-			/>
-			<CheckboxControls
-				label="Disable Chat"
-				accessor={() => props.startingProps.disableChat}
-				setter={setDisableChat}
-				disabled={!props.isAdmin}
-			/>
-			<CheckboxControls
-				label="Two Player Reverse Skip"
-				accessor={() => props.startingProps.twoPlayerReverseSkip}
-				setter={setTwoPlayerReverseSkip}
-				disabled={!props.isAdmin}
-			/>
-			<DropDownControls
-				label="Draw Card Method"
-				accessor={() => props.startingProps.drawCardMethod}
-				setter={setDrawCardMethod}
-				choices={drawCardMethods}
-				disabled={!props.isAdmin}
-			/>
-			<CheckboxControls
-				label="Clear Stack on Game Over"
-				accessor={() => props.startingProps.clearStackOnGameOver}
-				setter={setClearStackOnGameOver}
-				disabled={!props.isAdmin}
-			/>
+		<div class={styles.container}>
+			<h1>Admin {props.isAdmin ? 'Controls' : 'Rules'}</h1>
+			<div class={styles.grid}>
+				<CheckboxControls
+					label="Stacking"
+					accessor={() => props.startingProps.stacking}
+					setter={setStacking}
+					disabled={!props.isAdmin}
+				/>
+				<NumberControls
+					label="Starting Hand Size"
+					accessor={() => props.startingProps.startingHandSize}
+					setter={setStartingHandSize}
+					disabled={!props.isAdmin}
+				/>
+				<CheckboxControls
+					label="Disable Chat"
+					accessor={() => props.startingProps.disableChat}
+					setter={setDisableChat}
+					disabled={!props.isAdmin}
+				/>
+				<CheckboxControls
+					label="Two Player Reverse Skip"
+					accessor={() => props.startingProps.twoPlayerReverseSkip}
+					setter={setTwoPlayerReverseSkip}
+					disabled={!props.isAdmin}
+				/>
+				<DropDownControls
+					label="Draw Card Method"
+					accessor={() => props.startingProps.drawCardMethod}
+					setter={setDrawCardMethod}
+					choices={drawCardMethods}
+					disabled={!props.isAdmin}
+				/>
+				<CheckboxControls
+					label="Clear Stack on Game Over"
+					accessor={() => props.startingProps.clearStackOnGameOver}
+					setter={setClearStackOnGameOver}
+					disabled={!props.isAdmin}
+				/>
+			</div>
 		</div>
 	</Popout>
 	</>
