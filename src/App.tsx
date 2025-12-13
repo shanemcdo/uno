@@ -13,11 +13,16 @@ const peer = new Peer();
 const [id, setId] = createSignal<string>('');
 const [conn, setConn] = createSignal<DataConnection | null>(null);
 const [loading, setLoading] = createSignal(false);
+const [connectionError, setConnectionError] = createSignal('');
 
 function connect(id: string) {
 	const conn = peer.connect(id, { reliable: true });
+	const timeout = setTimeout(() => {
+		setConnectionError(`Couldn't connect to ${id}`);
+	}, 500);
 	conn.on('open', () => {
 		console.log('conn connected');
+		clearTimeout(timeout);
 		setConn(conn);
 		setLoading(false);
 	});
@@ -47,10 +52,11 @@ const Menu = () => {
 			<div class={styles.vert_bar} />
 		</div>
 		<div class={styles.option}>
-			<StringInput	
+			<StringInput
 				placeholder="Game Code"
 				callback={connect}
 				buttonText="Join Game"
+				error={connectionError()}
 			/>
 		</div>
 	</div>;

@@ -39,9 +39,15 @@
     font-size: 3rem;
   }
 
+  $font-size: 1.8rem;
+
   input {
     @include input.standard-input;
-    font-size: 1.8rem;
+    font-size: $font-size;
+  }
+
+  p {
+    font-size: $font-size;
   }
 }
 
