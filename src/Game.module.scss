@@ -170,10 +170,10 @@
 
 .popup {
   position: absolute;
-  width: 60vw;
-  height: 60vh;
-  top: 20vh;
-  left: 20vw;
+  top: 50vh;
+  left: 50vw;
+  translate: -50% -50%;
+  padding: 1.5rem;
   text-align: center;
   background: var(--bg);
   border: solid 1px var(--border);
