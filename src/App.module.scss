@@ -1,5 +1,6 @@
 @use './input';
 
+
 .App {
   height: 100%;
   $hue: 0;
@@ -17,7 +18,18 @@
     background: var(--bg);
     color: var(--text);
   }
+
+  @media (prefers-color-scheme: light) {
+    --test: "true";
+    --bg-dark: hsl(#{$hue}, #{$sat}, 85%);
+    --bg: hsl(#{$hue}, #{$sat}, 90%);
+    --bg-light: hsl(#{$hue}, #{$sat}, 95%);
+    --border: hsl(#{$hue}, #{$sat}, 60%);
+    --text-muted: hsl(#{$hue}, #{$sat}, 20%);
+    --text: hsl(#{$hue}, #{$sat}, 10%);
+  }
 }
+
 
 .loading {
   height: 100%;
