@@ -33,6 +33,7 @@ const Game: Component<Props> = props => {
 		
 	};
 	const [name, setName] = createSignal<null | string>(null);
+	const [nameErrorMessage, setNameErrorMessage] = createSignal('');
 	const [messages, setMessages] = createSignal<Message[]>([]);
 	const addMessage = (message: Message) => {
 		setMessages([...messages(), message]);
@@ -62,6 +63,7 @@ const Game: Component<Props> = props => {
 		switch(d.type) {
 		case ServerType.Name:
 			if(d.accepted) setName(d.name);
+			else setNameErrorMessage(`Cannot use name ${d.name}`);
 			break;
 		case ServerType.Message:
 			addMessage(d);
@@ -81,6 +83,7 @@ const Game: Component<Props> = props => {
 					callback={ name => {
 						props.conn.send({ type: ClientType.Name, name } as NameRequest);
 					}}
+					error={nameErrorMessage()}
 				/>
 			</div>
 		</div>;

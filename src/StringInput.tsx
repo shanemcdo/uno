@@ -1,6 +1,8 @@
 import type { Component } from 'solid-js';
 
-import { createSignal, mergeProps } from 'solid-js';
+import { createSignal, mergeProps, Show } from 'solid-js';
+
+import styles from './StringInput.module.scss'
 
 type Props = {
 	placeholder: string,
@@ -8,6 +10,7 @@ type Props = {
 	clearOnSend?: boolean,
 	allowEmptyInput?: boolean,
 	buttonText?: string,
+	error?: string,
 };
 
 const StringInput: Component<Props> = p => {
@@ -45,6 +48,9 @@ const StringInput: Component<Props> = p => {
 			disabled={ buttonDisabled() }
 			value={ props.buttonText }
 		/>
+		<Show when={ props.error }>
+			<p class={ styles.error }>{ props.error }</p>
+		</Show>
 	</>;
 };
 

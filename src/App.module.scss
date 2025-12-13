@@ -11,6 +11,8 @@
   --border: hsl(#{$hue}, #{$sat}, 40%);
   --text-muted: hsl(#{$hue}, #{$sat}, 70%);
   --text: hsl(#{$hue}, #{$sat}, 95%);
+  --error-bg: hsl(0, 100%, 20%);
+  --error-fg: hsl(0, 100%, 50%);
   background: var(--bg-dark);
   color: var(--text);
 
@@ -27,6 +29,8 @@
     --border: hsl(#{$hue}, #{$sat}, 60%);
     --text-muted: hsl(#{$hue}, #{$sat}, 20%);
     --text: hsl(#{$hue}, #{$sat}, 10%);
+    --error-bg: hsl(0, 100%, 80%);
+    --error-fg: hsl(0, 100%, 50%);
   }
 }
 
